@@ -12,21 +12,18 @@ import java.net.UnknownHostException;
 import model.*;
 
 
-
-
 public class TCP {
 	
 			//Pour plus tard
 			//String adresse_destinataire = Destinataire.getIp();
 			//int port = Expediteur.getPort();
-		
-
 	
+	String adresse_test = "127.0.0.1";
+	int port_test = 1024;
 	
 	public void envoyer_msg_tcp (User Destinataire, User Expediteur, /*Message msg*/ String message1) throws UnknownHostException, IOException {	 
 		
-		String adresse_test = "127.0.0.1";
-		int port_test = 1024;
+		
 		Socket link = new Socket(adresse_test,port_test);
 		
 		BufferedWriter out = new BufferedWriter(new OutputStreamWriter(link.getOutputStream()));
@@ -40,7 +37,7 @@ public class TCP {
 	
 	public void listen_msg_tcp () throws IOException {
 		
-		ServerSocket serveur = new ServerSocket(1024);
+		ServerSocket serveur = new ServerSocket(port_test);
 		Socket link2 = serveur.accept();
 		
 		BufferedReader in = new BufferedReader(new InputStreamReader(link2.getInputStream()));
