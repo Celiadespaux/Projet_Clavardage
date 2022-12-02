@@ -3,7 +3,7 @@ package manager;
 public class Thread_manager extends Thread {
 
 	
-	void init_thread() {
+	void init_thread(MessagesTCP) {
 		this.start();
 		
 	}
