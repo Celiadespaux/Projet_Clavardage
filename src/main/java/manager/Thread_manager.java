@@ -2,11 +2,8 @@ package manager;
 
 public class Thread_manager extends Thread {
 
-	public enum Nature_Thread{
-		RECEPTION, ENVOI
-	}
 	
-	void init_thread(Nature_Thread Th) {
+	void init_thread() {
 		this.start();
 		
 	}
