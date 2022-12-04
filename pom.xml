@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>fr.insa.demo.web</groupId>
-  <artifactId>Projet_java</artifactId>
+  <artifactId>Projet_Clavardage</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
   <name>Projet_java</name>
@@ -25,6 +25,11 @@
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+ 		<groupId>org.xerial</groupId>
+ 		<artifactId>sqlite-jdbc</artifactId>
+		<version>3.7.2</version>
+	</dependency>
   </dependencies>
 
   <build>

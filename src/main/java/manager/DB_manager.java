@@ -1,7 +1,9 @@
-import java.sql;
-import java.io;
+package manager;
 
-public class DB_Manager(){
+import java.sql.*;
+import java.io.*;
+
+public class DB_manager {
 
     
 
@@ -17,9 +19,9 @@ public class DB_Manager(){
         }
 
         //Connexion à la BDD 
-        String DB_URL = 
+        String DB_URL = "";
         try {
-            this.connection = DriverManager.getConnection("jdbc:sqlite:");
+            this.get = DriverManager.getConnection("jdbc:sqlite:");
 
         } catch (Exception e) {
             System.out.println("[DB_Manager] Problème connexion à la BDD");
