@@ -15,13 +15,6 @@ public class Network_manager {
 	}
 	
 	
-	public static enum TypeMessage {
-		MESSAGE_CONV,
-		MESSAGE_BROADCAST,
-		CONNEXION,
-		DECONNEXION,
-		PSEUDO_CHANGE
-	}
 	//run servers ??
 	
 	//envoyer un message (tcp)
