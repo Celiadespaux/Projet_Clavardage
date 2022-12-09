@@ -114,15 +114,15 @@ public class DB_manager {
      * @param id_user1
      * @param id_user2
      */
-    public static void insert_message_db (int id_dest, String date, Message msg) {
+    public static void insert_message_db (Message msg) {
     	
         String sql = "INSERT INTO discussion VALUES(?,?,?)";
 
         try (PreparedStatement pstmt = con.prepareStatement(sql)){
     
         	
-            pstmt.setInt(1, id_dest);
-            pstmt.setString(2, date);
+            pstmt.setInt(1, msg.getId_dest());
+            pstmt.setString(2, msg.getDate());
             pstmt.setString(3, msg.getContenu());
             pstmt.executeUpdate();
             System.out.println("[DB_Manager] Ajout ligne dans table ok");
@@ -152,7 +152,8 @@ public class DB_manager {
         // loop through the result set
         while (result.next()) {
 
-            Message m = new Message(result.getString("id_dest"),
+        	//changer id expe
+            Message m = new Message(result.getInt("id_dest"),01,
                     result.getString("date"),
                     result.getString("message"));
             list.add(m);
@@ -162,12 +163,12 @@ public class DB_manager {
     }
 
    
-    
+
     public static void main(String[] args) throws SQLException {
 		connectionDB();
 		creer_tables_DB();
-		Message msg = new Message("moi", "test");
-		insert_message_db(34,"22/09/22",msg);
+		Message msg = new Message(01,02, "test");
+		insert_message_db(msg);
         showHistory();
         delethistory();
         showHistory();

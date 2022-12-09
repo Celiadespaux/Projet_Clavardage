@@ -4,19 +4,22 @@ import java.time.LocalDateTime;
 
 public class Message {
 
-	private String name;
+	private int id_dest;
+	private int id_expe;
 	private String date;
 	private String contenu;
 
 	
-    public Message(String name, String contenu) {
-		this.name = name;
+    public Message(int id_dest, int id_expe, String contenu) {
+		this.id_dest = id_dest;
+		this.id_expe = id_expe;
 		this.date = LocalDateTime.now().toString();
 		this.contenu = contenu;
 	}
 	
-	public Message(String name, String date, String content){
-	        this.name = String.valueOf(name);
+	public Message(int id_dest,int id_expe, String date, String content){
+	        this.id_dest = id_dest;
+			this.id_expe = id_expe;
 	        this.date = date;
 	        this.contenu = content;
 	}
@@ -31,16 +34,6 @@ public class Message {
 	}
 	
 
-	public String getName() {
-		return name;
-	}
-
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-
 	public String getDate() {
 		return date;
 	}
@@ -51,9 +44,18 @@ public class Message {
 	}
 	
 
+	public int getId_dest() {
+		return id_dest;
+	}
+
+	public void setId_dest(int id_dest) {
+		this.id_dest = id_dest;
+	}
+
+	
     @Override
     public String toString() {
-        return "My name is  " + name + " "
+        return "My id is  " + id_expe + " "
                 + date + " -> Message : " + contenu;
     }
 
