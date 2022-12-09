@@ -29,7 +29,6 @@ public class MessagesTCP implements Runnable {
 			//si message conversation -> prevenir le network manager et il affichera le msg
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
