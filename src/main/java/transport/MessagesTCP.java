@@ -6,6 +6,8 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import model.Message;
+
 
 public class MessagesTCP implements Runnable {
 
@@ -15,14 +17,23 @@ public class MessagesTCP implements Runnable {
 		// TODO Auto-generated constructor stub
 	}
 
+	/*public void diffencier_msg(Message msg) {
+		switch(msg.getType()){
+		
+		case 
+		
+		case
+		
+		
+		}
+	}*/
 
 	public void run() { //quand le thread recoit quelque chose 
 		BufferedReader input ;
 		
 		try {
 			input = new BufferedReader(new InputStreamReader(recuSocket.getInputStream()));
-			String recu ;
-			recu = input.readLine();
+			String recu = input.readLine();
 			
 			input.close();
 			
