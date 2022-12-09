@@ -36,7 +36,7 @@ public class DB_manager {
         
         try {
         	// TODO recuperer le path des utilisateurs qd ils se connectent a l'application pour le mettre a la place de testDB
-            con = DriverManager.getConnection("jdbc:sqlite:testDB2"); // //localhost/test"   
+            con = DriverManager.getConnection("jdbc:sqlite:testDB"); // //localhost/test"   
             System.out.println("[DB_Manager] Connection a la bdd ok");
         } catch (Exception e) {
             System.out.println("[DB_Manager] Problème connexion à la BDD");
