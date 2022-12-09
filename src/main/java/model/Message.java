@@ -2,23 +2,33 @@ package model;
 
 import java.time.LocalDateTime;
 
-import manager.Network_manager.TypeMessage;
+
+
 
 public class Message {
+	
+	public static enum TypeMessage {
+		MESSAGE_CONV,
+		MESSAGE_BROADCAST,
+		CONNEXION,
+		DECONNEXION,
+		PSEUDO_CHANGE
+	}
 
 	private int id_dest;
 	private int id_expe;
 	private String date;
 	private String contenu;
 	private TypeMessage type ;
-
+	
+	
 	
     public Message(int id_dest, int id_expe, String contenu, TypeMessage type) {
 		this.id_dest = id_dest;
 		this.id_expe = id_expe;
 		this.date = LocalDateTime.now().toString();
 		this.contenu = contenu;
-		this.setType(type) ;
+		this.type = type ;
 	}
 	
 	public Message(int id_dest,int id_expe, String date, String content, TypeMessage type){
@@ -26,7 +36,7 @@ public class Message {
 			this.id_expe = id_expe;
 	        this.date = date;
 	        this.contenu = content;
-	        this.setType(type);
+	        this.type = type ;
 	}
 	
 

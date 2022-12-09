@@ -9,11 +9,11 @@ import java.net.Socket;
 import model.Message;
 
 
-public class MessagesTCP implements Runnable {
+public class Traitement_MessagesTCP implements Runnable {
 
 	Socket recuSocket ;
 	
-	public MessagesTCP() {
+	public Traitement_MessagesTCP() {
 		// TODO Auto-generated constructor stub
 	}
 

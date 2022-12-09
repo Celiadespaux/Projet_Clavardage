@@ -5,7 +5,6 @@ import java.util.*;
 import java.io.*;
 import model.*;
 import manager.*;
-import manager.Network_manager.TypeMessage;
 
 public class DB_manager {
 	
@@ -157,7 +156,7 @@ public class DB_manager {
         	//changer id expe
             Message m = new Message(result.getInt("id_dest"),01,
                     result.getString("date"),
-                    result.getString("message"),TypeMessage.MESSAGE_CONV);
+                    result.getString("message"),Message.TypeMessage.MESSAGE_CONV);
             list.add(m);
         }
         System.out.println(list);
@@ -169,7 +168,7 @@ public class DB_manager {
     public static void main(String[] args) throws SQLException {
 		connectionDB();
 		creer_tables_DB();
-		Message msg = new Message(01,02, "test", TypeMessage.MESSAGE_CONV);
+		Message msg = new Message(01,02, "test", Message.TypeMessage.MESSAGE_CONV);
 		insert_message_db(msg);
         showHistory();
         delethistory();
