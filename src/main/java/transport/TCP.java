@@ -21,10 +21,10 @@ public class TCP {
 	String adresse_test = "127.0.0.1";
 	int port_test = 1024;
 	
-	public void envoyer_msg_tcp (User Destinataire, User Expediteur, /*Message msg*/ String message1) throws UnknownHostException, IOException {	 
+	public static void envoyer_msg_tcp (User Destinataire, /*Message msg*/ String message1) throws UnknownHostException, IOException {	 
 		
 		
-		Socket link = new Socket(adresse_test,port_test);
+		Socket link = new Socket(Destinataire.getIp(),Destinataire.getPort());
 		
 		BufferedWriter out = new BufferedWriter(new OutputStreamWriter(link.getOutputStream()));
 		

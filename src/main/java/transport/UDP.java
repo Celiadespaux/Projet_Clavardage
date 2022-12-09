@@ -1,5 +1,6 @@
 package transport;
 
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -7,13 +8,17 @@ import java.util.*;
 import java.net.InterfaceAddress ; 
 import java.net.NetworkInterface ;
 import java.net.SocketException;
-import java.net.UnknownHostException; 
+import java.net.UnknownHostException;
 
 public class UDP {
 	
 	
-	
-	public void broadcast(String msg) {
+	/**
+	 * broadcast un message vers toutes les interfaces connectées 
+	 * @param msg
+	 * @throws IOException
+	 */
+	public static void broadcast(String msg) throws IOException {
 		
 		int port = 4567;
 		
@@ -35,21 +40,64 @@ public class UDP {
 				Iterator<InterfaceAddress> ite = liste.iterator();
 				
 				while(ite.hasNext()) {
-					//finir de creer la liste avec les add multicast -> et envoyer le message
+					InterfaceAddress interaddress = ite.next();
+					
+					if (interaddress.getBroadcast()!= null && !interaddress.getBroadcast().equals(addressf)) {
+						broadcast.add(interaddress.getBroadcast());
+					}
 				}
 				
 			}
 			
+			DatagramSocket socket = new DatagramSocket();
+			byte buffer[] = null ;
+			buffer = msg.getBytes();
+			
+			
+			for(InetAddress ip : broadcast) {
+				
+				DatagramPacket dp = new DatagramPacket(buffer, buffer.length, ip, port);
+				socket.send(dp);
+			}
+			
+			socket.close();
 			
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SocketException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
+	static int length ; 
 	
-
+	/**
+	 * recoit un broadcast (et va le donner a network manager)
+	 * @throws IOException
+	 */
+	public static void recevoir_broadcast() throws IOException {
+		
+		DatagramSocket socket = new DatagramSocket(4568);
+		byte[] buffer = new byte[length];
+		
+		DatagramPacket dp = new DatagramPacket(buffer,buffer.length) ;
+		socket.receive(dp);
+		//System.out.println("Data : " + Arrays.toString(dp.getData()));
+		
+		buffer = new byte[length];
+		
+		socket.close();
+		
+	}
+	
+	
+	 public static void main(String[] argv) throws IOException {
+		 
+			 broadcast("coucou");
+			 recevoir_broadcast();
+		 
+		//TODO tester la fct broadcast
+		//TODO
+	}
+	
 }
