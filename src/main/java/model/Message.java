@@ -79,8 +79,9 @@ public class Message {
 	
     @Override
     public String toString() {
-        return "My id is  " + id_expe + " "
-                + date + " -> Message : " + contenu;
+        return "My id is : " + id_expe 
+        		+ ", date :  " + date 
+        		+ " -> Message : " + contenu;
     }
 
 	public TypeMessage getType() {
