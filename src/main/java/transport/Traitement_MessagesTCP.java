@@ -2,31 +2,46 @@ package transport;
 
 
 import java.io.*;
-import java.net.InetAddress;
-import java.net.ServerSocket;
 import java.net.Socket;
 
+import manager.Network_manager;
 import model.Message;
+import model.User;
 
 
 public class Traitement_MessagesTCP implements Runnable {
 
 	Socket recuSocket ;
 	
+	User moi ;
+	
 	public Traitement_MessagesTCP() {
 		// TODO Auto-generated constructor stub
 	}
 
-	/*public void diffencier_msg(Message msg) {
-		switch(msg.getType()){
+	public void differencier_msg(Message msg) {
+		Message.TypeMessage tmsg = msg.getType();
 		
-		case 
+		switch(tmsg){
 		
-		case
+		case MESSAGE_CONV :
+			Network_manager.message_recu(msg);
+			break;
 		
+		case MESSAGE_BROADCAST :
+			break;
+		
+		case CONNEXION :
+			break;
+			
+		case DECONNEXION :
+			break;
+			
+		case PSEUDO_CHANGE :
+			break;
 		
 		}
-	}*/
+	}
 
 	public void run() { //quand le thread recoit quelque chose 
 		BufferedReader input ;
@@ -36,6 +51,9 @@ public class Traitement_MessagesTCP implements Runnable {
 			String recu = input.readLine();
 			
 			input.close();
+			
+			Message msg = Message.deconstruire_message(recu, moi);
+			differencier_msg(msg);
 			
 			//si message conversation -> prevenir le network manager et il affichera le msg
 			

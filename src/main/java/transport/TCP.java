@@ -19,23 +19,26 @@ public class TCP {
 			//int port = Expediteur.getPort();
 	
 	String adresse_test = "127.0.0.1";
-	int port_test = 1024;
+	static int port_test = 1024;
 	
-	public static void envoyer_msg_tcp (User Destinataire, /*Message msg*/ String message1) throws UnknownHostException, IOException {	 
+	public static void envoyer_msg_tcp (User Destinataire, User Expediteur, Message msg) throws UnknownHostException, IOException {	 
 		
 		
 		Socket link = new Socket(Destinataire.getIp(),Destinataire.getPort());
 		
 		BufferedWriter out = new BufferedWriter(new OutputStreamWriter(link.getOutputStream()));
 		
-		out.write(message1);
+		//construit un message avec contenu + id_expediteur + typemessage 
+		String msgenvoie = Message.construire_message(msg.getContenu(), Expediteur.getId(), Message.TypeMessage.MESSAGE_CONV);
+		
+		out.write(msgenvoie);
 		out.flush();
 		
 		link.close();
 	}
 	
 	
-	public void listen_msg_tcp () throws IOException {
+	public static void listen_msg_tcp () throws IOException {
 		
 		ServerSocket serveur = new ServerSocket(port_test);
 		Socket link2 = serveur.accept();
