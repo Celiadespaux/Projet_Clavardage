@@ -69,7 +69,6 @@ public class UDP {
 		}
 	}
 	
-	static int length ; 
 	
 	/**
 	 * recoit un broadcast (et va le donner a network manager)
@@ -78,26 +77,16 @@ public class UDP {
 	public static void recevoir_broadcast() throws IOException {
 		
 		DatagramSocket socket = new DatagramSocket(4568);
-		byte[] buffer = new byte[length];
+		byte[] buffer = new byte[1024];
 		
 		DatagramPacket dp = new DatagramPacket(buffer,buffer.length) ;
 		socket.receive(dp);
-		//System.out.println("Data : " + Arrays.toString(dp.getData()));
 		
-		buffer = new byte[length];
+		buffer = new byte[1024];
 		
 		socket.close();
 		
 	}
 	
-	
-	 public static void main(String[] argv) throws IOException {
-		 
-			 broadcast("coucou");
-			 recevoir_broadcast();
-		 
-		//TODO tester la fct broadcast
-		//TODO
-	}
 	
 }
