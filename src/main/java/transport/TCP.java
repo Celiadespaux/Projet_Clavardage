@@ -12,7 +12,7 @@ import java.net.UnknownHostException;
 import model.*;
 
 
-public class TCP {
+public class TCP extends Thread{
 	
 			//Pour plus tard
 			//String adresse_destinataire = Destinataire.getIp();
@@ -38,19 +38,28 @@ public class TCP {
 	}
 	
 	
-	public static void listen_msg_tcp () throws IOException {
+	public void run () {
 		
-		ServerSocket serveur = new ServerSocket(port_test);
-		Socket link2 = serveur.accept();
+		ServerSocket serveur;
+		try {
+			
+			serveur = new ServerSocket(port_test);
+			Socket link2 = serveur.accept();
+			
+			BufferedReader in = new BufferedReader(new InputStreamReader(link2.getInputStream()));
+			
+			String recu = null;
+			while (recu == null) recu = in.readLine() ;
+			System.out.println(recu);
+			
+			link2.close();
+			serveur.close();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		BufferedReader in = new BufferedReader(new InputStreamReader(link2.getInputStream()));
-		
-		String recu = null;
-		while (recu == null) recu = in.readLine() ;
-		System.out.println(recu);
-		
-		link2.close();
-		serveur.close();
 	}
 	
 }

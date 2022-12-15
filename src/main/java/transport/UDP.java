@@ -10,7 +10,7 @@ import java.net.NetworkInterface ;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
-public class UDP {
+public class UDP extends Thread{
 	
 	
 	/**
@@ -74,17 +74,29 @@ public class UDP {
 	 * recoit un broadcast (et va le donner a network manager)
 	 * @throws IOException
 	 */
-	public static void recevoir_broadcast() throws IOException {
+	public void run() {
 		
-		DatagramSocket socket = new DatagramSocket(4568);
-		byte[] buffer = new byte[1024];
+		DatagramSocket socket;
+		try {
+			
+			socket = new DatagramSocket(4568);
+			byte[] buffer = new byte[1024];
+			
+			DatagramPacket dp = new DatagramPacket(buffer,buffer.length) ;
+			socket.receive(dp);
+			
+			buffer = new byte[1024];
+			
+			socket.close();
+			
+		} catch (SocketException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		DatagramPacket dp = new DatagramPacket(buffer,buffer.length) ;
-		socket.receive(dp);
-		
-		buffer = new byte[1024];
-		
-		socket.close();
 		
 	}
 	

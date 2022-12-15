@@ -1,10 +1,10 @@
 package TestMessages;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.*;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.List;
+import model.Message;
 
 public class UDPSender{
     /*public static void main(String[] args) throws Exception {
@@ -17,7 +17,7 @@ public class UDPSender{
     }*/
 
 	
-	public static void main(String[] args) throws Exception {
+	/*public static void main(String[] args) throws Exception {
 		String msg = "Je suis la ";
 		//int port = 4567;
 				
@@ -65,6 +65,21 @@ public class UDPSender{
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 	
+	public static void main(String[] args) throws IOException {
+		
+		Socket link = new Socket("127.0.0.1",1234);
+		
+		BufferedWriter out = new BufferedWriter(new OutputStreamWriter(link.getOutputStream()));
+		
+		//construit un message avec contenu + id_expediteur + typemessage 
+		String msgenvoie = Message.construire_message("Bonjour", 12, Message.TypeMessage.MESSAGE_CONV);
+		
+		out.write(msgenvoie);
+		out.flush();
+		
+		link.close();
+		
+	}
 }  

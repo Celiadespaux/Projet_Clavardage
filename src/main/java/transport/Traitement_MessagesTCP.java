@@ -55,7 +55,6 @@ public class Traitement_MessagesTCP implements Runnable {
 			Message msg = Message.deconstruire_message(recu, moi);
 			differencier_msg(msg);
 			
-			//si message conversation -> prevenir le network manager et il affichera le msg
 			
 		} catch (IOException e) {
 			e.printStackTrace();
