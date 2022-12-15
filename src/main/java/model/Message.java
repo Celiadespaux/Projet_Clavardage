@@ -3,8 +3,6 @@ package model;
 import java.time.LocalDateTime;
 
 
-
-
 public class Message {
 	
 	public static enum TypeMessage {

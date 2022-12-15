@@ -1,8 +1,7 @@
 package manager;
 
 import java.io.IOException;
-import model.Message;
-import model.User;
+import model.*;
 import transport.*;
 
 public class Network_manager {
@@ -12,12 +11,14 @@ public class Network_manager {
 	}
 	
 	User moi ;
+	TCP Tcp;
+	UDP Udp;
 	
 	
 	//run servers ??
 	public void runservers() throws IOException {
-		UDP.recevoir_broadcast(); //preciser le num ed port ??
-		TCP.listen_msg_tcp();
+		new Thread(this.Udp).start();; //preciser le num de port ??
+		new Thread(this.Tcp).start();;
 	}
 
 	
