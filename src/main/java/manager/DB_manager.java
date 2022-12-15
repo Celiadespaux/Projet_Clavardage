@@ -2,9 +2,7 @@ package manager;
 
 import java.sql.*;
 import java.util.*;
-import java.io.*;
 import model.*;
-import manager.*;
 
 public class DB_manager {
 	
@@ -215,8 +213,7 @@ public class DB_manager {
         
         String sql = "SELECT * FROM utilisateur where pseudo='"+pseudo+"'";
         
-        
-        System.out.println(sql);
+       
         
     	Statement stmt = con.createStatement();
         
@@ -237,8 +234,7 @@ public class DB_manager {
      */
     public static void maj_pseudo(String pseudo, int id) {
     	
-    	String sql = "UPDATE utilisateur SET pseudo = ? , "
-                + "WHERE id = ?";
+    	String sql = "UPDATE utilisateur SET pseudo = ? WHERE id = ?";
     
         PreparedStatement pstmt;
 		try {
@@ -321,7 +317,7 @@ public class DB_manager {
         User user1 = new User(111,"toto", "motdepasse", "143.112.212.233", 3348);
         User user2 = new User(222,"pierre", "motdepass24e", "143.112.212.233", 3358);
         User user3 = new User(333,"jack", "motdepass24e", "143.112.212.233", 3379);
-       add_utlisateur_db(user1);
+        add_utlisateur_db(user1);
         add_utlisateur_db(user2);
         add_utlisateur_db(user3);
         
@@ -338,6 +334,8 @@ public class DB_manager {
         else {
         	System.out.println("[DB_Manager] Pseudo toto occupe");
         }
+        
+        maj_pseudo("jackie",333);
         
        
     }
