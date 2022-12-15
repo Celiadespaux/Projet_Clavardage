@@ -2,9 +2,7 @@ package manager;
 
 import java.sql.*;
 import java.util.*;
-import java.io.*;
 import model.*;
-import manager.*;
 
 public class DB_manager {
 	
