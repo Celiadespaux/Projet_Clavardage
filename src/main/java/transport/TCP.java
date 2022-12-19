@@ -14,6 +14,20 @@ import model.*;
 
 public class TCP extends Thread{
 	
+	
+
+	boolean connecte = true;
+	boolean available = true;
+	 
+	public boolean getAvailable() {
+		return this.available ; 
+	}
+		
+	public void setConnecte(boolean state) {
+		this.connecte = state ; 
+	}
+		
+	
 			//Pour plus tard
 			//String adresse_destinataire = Destinataire.getIp();
 			//int port = Expediteur.getPort();
@@ -59,6 +73,8 @@ public class TCP extends Thread{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		this.available = true ; 
 		
 	}
 	
