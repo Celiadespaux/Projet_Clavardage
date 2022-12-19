@@ -12,6 +12,11 @@ import java.net.UnknownHostException;
 
 public class UDP extends Thread{
 	
+	boolean connecte = true ;
+	
+	public void setConnecte(boolean state) {
+		this.connecte = state ; 
+	}
 	
 	/**
 	 * broadcast un message vers toutes les interfaces connectées 
@@ -19,6 +24,8 @@ public class UDP extends Thread{
 	 * @throws IOException
 	 */
 	public static void broadcast(String msg) throws IOException {
+		
+		
 		
 		int port = 4567;
 		
@@ -82,12 +89,15 @@ public class UDP extends Thread{
 			socket = new DatagramSocket(4568);
 			byte[] buffer = new byte[1024];
 			
-			DatagramPacket dp = new DatagramPacket(buffer,buffer.length) ;
-			socket.receive(dp);
+			while (this.connecte) {
+				DatagramPacket dp = new DatagramPacket(buffer,buffer.length) ;
+				socket.receive(dp);
+				
+				buffer = new byte[1024];
+				
+				socket.close();
+			}
 			
-			buffer = new byte[1024];
-			
-			socket.close();
 			
 		} catch (SocketException e) {
 			// TODO Auto-generated catch block
