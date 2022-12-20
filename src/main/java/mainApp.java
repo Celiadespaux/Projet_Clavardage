@@ -17,7 +17,6 @@ public class mainApp extends Application {
 
         //Connexion Window
         FXMLLoader fxmlLoader = new FXMLLoader(mainApp.class.getResource("/view/ConnexionWindow.fxml"));
-
         primaryStage.setTitle("Projet Clavardage");
         primaryStage.setScene(new Scene(fxmlLoader.load(), 1100, 700));
         primaryStage.show();
