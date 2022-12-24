@@ -12,42 +12,70 @@ import java.net.UnknownHostException;
 import model.*;
 
 
-public class TCP {
+public class TCP extends Thread{
+	
+	
+
+	boolean connecte = true;
+	boolean available = true;
+	 
+	public boolean getAvailable() {
+		return this.available ; 
+	}
+		
+	public void setConnecte(boolean state) {
+		this.connecte = state ; 
+	}
+		
 	
 			//Pour plus tard
 			//String adresse_destinataire = Destinataire.getIp();
 			//int port = Expediteur.getPort();
 	
 	String adresse_test = "127.0.0.1";
-	int port_test = 1024;
+	static int port_test = 1024;
 	
-	public static void envoyer_msg_tcp (User Destinataire, /*Message msg*/ String message1) throws UnknownHostException, IOException {	 
+	public static void envoyer_msg_tcp (User Destinataire, User Expediteur, Message msg) throws UnknownHostException, IOException {	 
 		
 		
 		Socket link = new Socket(Destinataire.getIp(),Destinataire.getPort());
 		
 		BufferedWriter out = new BufferedWriter(new OutputStreamWriter(link.getOutputStream()));
 		
-		out.write(message1);
+		//construit un message avec contenu + id_expediteur + typemessage 
+		String msgenvoie = Message.construire_message(msg.getContenu(), Expediteur.getId(), Message.TypeMessage.MESSAGE_CONV);
+		
+		out.write(msgenvoie);
 		out.flush();
 		
 		link.close();
 	}
 	
 	
-	public void listen_msg_tcp () throws IOException {
+	public void run () {
 		
-		ServerSocket serveur = new ServerSocket(port_test);
-		Socket link2 = serveur.accept();
+		ServerSocket serveur;
+		try {
+			
+			serveur = new ServerSocket(port_test);
+			Socket link2 = serveur.accept();
+			
+			BufferedReader in = new BufferedReader(new InputStreamReader(link2.getInputStream()));
+			
+			String recu = null;
+			while (recu == null) recu = in.readLine() ;
+			System.out.println(recu);
+			
+			link2.close();
+			serveur.close();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		BufferedReader in = new BufferedReader(new InputStreamReader(link2.getInputStream()));
+		this.available = true ; 
 		
-		String recu = null;
-		while (recu == null) recu = in.readLine() ;
-		System.out.println(recu);
-		
-		link2.close();
-		serveur.close();
 	}
 	
 }
