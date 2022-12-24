@@ -3,8 +3,6 @@ package model;
 import java.time.LocalDateTime;
 
 
-
-
 public class Message {
 	
 	public static enum TypeMessage {
@@ -21,8 +19,6 @@ public class Message {
 	private String contenu;
 	private TypeMessage type ;
 	
-	
-	
     public Message(int id_dest, int id_expe, String contenu, TypeMessage type) {
 		this.id_dest = id_dest;
 		this.id_expe = id_expe;
@@ -37,6 +33,17 @@ public class Message {
 	        this.date = date;
 	        this.contenu = content;
 	        this.type = type ;
+	}
+	
+	public static String construire_message(String contenu, int id_dest, TypeMessage type) {
+		return (contenu + "&&" + id_dest + "&&"+ type);
+	}
+	
+	public static Message deconstruire_message(String msg, User moi) {
+		String[] m = msg.split("&&");
+		
+		Message message = new Message(moi.getId(), Integer.valueOf(m[1]), m[0], TypeMessage.valueOf(m[2].toUpperCase()));
+		return(message);
 	}
 	
 
