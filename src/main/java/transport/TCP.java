@@ -15,6 +15,7 @@ import model.*;
 public class TCP extends Thread{
 	
 
+
 	boolean connecte = true;
 	boolean available = true;
 	 

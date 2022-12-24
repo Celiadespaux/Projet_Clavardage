@@ -29,7 +29,10 @@
 		</attributes>
 	</classpathentry>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 64d64e67747f96510eb1165d286faf84f6403079
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
@@ -52,6 +55,9 @@
 			<attribute name="test" value="true"/>
 		</attributes>
 	</classpathentry>
+<<<<<<< HEAD
 >>>>>>> d9ac99a4a1515182548a7cd8c13b2c9a12b8fed0
+=======
+>>>>>>> 64d64e67747f96510eb1165d286faf84f6403079
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
