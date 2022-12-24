@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: #B68F8F;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ChoixPseudoWindow">
+   <children>
+      <Label layoutX="204.0" layoutY="216.0" prefHeight="112.0" prefWidth="695.0" text="Veuillez choisir un pseudonyme :" textFill="WHITE">
+         <font>
+            <Font size="50.0" />
+         </font>
+      </Label>
+      <TextField id="tf_pseudo" alignment="CENTER" layoutX="408.0" layoutY="346.0" prefHeight="64.0" prefWidth="291.0" promptText="Pseudo" style="-fx-background-color: #4e2e2f;" />
+   </children>
+</AnchorPane>
