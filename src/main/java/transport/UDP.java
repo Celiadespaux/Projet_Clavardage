@@ -25,8 +25,6 @@ public class UDP extends Thread{
 	 */
 	public static void broadcast(String msg) throws IOException {
 		
-		
-		
 		int port = 4567;
 		
 		byte[] addressforbid = new byte[]{(byte)0,(byte)0,(byte)0,(byte)0};

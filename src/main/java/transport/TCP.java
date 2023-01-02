@@ -17,11 +17,7 @@ public class TCP extends Thread{
 
 
 	boolean connecte = true;
-	boolean available = true;
-	 
-	public boolean getAvailable() {
-		return this.available ; 
-	}
+
 		
 	public void setConnecte(boolean state) {
 		this.connecte = state ; 
@@ -72,9 +68,7 @@ public class TCP extends Thread{
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
-		this.available = true ; 
+		} 
 		
 	}
 	

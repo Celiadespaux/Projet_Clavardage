@@ -28,18 +28,15 @@ public class Traitement_MessagesTCP implements Runnable {
 			Network_manager.message_recu(msg);
 			break;
 		
-		case MESSAGE_BROADCAST :
+		case DEMANDE_PSEUDO :
+			//ajouter nouveau user dans annuaire 
 			break;
 		
-		case CONNEXION :
+		case PSEUDO_LIBRE :
+			Account_manager.pseudo_pas_dispo() ;
 			break;
 			
-		case DECONNEXION :
-			break;
-			
-		case PSEUDO_CHANGE :
-			break;
-		
+	
 		}
 	}
 
