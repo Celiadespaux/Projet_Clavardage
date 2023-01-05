@@ -7,10 +7,9 @@ public class Message {
 	
 	public static enum TypeMessage {
 		MESSAGE_CONV,
-		MESSAGE_BROADCAST,
-		CONNEXION,
-		DECONNEXION,
-		PSEUDO_CHANGE
+		DEMANDE_PSEUDO,
+		PSEUDO_LIBRE
+		
 	}
 
 	private int id_dest;
