@@ -7,8 +7,7 @@ public class Message {
 	
 	public static enum TypeMessage {
 		MESSAGE_CONV,
-		DEMANDE_PSEUDO,
-		PSEUDO_LIBRE
+		DEMANDE_PSEUDO
 		
 	}
 

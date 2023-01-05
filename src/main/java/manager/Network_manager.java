@@ -33,7 +33,8 @@ public class Network_manager {
 	} 
 	
 	
-	//pseudo dispo
+	
+	
 	//dire qu'on est connecté
 	//dire qu'on change de pseudo 
 	//dire qu'on se deconnecte

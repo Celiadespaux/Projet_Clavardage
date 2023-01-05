@@ -32,9 +32,6 @@ public class Traitement_MessagesTCP implements Runnable {
 			//ajouter nouveau user dans annuaire 
 			break;
 		
-		case PSEUDO_LIBRE :
-			Account_manager.pseudo_pas_dispo() ;
-			break;
 			
 	
 		}
