@@ -1,12 +1,8 @@
 package manager;
 
 import java.io.IOException;
-import java.net.UnknownHostException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import model.User;
-import transport.TCP;
+import model.*;
+import transport.*;
 
 public class Network_manager {
 
@@ -14,21 +10,26 @@ public class Network_manager {
 		// TODO Auto-generated constructor stub
 	}
 	
+	User moi ;
+	TCP Tcp;
+	UDP Udp;
+	
 	
 	//run servers ??
+	public void runservers() throws IOException {
+		new Thread(this.Udp).start();; //preciser le num de port ??
+		new Thread(this.Tcp).start();;
+	}
+
 	
 	//envoyer un message (tcp)
-	public void envoyer_message(User Destinataire, String msg) throws IOException {
-		TCP.envoyer_msg_tcp(Destinataire, msg);
+	public void envoyer_message(User Destinataire, User moi, Message msg) throws IOException {
+		TCP.envoyer_msg_tcp(Destinataire, moi, msg);
 	}
 	
 	//recevoir un message (tcp) et ajouter a la db
-	public void message_recu(User Emetteur, String msg) {
-		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-		Date date = new Date(System.currentTimeMillis());
-		String dateformatter = formatter.format(date);
-		
-		//TODO ajouter message a la db avec emetteur.ip, myip, msg, dateformatter
+	public static void message_recu(Message msg) {
+		DB_manager.insert_message_db(msg);
 	} 
 	
 	
