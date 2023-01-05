@@ -15,7 +15,7 @@ public class ConnexionWindow {
     @FXML
     public void changeScene_ChoixPseudo(ActionEvent event) throws IOException {
         Parent root = null;
-        FXMLLoader fxmlLoader = new FXMLLoader(ConnexionWindow.class.getResource("/view/ChoixPseudoWindow.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(ConnexionWindow.class.getResource("/ChoixPseudoWindow.fxml"));
         root = fxmlLoader.load();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));

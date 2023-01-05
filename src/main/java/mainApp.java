@@ -11,16 +11,15 @@ public class mainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
-        //DB
+        // DB
         // DB_manager DB = new DB_manager();
 
-        //Connexion Window
-        FXMLLoader fxmlLoader = new FXMLLoader(mainApp.class.getResource("/view/ConnexionWindow.fxml"));
+        // Connexion Window
+        FXMLLoader fxmlLoader = new FXMLLoader(mainApp.class.getResource("/ConnexionWindow.fxml"));
+        //FXMLLoader loader = new FXMLLoader(ReportMenu.this.getClass().getResource("/fxml/" + report.getClass().getCanonicalName().substring(18).replaceAll("Controller", "ConnexionWindow") + ".fxml"));
         primaryStage.setTitle("Projet Clavardage");
-        primaryStage.setScene(new Scene(fxmlLoader.load(), 1100, 700));
+        primaryStage.setScene(new Scene(fxmlLoader.load()));
         primaryStage.show();
-
 
     }
 
