@@ -9,7 +9,6 @@ public class Account_manager {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
 	}
 	
 	static int maxLength = 30;
@@ -24,11 +23,17 @@ public class Account_manager {
 		return res ; 
 	}
 	
-	public static void demander_pseudo(int id) throws IOException {
-		String msg = Message.construire_message("",id,Message.TypeMessage.DEMANDE_PSEUDO);
+	
+	public static void connecte(int id) throws IOException {
+		String msg = Message.construire_message("",id,Message.TypeMessage.CONNECTE);
 		UDP.broadcast(msg);
 	}
 	
+	
+	public static void deconnecte(int id) throws IOException {
+		String msg = Message.construire_message("",id,Message.TypeMessage.DECONNECTE);
+		UDP.broadcast(msg);
+		Network_manager.deconnection();
+		}
+	}
 
-
-}

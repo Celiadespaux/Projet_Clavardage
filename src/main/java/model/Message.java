@@ -7,18 +7,20 @@ public class Message {
 	
 	public static enum TypeMessage {
 		MESSAGE_CONV,
-		DEMANDE_PSEUDO
+		CONNECTE,
+		DECONNECTE,
+		RENVOIE_PSEUDO
 		
 	}
 
-	private int id_dest;
+	private static int id_dest;
 	private int id_expe;
 	private String date;
 	private String contenu;
 	private TypeMessage type ;
 	
     public Message(int id_dest, int id_expe, String contenu, TypeMessage type) {
-		this.id_dest = id_dest;
+		Message.id_dest = id_dest;
 		this.id_expe = id_expe;
 		this.date = LocalDateTime.now().toString();
 		this.contenu = contenu;
@@ -26,7 +28,7 @@ public class Message {
 	}
 	
 	public Message(int id_dest,int id_expe, String date, String content, TypeMessage type){
-	        this.id_dest = id_dest;
+	        Message.id_dest = id_dest;
 			this.id_expe = id_expe;
 	        this.date = date;
 	        this.contenu = content;
@@ -37,6 +39,7 @@ public class Message {
 		return (contenu + "&&" + id_dest + "&&"+ type);
 	}
 	
+
 	public static Message deconstruire_message(String msg, User moi) {
 		String[] m = msg.split("&&");
 		
@@ -44,6 +47,9 @@ public class Message {
 		return(message);
 	}
 	
+	public int getId_expe() {
+		return id_expe;
+	}
 
 	public String getContenu() {
 		return contenu;
@@ -64,12 +70,12 @@ public class Message {
 	}
 	
 
-	public int getId_dest() {
+	public static int getId_dest() {
 		return id_dest;
 	}
 
 	public void setId_dest(int id_dest) {
-		this.id_dest = id_dest;
+		Message.id_dest = id_dest;
 	}
 
 	
