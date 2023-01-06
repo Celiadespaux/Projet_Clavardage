@@ -5,6 +5,10 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.*;
+
+import model.Message;
+import model.User;
+
 import java.net.InterfaceAddress ; 
 import java.net.NetworkInterface ;
 import java.net.SocketException;
@@ -12,11 +16,21 @@ import java.net.UnknownHostException;
 
 public class UDP extends Thread{
 	
-	boolean connecte = true ;
-	
-	public void setConnecte(boolean state) {
-		this.connecte = state ; 
-	}
+		static int port;
+		int length;
+		boolean connecte ; 
+		
+		public UDP(int port, int length) {
+			UDP.port = port;
+			this.length = length;
+			this.connecte = true ; 
+		}
+		
+		public void setConnecte(boolean state) {
+			this.connecte = state ; 
+		}
+		
+		User moi ; //TODO
 	
 	/**
 	 * broadcast un message vers toutes les interfaces connectées 
@@ -24,8 +38,6 @@ public class UDP extends Thread{
 	 * @throws IOException
 	 */
 	public static void broadcast(String msg) throws IOException {
-		
-		int port = 4567;
 		
 		byte[] addressforbid = new byte[]{(byte)0,(byte)0,(byte)0,(byte)0};
 				
@@ -84,17 +96,21 @@ public class UDP extends Thread{
 		DatagramSocket socket;
 		try {
 			
-			socket = new DatagramSocket(4568);
-			byte[] buffer = new byte[1024];
+			socket = new DatagramSocket(port);
+			byte[] buffer = new byte[length];
 			
-			while (this.connecte) {
+			while(this.connecte) {
 				DatagramPacket dp = new DatagramPacket(buffer,buffer.length) ;
 				socket.receive(dp);
+				String recu = new String(dp.getData(), 0, dp.getLength());
 				
-				buffer = new byte[1024];
-				
-				socket.close();
+				Message msg = Message.deconstruire_message(recu, moi);
+				Traitement_MessagesTCP.differencier_msg(msg);
 			}
+				
+			buffer = new byte[1024];
+				
+			socket.close();
 			
 			
 		} catch (SocketException e) {

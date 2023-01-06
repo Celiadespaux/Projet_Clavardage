@@ -1,9 +1,7 @@
 package transport;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -13,25 +11,15 @@ import model.*;
 
 
 public class TCP extends Thread{
-	
-
-
-	boolean connecte = true;
-
 		
+	boolean connecte = true ; 
+	
 	public void setConnecte(boolean state) {
 		this.connecte = state ; 
 	}
-		
 	
-			//Pour plus tard
-			//String adresse_destinataire = Destinataire.getIp();
-			//int port = Expediteur.getPort();
 	
-	String adresse_test = "127.0.0.1";
-	static int port_test = 1024;
-	
-	public static void envoyer_msg_tcp (User Destinataire, User Expediteur, Message msg) throws UnknownHostException, IOException {	 
+	public static void envoyer_msg_tcp (User Destinataire, Message msg) throws UnknownHostException, IOException {	 
 		
 		
 		Socket link = new Socket(Destinataire.getIp(),Destinataire.getPort());
@@ -39,7 +27,7 @@ public class TCP extends Thread{
 		BufferedWriter out = new BufferedWriter(new OutputStreamWriter(link.getOutputStream()));
 		
 		//construit un message avec contenu + id_expediteur + typemessage 
-		String msgenvoie = Message.construire_message(msg.getContenu(), Expediteur.getId(), Message.TypeMessage.MESSAGE_CONV);
+		String msgenvoie = Message.construire_message(msg.getContenu(), msg.getId_expe(), msg.getType());
 		
 		out.write(msgenvoie);
 		out.flush();
@@ -50,19 +38,19 @@ public class TCP extends Thread{
 	
 	public void run () {
 		
+		int port = 1024;
 		ServerSocket serveur;
+		Socket link2 ;
+		
 		try {
 			
-			serveur = new ServerSocket(port_test);
-			Socket link2 = serveur.accept();
+			serveur = new ServerSocket(port);
 			
-			BufferedReader in = new BufferedReader(new InputStreamReader(link2.getInputStream()));
+			while(connecte) {
+				link2 = serveur.accept();
+				new Thread(new Traitement_MessagesTCP(link2, serveur, this)).start() ;
+			}
 			
-			String recu = null;
-			while (recu == null) recu = in.readLine() ;
-			System.out.println(recu);
-			
-			link2.close();
 			serveur.close();
 			
 		} catch (IOException e) {
