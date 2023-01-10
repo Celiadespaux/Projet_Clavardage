@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.*;
 import model.Message;
+import model.User;
 
 public class UDPSender{
     /*public static void main(String[] args) throws Exception {
@@ -73,8 +74,9 @@ public class UDPSender{
 		
 		BufferedWriter out = new BufferedWriter(new OutputStreamWriter(link.getOutputStream()));
 		
+		User user = new User(1,"","","",1);
 		//construit un message avec contenu + id_expediteur + typemessage 
-		String msgenvoie = Message.construire_message("Bonjour", 12, Message.TypeMessage.MESSAGE_CONV);
+		String msgenvoie = Message.construire_message("Bonjour", user, Message.TypeMessage.MESSAGE_CONV);
 		
 		out.write(msgenvoie);
 		out.flush();

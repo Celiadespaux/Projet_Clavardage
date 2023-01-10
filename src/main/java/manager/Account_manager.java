@@ -24,16 +24,22 @@ public class Account_manager {
 	}
 	
 	
-	public static void connecte(int id) throws IOException {
-		String msg = Message.construire_message("",id,Message.TypeMessage.CONNECTE);
+	public static void connecte(User sender) throws IOException {
+		String msg = Message.construire_message("",sender,Message.TypeMessage.CONNECTE);
 		UDP.broadcast(msg);
 	}
 	
 	
-	public static void deconnecte(int id) throws IOException {
-		String msg = Message.construire_message("",id,Message.TypeMessage.DECONNECTE);
+	public static void deconnecte(User sender) throws IOException {
+		String msg = Message.construire_message("",sender,Message.TypeMessage.DECONNECTE);
 		UDP.broadcast(msg);
 		Network_manager.deconnection();
 		}
+	
+	public static void changer_pseudo(User sender) throws IOException {
+		String msg = Message.construire_message("",sender,Message.TypeMessage.CHANGE_PSEUDO);
+		UDP.broadcast(msg);
+	}
+	
 	}
 

@@ -7,8 +7,6 @@ import java.net.InetAddress;
 import java.util.*;
 
 import model.Message;
-import model.User;
-
 import java.net.InterfaceAddress ; 
 import java.net.NetworkInterface ;
 import java.net.SocketException;
@@ -30,7 +28,6 @@ public class UDP extends Thread{
 			this.connecte = state ; 
 		}
 		
-		User moi ; //TODO
 	
 	/**
 	 * broadcast un message vers toutes les interfaces connectées 
@@ -104,8 +101,8 @@ public class UDP extends Thread{
 				socket.receive(dp);
 				String recu = new String(dp.getData(), 0, dp.getLength());
 				
-				Message msg = Message.deconstruire_message(recu, moi);
-				Traitement_MessagesTCP.differencier_msg(msg);
+				Message msg = Message.deconstruire_message(recu, Traitement_Messages.moi);
+				Traitement_Messages.differencier_msg(msg);
 			}
 				
 			buffer = new byte[1024];

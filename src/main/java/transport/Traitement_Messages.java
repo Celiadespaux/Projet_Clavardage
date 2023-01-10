@@ -4,28 +4,28 @@ package transport;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 import manager.Network_manager;
 import model.Message;
 import model.User;
-import model.Message.TypeMessage;
 
 
-public class Traitement_MessagesTCP implements Runnable {
+public class Traitement_Messages implements Runnable {
 
 	Socket clientSocket ;
 	ServerSocket serverSocket ;
 	TCP serverTCP ; 
 	
-	User moi ;
+	static User moi = new User(1,"User1","MDP1","",1);
 	
-	public Traitement_MessagesTCP(Socket client, ServerSocket serverSocket, TCP serverTCP) {
+	public Traitement_Messages(Socket client, ServerSocket serverSocket, TCP serverTCP) {
 		this.clientSocket = client ;
 		this.serverSocket = serverSocket ;
 		this.serverTCP = serverTCP ; 
 	}
 
-	public static void differencier_msg(Message msg) {
+	public static void differencier_msg(Message msg) throws UnknownHostException, IOException {
 		Message.TypeMessage tmsg = msg.getType();
 		
 		switch(tmsg){
@@ -35,17 +35,22 @@ public class Traitement_MessagesTCP implements Runnable {
 			break;
 		
 		case CONNECTE :
-			//ajouter nouveau utilisateur a l'annuaire
-			String nmsg = Message.construire_message("", msg.getId_expe(), Message.TypeMessage.RENVOIE_PSEUDO);
-			envoyer_msg_tcp(Destinataire, nmsg);
+			//TODO ajouter nouveau utilisateur a l'annuaire (sender)
+			Message nmsg = new Message(moi,"", Message.TypeMessage.RENVOIE_PSEUDO);
+			TCP.envoyer_msg_tcp(msg.getSender(), nmsg);
 			break;
 		
 		case DECONNECTE :
-			//supprimer utilisateur de l'annuaire
+			//TODO supprimer utilisateur de l'annuaire
+			Network_manager.deconnection();
 			break;
 			
 		case RENVOIE_PSEUDO :
-			//ajouter utilisateur a l'annuaire
+			//TODO ajouter utilisateur a l'annuaire (sender)
+			break;
+			
+		case CHANGE_PSEUDO : 
+			//TODO changer le pseudo de sender dans l'annuaire
 			break;
 	
 		}

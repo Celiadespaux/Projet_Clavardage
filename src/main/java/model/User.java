@@ -66,8 +66,22 @@ public class User {
         		+ ", @ip : " + ip
         		+", port_nb : " + port ;
     }
+
+	public static String construire_user(User user) {
+		int id = user.getId();
+		String pseudo = user.getPseudo();
+		String mdp = user.getMdp();
+		String ip = user.getIp();
+		int port = user.getPort();
+		return (id + "&&" + pseudo + "&&"+ mdp + "&&" + ip + "&&" + port);
+	}
 	
-	
+	public static User deconstruire_user(String user) {
+		String[] m = user.split("&&");
+		
+		User Utilisateur = new User(Integer.valueOf(m[0]), m[1], m[2], m[3], Integer.valueOf(m[4]));
+		return(Utilisateur);
+	}
 	
 
 }
