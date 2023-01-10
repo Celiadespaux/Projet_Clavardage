@@ -2,6 +2,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import manager.*;
 
 public class mainApp extends Application {
 
@@ -11,12 +12,12 @@ public class mainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // DB
-        // DB_manager DB = new DB_manager();
+        
+        // INITIALISATION DES MANAGER
+        DB_locale_manager DB = new DB_locale_manager();
 
-        // Connexion Window
+        // AFFICHAGE PAGE DE CONNEXION
         FXMLLoader fxmlLoader = new FXMLLoader(mainApp.class.getResource("/ConnexionWindow.fxml"));
-        //FXMLLoader loader = new FXMLLoader(ReportMenu.this.getClass().getResource("/fxml/" + report.getClass().getCanonicalName().substring(18).replaceAll("Controller", "ConnexionWindow") + ".fxml"));
         primaryStage.setTitle("Projet Clavardage");
         primaryStage.setScene(new Scene(fxmlLoader.load()));
         primaryStage.show();

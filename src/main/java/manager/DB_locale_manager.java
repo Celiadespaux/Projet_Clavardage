@@ -6,21 +6,58 @@ import model.User;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class DB_manager {
+public class DB_locale_manager {
 
     //
     // CONFIGURATION
     //
 
-    static Connection con = null;
+    public static Connection con;
 
+    public DB_locale_manager() throws SQLException {
 
+        //CONNEXION
+        try {
+            Class.forName("org.sqlite.JDBC");
+            con = DriverManager.getConnection("jdbc:sqlite:testDB"); // //localhost/test"
+            System.out.println("[DB_Manager] Connection a la bdd ok");
+
+        } catch (ClassNotFoundException e) {
+            System.out.println("[DB_Manager] Problème connexion à la BDD");
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            System.out.println("[DB_Manager] Problème connexion à la BDD");
+            throw new RuntimeException(e);
+        }
+
+        //INITIALISATION
+        creer_tables_DB();
+
+        deleteUsers();
+        User user1 = new User(111, "toto", "motdepasse", "143.112.212.233", 3348);
+        User user2 = new User(222, "pierre", "motdepass24e", "143.112.212.233", 3358);
+        User user3 = new User(333, "jack", "motdepass24e", "143.112.212.233", 3379);
+        add_utlisateur_db(user1);
+        add_utlisateur_db(user2);
+        add_utlisateur_db(user3);
+
+        deleteDiscussion();
+        Message msg = new Message(01, 02, "hey ca va ?", Message.TypeMessage.MESSAGE_CONV);
+        insert_message_db(msg);
+        Message msg2 = new Message(02, 01, "ca va trql", Message.TypeMessage.MESSAGE_CONV);
+        insert_message_db(msg2);
+
+        getHistory_mess();
+
+    }
+
+/*
     // TODO prends en arg l'url du path du fichier a creer localement
-
-    /**
+    *//**
      * Charge le pilote et se connecte a la bdd
-     */
-    public static void connectionDB() {
+     *//*
+    public static Connection connectionDB() {
 
         //Chargement pilote
         try {
@@ -31,21 +68,23 @@ public class DB_manager {
         }
 
 
-        //Connexion à la BDD 
+        //Connexion à la BDD
 
         //String url = "jdbc:sqlite:" + Path+ BdName;
 
         try {
             // TODO recuperer le path des utilisateurs qd ils se connectent a l'application pour le mettre a la place de testDB
-            con = DriverManager.getConnection("jdbc:sqlite:testDB"); // //localhost/test"   
+            con = DriverManager.getConnection("jdbc:sqlite:testDB"); // //localhost/test"
             System.out.println("[DB_Manager] Connection a la bdd ok");
+
         } catch (Exception e) {
             System.out.println("[DB_Manager] Problème connexion à la BDD");
             e.printStackTrace();
         }
 
+        return con;
 
-    }
+    }*/
 
 
     /**
@@ -60,6 +99,7 @@ public class DB_manager {
                 + "	mdp varchar(20),\n"
                 + "	ip_adr varchar(20),\n"
                 + "	port_nb integer,\n"
+                + "	connecte integer,\n" //1 si connecte 0 si deconnecte
                 + "	UNIQUE (ID)\n"
                 + ");";
 
@@ -101,10 +141,6 @@ public class DB_manager {
 
     }
 
-    //
-    // TABLE MESSAGES
-    //
-
     /**
      * Enregistre un message dans le tableau discussion
      *
@@ -124,13 +160,16 @@ public class DB_manager {
             System.out.println(e.getMessage());
         }
     }
-
+    //
+    // TABLE MESSAGES
+    //
 
     /**
      * @return un tabeau de tous les messages de l'utlisateur
      * @throws SQLException
      */
-    public static ArrayList<Message> showHistory() throws SQLException {
+    //TODO trier en fct de expe / dest
+    public static ArrayList<Message> getHistory_mess() throws SQLException {
         //TODO poffiner en fct de la convo
         String query = "SELECT * FROM discussion ";
 
@@ -151,28 +190,22 @@ public class DB_manager {
                     Message.TypeMessage.MESSAGE_CONV);
             list.add(m);
         }
-        System.out.println(list);
+        // System.out.println(list);
         return list;
     }
-
 
     /**
      * Effacer l'historique
      *
      * @throws SQLException
      */
-    private static void deleteHistory() throws SQLException {
+    private static void deleteDiscussion() throws SQLException {
         String query = "DELETE FROM discussion";
         Statement statement = con.createStatement();
         statement.execute(query);
         System.out.println("[DB_Manager] Le contenu de la table discussion est supprimé");
 
     }
-
-    //
-    // TABLE UTILISATEURS
-    //
-
 
     /**
      * Ajout d'un utilisateur dans le tableau utilisateur
@@ -181,7 +214,7 @@ public class DB_manager {
      */
     public static void add_utlisateur_db(User utilisateur) {
 
-        String sql = "INSERT INTO utilisateur ('id','pseudo','mdp','ip_adr','port_nb') VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO utilisateur ('id','pseudo','mdp','ip_adr','port_nb','connecte') VALUES (?,?,?,?,?,?)";
 
         try (PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setInt(1, utilisateur.getId());
@@ -189,6 +222,8 @@ public class DB_manager {
             pstmt.setString(3, utilisateur.getMdp());
             pstmt.setString(4, utilisateur.getIp());
             pstmt.setInt(5, utilisateur.getPort());
+            //TODO changer connecte
+            pstmt.setInt(6, 1);
             pstmt.executeUpdate();
             System.out.println("[DB_Manager] Ajout utlisateur dans table ok");
         } catch (SQLException e) {
@@ -196,6 +231,10 @@ public class DB_manager {
         }
 
     }
+
+    //
+    // TABLE UTILISATEURS
+    //
 
     /**
      * Checks if a user with the login is already created or not
@@ -220,7 +259,6 @@ public class DB_manager {
 
         return (!rs.next());
     }
-
 
     /**
      * Changer le pseudo de l'utilisateur
@@ -276,6 +314,12 @@ public class DB_manager {
         return list;
     }
 
+    private static void delete_table_utilisateur() throws SQLException {
+        String sql = "DROP TABLE utilisateur";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.executeUpdate();
+        System.out.println("[DB_Manager] Table utilisateur correctement supprimee");
+    }
 
     /**
      * Effacer tous les utilisateurs
@@ -290,33 +334,15 @@ public class DB_manager {
 
     }
 
-    //
-    // MAIN
-    //
-
-
     public static void main(String[] args) throws SQLException {
 
-
-        connectionDB();
-
-        creer_tables_DB();
-        //deleteUsers();
+        //delete_table_utilisateur();
 
 
-        Message msg = new Message(01, 02, "test", Message.TypeMessage.MESSAGE_CONV);
-        insert_message_db(msg);
         /*
-        showHistory();
+
         deleteHistory();
         showHistory();
-        User user1 = new User(111, "toto", "motdepasse", "143.112.212.233", 3348);
-        User user2 = new User(222, "pierre", "motdepass24e", "143.112.212.233", 3358);
-        User user3 = new User(333, "jack", "motdepass24e", "143.112.212.233", 3379);
-        add_utlisateur_db(user1);
-        add_utlisateur_db(user2);
-        add_utlisateur_db(user3);
-
         showUsers();
         if (verifier_pseudo_libre("paul")) {
             System.out.println("[DB_Manager] Pseudo paul libre");
@@ -329,10 +355,15 @@ public class DB_manager {
             System.out.println("[DB_Manager] Pseudo toto occupe");
         }*/
 
-        maj_pseudo("jackie", 333);
+        // maj_pseudo("jackie", 333);
 
 
     }
+
+
+    //
+    // MAIN
+    //
 
 
 }
