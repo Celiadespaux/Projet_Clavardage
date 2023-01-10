@@ -21,8 +21,8 @@ public class Message_item {
         l_date.setText(mess.getDate());
         l_mess.setText(mess.getContenu());
         //TODO changer expe
-        int expe = mess.getId_expe();
-        l_expediteur.setText(Integer.toString(expe));
+        String sender = mess.getSender().getPseudo();
+        l_expediteur.setText(sender);
     }
 
 }
