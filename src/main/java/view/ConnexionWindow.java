@@ -12,6 +12,7 @@ import java.io.IOException;
 
 public class ConnexionWindow {
 
+    //FCT Get_moi pour savoir qui s'est connecte
     @FXML
     public void changeScene_ChoixPseudo(ActionEvent event) throws IOException {
         Parent root = null;
