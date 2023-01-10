@@ -43,9 +43,9 @@ public class DB_locale_manager {
         add_utlisateur_db(user3);
 
         deleteDiscussion();
-        Message msg = new Message(01, 02, "hey ca va ?", Message.TypeMessage.MESSAGE_CONV);
+        Message msg = new Message(user1, "hey ca va ?", Message.TypeMessage.MESSAGE_CONV);
         insert_message_db(msg);
-        Message msg2 = new Message(02, 01, "ca va trql", Message.TypeMessage.MESSAGE_CONV);
+        Message msg2 = new Message(user2, "ca va trql", Message.TypeMessage.MESSAGE_CONV);
         insert_message_db(msg2);
 
         getHistory_mess();
@@ -151,7 +151,7 @@ public class DB_locale_manager {
         String sql = "INSERT INTO discussion VALUES(?,?,?)";
 
         try (PreparedStatement pstmt = con.prepareStatement(sql)) {
-            pstmt.setInt(1, msg.getId_dest());
+            pstmt.setInt(1, msg.getSender().getId());
             pstmt.setString(2, msg.getDate());
             pstmt.setString(3, msg.getContenu());
             pstmt.executeUpdate();
@@ -182,9 +182,10 @@ public class DB_locale_manager {
         while (result.next()) {
 
             //TODO changer id expe
+            User bidon = new User(0,"bidon","mdp","@ip",123);
             Message m = new Message(
-                    result.getInt("id_dest"),
-                    01,
+                    //result.getInt("id_dest"),
+                    bidon,
                     result.getString("date"),
                     result.getString("message"),
                     Message.TypeMessage.MESSAGE_CONV);
