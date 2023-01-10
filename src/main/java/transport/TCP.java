@@ -27,7 +27,7 @@ public class TCP extends Thread{
 		BufferedWriter out = new BufferedWriter(new OutputStreamWriter(link.getOutputStream()));
 		
 		//construit un message avec contenu + id_expediteur + typemessage 
-		String msgenvoie = Message.construire_message(msg.getContenu(), msg.getId_expe(), msg.getType());
+		String msgenvoie = Message.construire_message(msg.getContenu(), msg.getSender(), msg.getType());
 		
 		out.write(msgenvoie);
 		out.flush();
@@ -48,7 +48,7 @@ public class TCP extends Thread{
 			
 			while(connecte) {
 				link2 = serveur.accept();
-				new Thread(new Traitement_MessagesTCP(link2, serveur, this)).start() ;
+				new Thread(new Traitement_Messages(link2, serveur, this)).start() ;
 			}
 			
 			serveur.close();

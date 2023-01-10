@@ -16,20 +16,13 @@ public class Network_manager {
 
 	}
 	
-	
-	
-	
-	//run servers ??
+
+	//run servers 
 	public void runservers() throws IOException {
-		new Thread(Network_manager.Udp).start();; //preciser le num de port ??
+		new Thread(Network_manager.Udp).start();; 
 		new Thread(Network_manager.Tcp).start();;
 	}
-
 	
-	//envoyer un message (tcp)
-	public void envoyer_message(User Destinataire, User Expediteur, Message msg) throws IOException {
-		TCP.envoyer_msg_tcp(Destinataire, msg);
-	}
 	
 	//recevoir un message (tcp) et ajouter a la db
 	public static void message_recu(Message msg) {
@@ -42,11 +35,9 @@ public class Network_manager {
 	}
 	
 	
-	//dire qu'on est connecté
-	//dire qu'on change de pseudo 
-	//dire qu'on se deconnecte
-	//
-	
+	//bouton connection : verifier pseudo ok + account_manager.connecte + runservers +  
+	//bouton deconnection : account_manager.deconnecte 
+	//bouton changer pseudo : verifier si nouveau pseudo ok + account_manager.changer_pseudo
 	
 
 	public static void main(String[] args) {

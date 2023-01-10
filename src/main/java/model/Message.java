@@ -9,46 +9,45 @@ public class Message {
 		MESSAGE_CONV,
 		CONNECTE,
 		DECONNECTE,
-		RENVOIE_PSEUDO
+		RENVOIE_PSEUDO,
+		CHANGE_PSEUDO
 		
 	}
 
-	private static int id_dest;
-	private int id_expe;
+	private static User sender;
 	private String date;
 	private String contenu;
 	private TypeMessage type ;
 	
-    public Message(int id_dest, int id_expe, String contenu, TypeMessage type) {
-		Message.id_dest = id_dest;
-		this.id_expe = id_expe;
+    public Message(User sender, String contenu, TypeMessage type) {
+		Message.sender = sender;
 		this.date = LocalDateTime.now().toString();
 		this.contenu = contenu;
 		this.type = type ;
 	}
 	
-	public Message(int id_dest,int id_expe, String date, String content, TypeMessage type){
-	        Message.id_dest = id_dest;
-			this.id_expe = id_expe;
+	public Message(User sender, String date, String content, TypeMessage type){
+	        Message.sender = sender;
 	        this.date = date;
 	        this.contenu = content;
 	        this.type = type ;
 	}
 	
-	public static String construire_message(String contenu, int id_dest, TypeMessage type) {
+	/*public static String construire_message(String contenu, int id_dest, TypeMessage type) {
 		return (contenu + "&&" + id_dest + "&&"+ type);
+	}*/
+	public static String construire_message(String contenu, User sender, TypeMessage type) {
+		String util = User.construire_user(sender);
+		return (contenu + "&&" + util + "&&"+ type);
 	}
 	
 
 	public static Message deconstruire_message(String msg, User moi) {
 		String[] m = msg.split("&&");
 		
-		Message message = new Message(moi.getId(), Integer.valueOf(m[1]), m[0], TypeMessage.valueOf(m[2].toUpperCase()));
+		User util = User.deconstruire_user(m[1]);
+		Message message = new Message(util, m[0], TypeMessage.valueOf(m[2].toUpperCase()));
 		return(message);
-	}
-	
-	public int getId_expe() {
-		return id_expe;
 	}
 
 	public String getContenu() {
@@ -70,18 +69,18 @@ public class Message {
 	}
 	
 
-	public static int getId_dest() {
-		return id_dest;
+	public User getSender() {
+		return sender;
 	}
 
-	public void setId_dest(int id_dest) {
-		Message.id_dest = id_dest;
+	public void setSender(User sender) {
+		Message.sender = sender;
 	}
 
 	
     @Override
     public String toString() {
-        return "My id is : " + id_expe 
+        return "My id is : " + sender.getId() 
         		+ ", date :  " + date 
         		+ " -> Message : " + contenu;
     }
