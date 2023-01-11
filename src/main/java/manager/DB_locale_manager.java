@@ -5,6 +5,7 @@ import model.User;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.*;
 
 public class DB_locale_manager {
 
@@ -13,6 +14,8 @@ public class DB_locale_manager {
     //
 
     public static Connection con;
+    //TODO modifier moi par getmoi de connexion window
+    static User moi = new User(345,"bidon","mdp","test",123);
 
     public DB_locale_manager() throws SQLException {
 
@@ -182,10 +185,9 @@ public class DB_locale_manager {
         while (result.next()) {
 
             //TODO changer id expe
-            User bidon = new User(0,"bidon","mdp","@ip",123);
             Message m = new Message(
                     //result.getInt("id_dest"),
-                    bidon,
+                    moi,
                     result.getString("date"),
                     result.getString("message"),
                     Message.TypeMessage.MESSAGE_CONV);
@@ -205,6 +207,37 @@ public class DB_locale_manager {
         Statement statement = con.createStatement();
         statement.execute(query);
         System.out.println("[DB_Manager] Le contenu de la table discussion est supprimé");
+
+    }
+
+    /**
+     *
+     * @param id
+     * @return l'User si trouvé ou null
+     */
+    public User getUserfromId (Integer id){
+
+        String id_string = id.toString();
+        String sql = "SELECT * FROM utilisateur where id='"+id_string+"'";
+
+        Statement stmt = null;
+        try {
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                return new User(
+                        id,
+                        rs.getString("Pseudo"),
+                        rs.getString("mdp"),
+                        rs.getString("ip_adr"),
+                        rs.getInt("port_nb")
+                );
+            }
+                return null;
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+
 
     }
 

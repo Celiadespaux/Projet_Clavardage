@@ -17,8 +17,8 @@ public class ChatWindow {
 
     @FXML
     private VBox vbox_chat_messages;
-/*
 
+/*
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         List<Message> messages;
@@ -44,8 +44,7 @@ public class ChatWindow {
         }
 
 
-    }
-*/
+    }*/
 
     // Affichage page de deconnexion qd on clique sur le bouton deconnexion
     @FXML
