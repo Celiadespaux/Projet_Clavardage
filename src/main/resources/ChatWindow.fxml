@@ -178,7 +178,7 @@
                <content>
                   <Pane id="scrollpane_chat" prefHeight="357.0" prefWidth="880.0" style="-fx-background-color: #4e2e2f;">
                      <children>
-                        <VBox prefHeight="357.0" prefWidth="880.0" />
+                        <VBox id="vbox_chat_messages" prefHeight="357.0" prefWidth="880.0" />
                      </children></Pane>
                </content>
             </ScrollPane>

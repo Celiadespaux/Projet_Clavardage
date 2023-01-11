@@ -3,6 +3,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import manager.*;
+import model.*;
 
 public class mainApp extends Application {
 
@@ -15,6 +16,7 @@ public class mainApp extends Application {
         
         // INITIALISATION DES MANAGER
         DB_locale_manager DB = new DB_locale_manager();
+
 
         // AFFICHAGE PAGE DE CONNEXION
         FXMLLoader fxmlLoader = new FXMLLoader(mainApp.class.getResource("/ConnexionWindow.fxml"));
