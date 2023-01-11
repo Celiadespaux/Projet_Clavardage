@@ -18,7 +18,7 @@ public class Network_manager {
 	
 
 	//run servers 
-	public void runservers() throws IOException {
+	public static void runservers() throws IOException {
 		new Thread(Network_manager.Udp).start();; 
 		new Thread(Network_manager.Tcp).start();;
 	}
@@ -33,11 +33,6 @@ public class Network_manager {
 		Tcp.setConnecte(false);
 		Udp.setConnecte(false) ;
 	}
-	
-	
-	//bouton connection : verifier pseudo ok + account_manager.connecte + runservers +  
-	//bouton deconnection : account_manager.deconnecte 
-	//bouton changer pseudo : verifier si nouveau pseudo ok + account_manager.changer_pseudo
 	
 
 	public static void main(String[] args) {
