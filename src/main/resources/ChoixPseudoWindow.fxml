@@ -15,12 +15,12 @@
             <Image url="@logo_clavardage_grand.png" />
          </image>
       </ImageView>
-      <Label id = "l_mess_pseudo" layoutX="290.0" layoutY="310.0" prefHeight="112.0" prefWidth="520.0" text="Veuillez choisir un pseudonyme :" textFill="WHITE">
+      <Label fx:id = "l_mess_pseudo" layoutX="290.0" layoutY="310.0" prefHeight="112.0" prefWidth="520.0" text="Veuillez choisir un pseudonyme :" textFill="WHITE">
          <font>
-            <Font size="37.0" />
+            <Font size="25.0" />
          </font>
       </Label>
-      <TextField id="tf_pseudo" alignment="CENTER" layoutX="407.0" layoutY="429.0" prefHeight="48.0" prefWidth="291.0" promptText="Saisir pseudonyme" style="-fx-background-color: #4e2e2f; -fx-text-fill: #ffffff;">
+      <TextField fx:id="tf_pseudo" alignment="CENTER" layoutX="407.0" layoutY="429.0" prefHeight="48.0" prefWidth="291.0" promptText="Saisir pseudonyme" style="-fx-background-color: #4e2e2f; -fx-text-fill: #ffffff;">
          <font>
             <Font size="21.0" />
          </font></TextField>

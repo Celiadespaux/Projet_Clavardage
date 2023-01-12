@@ -17,13 +17,10 @@ import java.sql.SQLException;
 
 public class ChoixPseudoWindow {
 
-    String pseudo;
-    @FXML
-    private TextField tf_pseudo;
+    static String pseudo;
+    @FXML TextField tf_pseudo ;
     
-    String mess_pseudo;
-    @FXML
-    private Label l_mess_pseudo;
+    @FXML Label l_mess_pseudo ;
 
     @FXML
     public void changeScene_ChatWindow(ActionEvent event) throws IOException {
@@ -36,23 +33,26 @@ public class ChoixPseudoWindow {
     }
 
     public void valider_choix_pseudo(ActionEvent event) throws SQLException, IOException {
-
-        pseudo = tf_pseudo.getText();
-        if (Account_manager.verifier_pseudo_valide(pseudo)) {
-            if (DB_locale_manager.verifier_pseudo_libre(pseudo)) {
-            	Account_manager.connecte(Traitement_Messages.getMoi());
-            	Network_manager.runservers();
-            }
-            else {
-            	mess_pseudo = "Pseudo non valide, choisir un autre pseudo";
-            	valider_choix_pseudo(event);
-            }
-        }
-        else {
-        	mess_pseudo = "Pseudo non libre, choisir un autre pseudo";
-        	valider_choix_pseudo(event);
-        }
-        changeScene_ChatWindow(event);
+        	pseudo = tf_pseudo.getText();
+	        if (Account_manager.verifier_pseudo_valide(pseudo)) {
+	            if (DB_locale_manager.verifier_pseudo_libre(pseudo)) {
+	            	try {
+	            		Network_manager networkManager = new Network_manager();
+						networkManager.runservers();
+						Account_manager.connecte(Traitement_Messages.getMoi());
+					    changeScene_ChatWindow(event);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	            }
+	            else {
+	            	l_mess_pseudo.setText("Pseudo non libre, choisir un autre pseudo :");
+	            }
+	        }
+	        else {
+	        	l_mess_pseudo.setText("Pseudo non valide, choisir un autre pseudo :");
+	        }
     }
 
 }

@@ -12,13 +12,13 @@ public class Network_manager {
 	public Network_manager() {
 		// TODO Auto-generated constructor stub
 		Tcp = new TCP();
-		Udp = new UDP(5001, 1000) ;
+		Udp = new UDP(5001, 10000) ;
 
 	}
 	
 
 	//run servers 
-	public static void runservers() throws IOException {
+	public void runservers() throws IOException {
 		new Thread(Network_manager.Udp).start();; 
 		new Thread(Network_manager.Tcp).start();;
 	}
