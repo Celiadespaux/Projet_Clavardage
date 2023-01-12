@@ -15,7 +15,7 @@
             <Image url="@logo_clavardage_grand.png" />
          </image>
       </ImageView>
-      <Label fx:id = "l_mess_pseudo" layoutX="290.0" layoutY="310.0" prefHeight="112.0" prefWidth="520.0" text="Veuillez choisir un pseudonyme :" textFill="WHITE">
+      <Label fx:id="l_mess_pseudo" alignment="CENTER" contentDisplay="CENTER" layoutX="290.0" layoutY="310.0" prefHeight="112.0" prefWidth="520.0" text="Veuillez choisir un pseudonyme :" textFill="WHITE">
          <font>
             <Font size="25.0" />
          </font>

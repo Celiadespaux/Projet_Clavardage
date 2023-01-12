@@ -61,7 +61,7 @@ public class User {
 	
     @Override
     public String toString() {
-        return "My id is " + id 
+        return "[User] My id is " + id
         		+ ", pseudo : " + pseudo
         		+ ", @ip : " + ip
         		+", port_nb : " + port ;

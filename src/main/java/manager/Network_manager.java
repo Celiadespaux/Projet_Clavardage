@@ -26,7 +26,7 @@ public class Network_manager {
 	
 	//recevoir un message (tcp) et ajouter a la db
 	public static void message_recu(Message msg) {
-		DB_locale_manager.insert_message_db(msg);
+		DB_locale_manager.insert_message_db(msg,1);
 	} 
 	
 	public static void deconnection() {

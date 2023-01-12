@@ -15,7 +15,7 @@ public class DB_locale_manager {
 
     public static Connection con;
     //TODO modifier moi par getmoi de connexion window
-    static User moi = new User(345,"bidon","mdp","test",123);
+    static User moi = new User(777,"bidon_moi","mdp","test",123);
 
     public DB_locale_manager() throws SQLException {
 
@@ -46,10 +46,10 @@ public class DB_locale_manager {
         add_utlisateur_db(user3);
 
         deleteDiscussion();
-        Message msg = new Message(user1, "hey ca va ?", Message.TypeMessage.MESSAGE_CONV);
-        insert_message_db(msg);
+        Message msg = new Message(moi, "hey ca va ?", Message.TypeMessage.MESSAGE_CONV);
+        insert_message_db(msg,0);
         Message msg2 = new Message(user2, "ca va trql", Message.TypeMessage.MESSAGE_CONV);
-        insert_message_db(msg2);
+        insert_message_db(msg2,1);
 
         getHistory_mess();
 
@@ -111,6 +111,7 @@ public class DB_locale_manager {
                 + "	id_dest integer,\n"
                 + "	date text,\n"
                 + "	message text,\n"
+                + " recu text ,\n" //1 si recu 0 si envoye
                 + "   FOREIGN KEY (id_dest) REFERENCES utilisateur(id),"
                 + "	PRIMARY KEY (id_dest,date)\n"
                 + ");";
@@ -149,14 +150,15 @@ public class DB_locale_manager {
      *
      * @param msg le message à enregistrer
      */
-    public static void insert_message_db(Message msg) {
+    public static void insert_message_db(Message msg, int recu) {
 
-        String sql = "INSERT INTO discussion VALUES(?,?,?)";
+        String sql = "INSERT INTO discussion VALUES(?,?,?,?)";
 
         try (PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setInt(1, msg.getSender().getId());
             pstmt.setString(2, msg.getDate());
             pstmt.setString(3, msg.getContenu());
+            pstmt.setInt(4,recu);
             pstmt.executeUpdate();
             System.out.println("[DB_Manager] Ajout message dans table ok");
         } catch (SQLException e) {
@@ -173,27 +175,35 @@ public class DB_locale_manager {
      */
     //TODO trier en fct de expe / dest
     public static ArrayList<Message> getHistory_mess() throws SQLException {
+
         //TODO poffiner en fct de la convo
         String query = "SELECT * FROM discussion ";
-
         Statement statement = con.createStatement();
-
         ResultSet result = statement.executeQuery(query);
         ArrayList<Message> list = new ArrayList<>();
 
         // loop through the result set
         while (result.next()) {
 
-            //TODO changer id expe
+            User sender;
+
+            if (result.getInt("recu")==1){
+                sender = DB_locale_manager.getUserfromId(result.getInt("id_dest"));
+            } else {
+                sender = moi;
+
+            }
             Message m = new Message(
-                    //result.getInt("id_dest"),
-                    moi,
+                    sender,
                     result.getString("date"),
                     result.getString("message"),
                     Message.TypeMessage.MESSAGE_CONV
             );
             list.add(m);
+            System.out.println(list);
+
         }
+        System.out.println("[DB_Manager]Liste finale:");
         System.out.println(list);
         return list;
     }
@@ -216,9 +226,29 @@ public class DB_locale_manager {
      * @param id
      * @return l'User si trouvé ou null
      */
-    public User getUserfromId (Integer id){
+    public static User getUserfromId (Integer id){
 
-        String id_string = id.toString();
+        try {
+            String query = "SELECT * FROM utilisateur WHERE id = ?";
+            PreparedStatement statement = con.prepareStatement(query);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                int userId = resultSet.getInt("id");
+                String pseudo = resultSet.getString("pseudo");
+                String mdp = resultSet.getString("mdp");
+                String ip = resultSet.getString("ip_adr");
+                int port = resultSet.getInt("port_nb");
+                User user = new User(userId, pseudo, mdp, ip, port);
+                System.out.println("[DB_locale_manager -> getUserfromId] user trouve :"+user);
+                return user;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+
+        /* String id_string = id.toString();
         String sql = "SELECT * FROM utilisateur where id='"+id_string+"'";
 
         Statement stmt = null;
@@ -228,19 +258,22 @@ public class DB_locale_manager {
             while(rs.next()){
                 return new User(
                         id,
-                        rs.getString("Pseudo"),
+                        rs.getString("pseudo"),
                         rs.getString("mdp"),
                         rs.getString("ip_adr"),
                         rs.getInt("port_nb")
                 );
             }
-                return null;
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
-        }
-
+        }*/
 
     }
+
+
+
+
+
 
     /**
      * Ajout d'un utilisateur dans le tableau utilisateur
@@ -354,6 +387,13 @@ public class DB_locale_manager {
         PreparedStatement pstmt = con.prepareStatement(sql);
         pstmt.executeUpdate();
         System.out.println("[DB_Manager] Table utilisateur correctement supprimee");
+    }
+
+    private static void delete_table_discussion() throws SQLException {
+        String sql = "DROP TABLE discussion";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.executeUpdate();
+        System.out.println("[DB_Manager] Table discussion correctement supprimee");
     }
 
     /**

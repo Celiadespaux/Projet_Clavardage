@@ -52,22 +52,10 @@ public class ChatWindow implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/Message_item.fxml"));
             try {
-
                 VBox m_item_fxml = fxmlLoader.load();
-                System.out.println("[ChatWindow.java] Apres load VBOX");
-
-                //Message_item m_item_ctrl = new Message_item();
                 Message_item m_item_ctrl = fxmlLoader.getController();
                 m_item_ctrl.setData(message);
-
-
-                //vbox_chat_messages = new VBox();
                 vbox_chat_messages.getChildren().add(m_item_fxml);
-                System.out.println("[ChatWindow.java] item :"+m_item_fxml);
-
-                System.out.println("[ChatWindow.java] Apres ajout de message a vbox_chat_messages ");
-
-
             } catch (IOException e) {
                 System.out.println("[ChatWindow.java] Pb load message_item");
                 throw new RuntimeException(e);
