@@ -10,7 +10,8 @@ public class Message {
 		CONNECTE,
 		DECONNECTE,
 		RENVOIE_PSEUDO,
-		CHANGE_PSEUDO
+		CHANGE_PSEUDO,
+		PSEUDO_DISPO
 		
 	}
 

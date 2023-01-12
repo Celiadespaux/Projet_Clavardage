@@ -6,6 +6,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import manager.Account_manager;
+import manager.DB_locale_manager;
 import manager.Network_manager;
 import model.Message;
 import model.User;
@@ -39,7 +41,7 @@ public class Traitement_Messages implements Runnable {
 			break;
 		
 		case CONNECTE :
-			//TODO ajouter nouveau utilisateur a l'annuaire (sender)
+			DB_locale_manager.add_utlisateur_db(msg.getSender());
 			Message nmsg = new Message(getMoi(),"", Message.TypeMessage.RENVOIE_PSEUDO);
 			TCP.envoyer_msg_tcp(msg.getSender(), nmsg);
 			break;
@@ -50,11 +52,15 @@ public class Traitement_Messages implements Runnable {
 			break;
 			
 		case RENVOIE_PSEUDO :
-			//TODO ajouter utilisateur a l'annuaire (sender)
+			DB_locale_manager.add_utlisateur_db(msg.getSender());
 			break;
 			
 		case CHANGE_PSEUDO : 
-			//TODO changer le pseudo de sender dans l'annuaire
+			DB_locale_manager.maj_pseudo(msg.getSender().getPseudo(), msg.getSender().getId());
+			break;
+			
+		case PSEUDO_DISPO:
+			Account_manager.pseudoPasDispo();
 			break;
 	
 		}
