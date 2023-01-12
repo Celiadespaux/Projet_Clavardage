@@ -46,6 +46,7 @@ public class ChatWindow implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        //Affichage de tous les messages
         ArrayList<Message> messages_list;
         try {
             messages_list = DB_locale_manager.getHistory_mess();
@@ -66,6 +67,9 @@ public class ChatWindow implements Initializable {
                 throw new RuntimeException(e);
             }
         }
+
+        //Affichage de tous les contacts
+
         
         l_mon_nom.setText(ChoixPseudoWindow.pseudo);
     }
