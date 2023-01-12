@@ -69,8 +69,27 @@ public class ChatWindow implements Initializable {
         }
 
         //Affichage de tous les contacts
+        ArrayList<User> contacts_list;
+        try {
+            contacts_list = DB_locale_manager.getContacts();
+        } catch (SQLException e) {
+            System.out.println("[ChatWindow.java] Pb creation liste contacts");
+            throw new RuntimeException(e);
+        }
+        for (User user : contacts_list) {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/Contact_item.fxml"));
+            try {
+                VBox c_item_fxml = fxmlLoader.load();
+                Contact_item c_item_ctrl = fxmlLoader.getController();
+                c_item_ctrl.setData(user);
+                hbox_utilisateurs_actifs.getChildren().add(c_item_fxml);
+            } catch (IOException e) {
+                System.out.println("[ChatWindow.java] Pb load contact_item");
+                throw new RuntimeException(e);
+            }
+        }
 
-        
         l_mon_nom.setText(ChoixPseudoWindow.pseudo);
     }
 

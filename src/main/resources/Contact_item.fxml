@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="100.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Contact_item">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="100.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Contact_item">
    <children>
-      <Circle fill="#4e2e2f" radius="50.0" stroke="WHITE" strokeType="INSIDE" />
-      <Label fx:id="l_contactname" alignment="CENTER" contentDisplay="CENTER" minWidth="100.0" text="Label" />
+      <Button fx:id="b_contact" minHeight="100.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-color: #4e2e2f;" text="X" textFill="WHITE">
+         <font>
+            <Font size="44.0" />
+         </font>
+      </Button>
+      <Label fx:id="l_contactname" alignment="CENTER" contentDisplay="CENTER" minWidth="100.0" text="Label" textFill="#4e2e2f" />
    </children>
 </VBox>

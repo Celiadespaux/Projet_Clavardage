@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Message_item implements Initializable {
+public class Message_item {
 
     @FXML
     private Label l_date;
@@ -22,11 +22,6 @@ public class Message_item implements Initializable {
 
     @FXML
     private Label l_mess;
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
 
     public static String formatDate(String input) {
         try {
@@ -42,7 +37,6 @@ public class Message_item implements Initializable {
     public void setData(Message mess) {
         l_date.setText(Message_item.formatDate(mess.getDate()));
         l_mess.setText(mess.getContenu());
-        //TODO changer expe
         String sender = mess.getSender().getPseudo();
         l_expediteur.setText(sender);
     }
