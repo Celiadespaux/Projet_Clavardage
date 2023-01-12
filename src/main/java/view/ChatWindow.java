@@ -30,6 +30,7 @@ import manager.*;
 public class ChatWindow implements Initializable {
 //public class ChatWindow {
 
+	
 	@FXML
     private TextField tf_mess_a_envoyer;
 	
@@ -75,8 +76,6 @@ public class ChatWindow implements Initializable {
         }
         
         l_mon_nom.setText(ChoixPseudoWindow.pseudo);
-
-
     }
 
     // Affichage page de deconnexion qd on clique sur le bouton deconnexion
@@ -95,11 +94,11 @@ public class ChatWindow implements Initializable {
         changeScene_DeconnexionWindow(event);
     }
     
-    /*public static void changer_nom() {
-        l_mon_nom.setText(ChangerPseudoWindow.pseudo);
-    }*/
+    public void rafraichir_pseudo(ActionEvent event) {
+    	l_mon_nom.setText(ChangerPseudoWindow.pseudo);
+    }
     
-    public void changer_pseudo(ActionEvent event) throws IOException { //TODO lier cette fonction au bouton changer pseudo 
+    public void changer_pseudo(ActionEvent event) throws IOException { 
     	Parent root;
         FXMLLoader fxmlLoader = new FXMLLoader(ConnexionWindow.class.getResource("/ChangerPseudoWindow.fxml"));
         root = fxmlLoader.load();
@@ -111,7 +110,7 @@ public class ChatWindow implements Initializable {
     public void envoyer_message(ActionEvent event) throws UnknownHostException, IOException {
     	String msg = tf_mess_a_envoyer.getText();
     	Message message = new Message(Traitement_Messages.getMoi(), msg, Message.TypeMessage.MESSAGE_CONV);
-    	User user = new User(2,"User2","MDP2","",2); //TODO recup user depuis la window 
+    	User user = new User(2,"User2","MDP2","127.0.0.1",6000); //TODO recup user depuis la window 
     	TCP.envoyer_msg_tcp(user, message);
     }
 

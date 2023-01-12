@@ -46,6 +46,11 @@
            				<Font size="10.0" />
          			</font>
       			</Button>
+      			<Button layoutX="484.0" layoutY="495.0" mnemonicParsing="false" onAction="#rafraichir_pseudo" prefHeight="15.0" prefWidth="100.0" style="-fx-background-radius: 20;" text="Rafraichir pseudo" textFill="#4e2e2f">
+         			<font>
+           				<Font size="7.0" />
+         			</font>
+      			</Button>
                </children>
                <HBox.margin>
                   <Insets left="10.0" />
@@ -205,7 +210,7 @@
    <bottom>
       <HBox prefHeight="22.0" prefWidth="1100.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" onAction="#changeScene_DeconnexionWindow" style="-fx-background-radius: 100px;" text="Deconnexion" textFill="#4e2e2f">
+            <Button mnemonicParsing="false" onAction="#bouton_deconnection" style="-fx-background-radius: 100px;" text="Deconnexion" textFill="#4e2e2f">
                <font>
                   <Font size="18.0" />
                </font>

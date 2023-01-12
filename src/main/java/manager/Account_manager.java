@@ -3,6 +3,8 @@ package manager;
 import java.io.IOException;
 import java.util.regex.*;
 import model.*;
+import model.Message.TypeMessage;
+import transport.Traitement_Messages;
 
 public class Account_manager {
 
@@ -10,6 +12,7 @@ public class Account_manager {
 		// TODO Auto-generated method stub
 	}
 	
+	static boolean dispo;
 	
 	static int maxLength = 30;
 	//verifie si pseudo pas trop long ou pas caracteres speciaux
@@ -21,6 +24,27 @@ public class Account_manager {
 		res = res && (pseudo.length() > 0) ; 
 		res = res && !m.find();
 		return res ; 
+	}
+	
+	public static boolean verifier_pseudo_libre(String pseudo) throws IOException {
+		dispo = true ;
+		long timeElapsed = 0;
+		long start = System.currentTimeMillis();
+		long finish = 0;
+		String msg = Message.construire_message(pseudo,  Traitement_Messages.getMoi(), TypeMessage.PSEUDO_DISPO);
+		
+		Network_manager.Udp.broadcast(msg);
+
+		while(timeElapsed<1000) {
+			finish = System.currentTimeMillis();
+			timeElapsed = finish - start;			
+		}
+		
+		return dispo ;
+	}
+	
+	public static void pseudoPasDispo() {
+		dispo = false;
 	}
 	
 	
