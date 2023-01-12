@@ -20,7 +20,12 @@ import transport.Traitement_Messages;
 import java.io.IOException;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import manager.*;
+
 
 public class ChatWindow implements Initializable {
 //public class ChatWindow {
@@ -33,37 +38,45 @@ public class ChatWindow implements Initializable {
     
     @FXML Label l_mon_nom ;
 
-/*
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        List<Message> messages;
+
+        ArrayList<Message> messages_list;
         try {
-            messages = new ArrayList<>(getHistory_mess());
+            messages_list = DB_locale_manager.getHistory_mess();
         } catch (SQLException e) {
-            System.out.println("[ChatWindow.java] Pb creation liste message");
+            System.out.println("[ChatWindow.java] Pb creation liste messages");
             throw new RuntimeException(e);
         }
-        for (Message message : messages) {
+        for (Message message : messages_list) {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("Message_item.fxml"));
+            fxmlLoader.setLocation(getClass().getResource("/Message_item.fxml"));
             try {
-                AnchorPane message_pane = fxmlLoader.load();
-                Message_item m_item = new Message_item();
-                m_item.setData(message);
-                vbox_chat_messages.getChildren().add(message_pane);
+
+                VBox m_item_fxml = fxmlLoader.load();
+                System.out.println("[ChatWindow.java] Apres load VBOX");
+
+                //Message_item m_item_ctrl = new Message_item();
+                Message_item m_item_ctrl = fxmlLoader.getController();
+                m_item_ctrl.setData(message);
+
+
+                //vbox_chat_messages = new VBox();
+                vbox_chat_messages.getChildren().add(m_item_fxml);
+                System.out.println("[ChatWindow.java] item :"+m_item_fxml);
+
+                System.out.println("[ChatWindow.java] Apres ajout de message a vbox_chat_messages ");
+
 
             } catch (IOException e) {
                 System.out.println("[ChatWindow.java] Pb load message_item");
                 throw new RuntimeException(e);
             }
         }
+        
+        l_mon_nom.setText(ChoixPseudoWindow.pseudo);
 
 
-    }*/
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-    	l_mon_nom.setText(ChoixPseudoWindow.pseudo);
     }
 
     // Affichage page de deconnexion qd on clique sur le bouton deconnexion

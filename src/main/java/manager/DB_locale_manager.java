@@ -190,10 +190,11 @@ public class DB_locale_manager {
                     moi,
                     result.getString("date"),
                     result.getString("message"),
-                    Message.TypeMessage.MESSAGE_CONV);
+                    Message.TypeMessage.MESSAGE_CONV
+            );
             list.add(m);
         }
-        // System.out.println(list);
+        System.out.println(list);
         return list;
     }
 
