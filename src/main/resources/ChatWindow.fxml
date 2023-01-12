@@ -33,7 +33,7 @@
                         <Insets left="50.0" top="-10.0" />
                      </VBox.margin>
                   </Circle>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="MON NOM" textFill="WHITE">
+                  <Label fx:id="l_mon_nom" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="MON NOM" textFill="WHITE">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -41,7 +41,11 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </Label>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Changer pseudo" textFill="WHITE" />
+                  <Button layoutX="484.0" layoutY="495.0" mnemonicParsing="false" onAction="#changer_pseudo" prefHeight="17.0" prefWidth="200.0" style="-fx-background-radius: 20;" text="Changer pseudo" textFill="#4e2e2f">
+         			<font>
+           				<Font size="10.0" />
+         			</font>
+      			</Button>
                </children>
                <HBox.margin>
                   <Insets left="10.0" />

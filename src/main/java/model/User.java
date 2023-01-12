@@ -73,13 +73,15 @@ public class User {
 		String mdp = user.getMdp();
 		String ip = user.getIp();
 		int port = user.getPort();
-		return (id + "&&" + pseudo + "&&"+ mdp + "&&" + ip + "&&" + port);
+		return (id + "/-/" + pseudo + "/-/"+ mdp + "/-/" + ip + "/-/" + port);
 	}
 	
 	public static User deconstruire_user(String user) {
-		String[] m = user.split("&&");
+		String[] m = user.split("/-/");
 		
-		User Utilisateur = new User(Integer.valueOf(m[0]), m[1], m[2], m[3], Integer.valueOf(m[4]));
+		int x=Integer.parseInt(m[0]); 
+		int y=Integer.parseInt(m[4]); 
+		User Utilisateur = new User(x, m[1], m[2], m[3], y);
 		return(Utilisateur);
 	}
 	

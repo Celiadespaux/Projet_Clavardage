@@ -17,7 +17,11 @@ public class Traitement_Messages implements Runnable {
 	ServerSocket serverSocket ;
 	TCP serverTCP ; 
 	
-	static User moi = new User(1,"User1","MDP1","",1);
+	static User moi = new User(1,"User1","MDP1","127.0.0.1",6000);
+	
+	public static User getMoi() {
+		return moi;
+	}
 	
 	public Traitement_Messages(Socket client, ServerSocket serverSocket, TCP serverTCP) {
 		this.clientSocket = client ;
@@ -36,7 +40,7 @@ public class Traitement_Messages implements Runnable {
 		
 		case CONNECTE :
 			//TODO ajouter nouveau utilisateur a l'annuaire (sender)
-			Message nmsg = new Message(moi,"", Message.TypeMessage.RENVOIE_PSEUDO);
+			Message nmsg = new Message(getMoi(),"", Message.TypeMessage.RENVOIE_PSEUDO);
 			TCP.envoyer_msg_tcp(msg.getSender(), nmsg);
 			break;
 		
@@ -63,7 +67,7 @@ public class Traitement_Messages implements Runnable {
 			input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			String recu = input.readLine();
 			
-			Message msg = Message.deconstruire_message(recu, moi);
+			Message msg = Message.deconstruire_message(recu, getMoi());
 			differencier_msg(msg);
 			
 			input.close();
@@ -71,8 +75,8 @@ public class Traitement_Messages implements Runnable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		
+	
 	}
+
 
 }

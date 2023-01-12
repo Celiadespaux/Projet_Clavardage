@@ -12,7 +12,7 @@ public class Network_manager {
 	public Network_manager() {
 		// TODO Auto-generated constructor stub
 		Tcp = new TCP();
-		Udp = new UDP(5001, 1000) ;
+		Udp = new UDP(5001, 10000) ;
 
 	}
 	
@@ -33,11 +33,6 @@ public class Network_manager {
 		Tcp.setConnecte(false);
 		Udp.setConnecte(false) ;
 	}
-	
-	
-	//bouton connection : verifier pseudo ok + account_manager.connecte + runservers +  
-	//bouton deconnection : account_manager.deconnecte 
-	//bouton changer pseudo : verifier si nouveau pseudo ok + account_manager.changer_pseudo
 	
 
 	public static void main(String[] args) {

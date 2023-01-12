@@ -15,12 +15,12 @@ import transport.*;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class ChoixPseudoWindow {
+public class ChangerPseudoWindow {
 
     static String pseudo;
-    @FXML TextField tf_pseudo ;
+    @FXML TextField tf_pseudo2;
     
-    @FXML Label l_mess_pseudo ;
+    @FXML Label l_mess_pseudo2 ;
 
     @FXML
     public void changeScene_ChatWindow(ActionEvent event) throws IOException {
@@ -33,26 +33,24 @@ public class ChoixPseudoWindow {
     }
 
     public void valider_choix_pseudo(ActionEvent event) throws SQLException, IOException {
-        	pseudo = tf_pseudo.getText();
-	        if (Account_manager.verifier_pseudo_valide(pseudo)) {
-	            if (DB_locale_manager.verifier_pseudo_libre(pseudo)) {
-	            	try {
-	            		Network_manager networkManager = new Network_manager();
-						networkManager.runservers();
-						Account_manager.connecte(Traitement_Messages.getMoi());
-					    changeScene_ChatWindow(event);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-	            }
-	            else {
-	            	l_mess_pseudo.setText("Pseudo non libre, choisir un autre pseudo :");
-	            }
-	        }
-	        else {
-	        	l_mess_pseudo.setText("Pseudo non valide, choisir un autre pseudo :");
-	        }
+        pseudo = tf_pseudo2.getText();
+        if (Account_manager.verifier_pseudo_valide(pseudo)) {
+            if (DB_locale_manager.verifier_pseudo_libre(pseudo)) {
+            	try {
+					Account_manager.changer_pseudo(Traitement_Messages.getMoi());
+					//ChatWindow.changer_nom();
+				    changeScene_ChatWindow(event);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+            else {
+            	l_mess_pseudo2.setText("Pseudo non libre, choisir un autre pseudo :");
+            }
+        }
+        else {
+        	l_mess_pseudo2.setText("Pseudo non valide, choisir un autre pseudo :");
+        }
     }
-
 }

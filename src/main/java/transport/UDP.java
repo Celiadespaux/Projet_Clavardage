@@ -34,7 +34,7 @@ public class UDP extends Thread{
 	 * @param msg
 	 * @throws IOException
 	 */
-	public static void broadcast(String msg) throws IOException {
+	public void broadcast(String msg) throws IOException {
 		
 		byte[] addressforbid = new byte[]{(byte)0,(byte)0,(byte)0,(byte)0};
 				
@@ -101,7 +101,7 @@ public class UDP extends Thread{
 				socket.receive(dp);
 				String recu = new String(dp.getData(), 0, dp.getLength());
 				
-				Message msg = Message.deconstruire_message(recu, Traitement_Messages.moi);
+				Message msg = Message.deconstruire_message(recu, Traitement_Messages.getMoi());
 				Traitement_Messages.differencier_msg(msg);
 			}
 				
