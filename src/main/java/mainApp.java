@@ -22,6 +22,8 @@ public class mainApp extends Application {
 
         // INITIALISATION DES MANAGER
         DB_locale_manager DB = new DB_locale_manager();
+        Network_manager networkManager = new Network_manager();
+		networkManager.runservers();
 
         // LANCEMENT APP
         launch(args);

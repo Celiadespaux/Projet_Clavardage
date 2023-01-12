@@ -35,10 +35,9 @@ public class ChoixPseudoWindow {
     public void valider_choix_pseudo(ActionEvent event) throws SQLException, IOException {
         	pseudo = tf_pseudo.getText();
 	        if (Account_manager.verifier_pseudo_valide(pseudo)) {
-	            if (DB_locale_manager.verifier_pseudo_libre(pseudo)) {
+	            //if (DB_locale_manager.verifier_pseudo_libre(pseudo)) {
+	            if (Account_manager.verifier_pseudo_libre(pseudo)) {
 	            	try {
-	            		Network_manager networkManager = new Network_manager();
-						networkManager.runservers();
 						Account_manager.connecte(Traitement_Messages.getMoi());
 					    changeScene_ChatWindow(event);
 					} catch (IOException e) {
