@@ -14,20 +14,20 @@ public class Message {
 		
 	}
 
-	private static User sender;
+	private User sender;
 	private String date;
 	private String contenu;
 	private TypeMessage type ;
 	
     public Message(User sender, String contenu, TypeMessage type) {
-		Message.sender = sender;
+		this.sender = sender;
 		this.date = LocalDateTime.now().toString();
 		this.contenu = contenu;
 		this.type = type ;
 	}
 	
 	public Message(User sender, String date, String content, TypeMessage type){
-	        Message.sender = sender;
+	        this.sender = sender;
 	        this.date = date;
 	        this.contenu = content;
 	        this.type = type ;
@@ -74,13 +74,13 @@ public class Message {
 	}
 
 	public void setSender(User sender) {
-		Message.sender = sender;
+		this.sender = sender;
 	}
 
-	
+
     @Override
     public String toString() {
-        return "My id is : " + sender.getId() 
+        return "[Message] Sender id : " + sender.getId()
         		+ ", date :  " + date 
         		+ " -> Message : " + contenu;
     }
