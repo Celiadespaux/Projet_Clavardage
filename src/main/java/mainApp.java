@@ -7,16 +7,8 @@ import model.*;
 
 public class mainApp extends Application {
 
-    public static void main(String[] args) throws Exception {
-        launch(args);
-    }
-
     @Override
     public void start(Stage primaryStage) throws Exception {
-        
-        // INITIALISATION DES MANAGER
-        DB_locale_manager DB = new DB_locale_manager();
-
 
         // AFFICHAGE PAGE DE CONNEXION
         FXMLLoader fxmlLoader = new FXMLLoader(mainApp.class.getResource("/ConnexionWindow.fxml"));
@@ -24,6 +16,15 @@ public class mainApp extends Application {
         primaryStage.setScene(new Scene(fxmlLoader.load()));
         primaryStage.show();
 
+    }
+
+    public static void main(String[] args) throws Exception {
+
+        // INITIALISATION DES MANAGER
+        DB_locale_manager DB = new DB_locale_manager();
+
+        // LANCEMENT APP
+        launch(args);
     }
 
 }

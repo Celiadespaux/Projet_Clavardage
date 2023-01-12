@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import manager.Account_manager;
@@ -16,7 +17,7 @@ public class ChoixPseudoWindow {
 
     String pseudo;
     @FXML
-    private TextField tf_pseudo;
+    final TextField tf_pseudo = new TextField();
 
     @FXML
     public void changeScene_ChatWindow(ActionEvent event) throws IOException {

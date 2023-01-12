@@ -1,26 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="200.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Message_item">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Message_item">
    <children>
-      <Label id="l_expediteur" layoutX="66.0" layoutY="31.0" prefHeight="54.0" prefWidth="185.0" text="Moi">
+      <HBox prefHeight="48.0" prefWidth="880.0">
+         <children>
+            <Label id="l_expediteur" fx:id="l_expediteur" alignment="CENTER" text="Expe_test">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <padding>
+                  <Insets left="20.0" top="20.0" />
+               </padding>
+            </Label>
+            <Label fx:id="l_date" alignment="CENTER" text="date_test">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <padding>
+                  <Insets left="20.0" top="20.0" />
+               </padding>
+            </Label>
+         </children>
+      </HBox>
+      <Label fx:id="l_mess" text="Bonjour c'est un test !">
          <font>
-            <Font size="38.0" />
+            <Font size="25.0" />
          </font>
-      </Label>
-      <Label id="l_mess" layoutX="65.0" layoutY="91.0" text="Bonjour ! ">
-         <font>
-            <Font size="49.0" />
-         </font>
-      </Label>
-      <Label id="l_date" layoutX="141.0" layoutY="36.0" text="12:10">
-         <font>
-            <Font size="38.0" />
-         </font>
+         <padding>
+            <Insets left="20.0" />
+         </padding>
       </Label>
    </children>
-</AnchorPane>
+</VBox>
