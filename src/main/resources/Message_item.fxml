@@ -6,35 +6,38 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Message_item">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Message_item">
    <children>
-      <HBox prefHeight="48.0" prefWidth="880.0">
+      <HBox prefHeight="40.0" prefWidth="880.0">
          <children>
-            <Label id="l_expediteur" fx:id="l_expediteur" alignment="CENTER" text="Expe_test">
+            <Label fx:id="l_expediteur" alignment="CENTER" text="Expe_test">
                <font>
-                  <Font size="20.0" />
+                  <Font size="10.0" />
                </font>
                <padding>
-                  <Insets left="20.0" top="20.0" />
+                  <Insets left="20.0" top="5.0" />
                </padding>
             </Label>
             <Label fx:id="l_date" alignment="CENTER" text="date_test">
                <font>
-                  <Font size="20.0" />
+                  <Font size="10.0" />
                </font>
                <padding>
-                  <Insets left="20.0" top="20.0" />
+                  <Insets left="20.0" top="5.0" />
                </padding>
             </Label>
          </children>
       </HBox>
       <Label fx:id="l_mess" text="Bonjour c'est un test !">
          <font>
-            <Font size="25.0" />
+            <Font size="20.0" />
          </font>
          <padding>
             <Insets left="20.0" />
          </padding>
+         <VBox.margin>
+            <Insets bottom="5.0" />
+         </VBox.margin>
       </Label>
    </children>
 </VBox>
