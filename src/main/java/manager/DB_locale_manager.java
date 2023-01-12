@@ -47,9 +47,9 @@ public class DB_locale_manager {
 
         deleteDiscussion();
         Message msg = new Message(user1, "hey ca va ?", Message.TypeMessage.MESSAGE_CONV);
-        insert_message_db(msg);
+        insert_message_db(msg,1);
         Message msg2 = new Message(user2, "ca va trql", Message.TypeMessage.MESSAGE_CONV);
-        insert_message_db(msg2);
+        insert_message_db(msg2,0);
 
         getHistory_mess();
 
@@ -111,6 +111,7 @@ public class DB_locale_manager {
                 + "	id_dest integer,\n"
                 + "	date text,\n"
                 + "	message text,\n"
+                + " recu text ,\n" //1 si recu 0 si envoye
                 + "   FOREIGN KEY (id_dest) REFERENCES utilisateur(id),"
                 + "	PRIMARY KEY (id_dest,date)\n"
                 + ");";
@@ -149,14 +150,15 @@ public class DB_locale_manager {
      *
      * @param msg le message à enregistrer
      */
-    public static void insert_message_db(Message msg) {
+    public static void insert_message_db(Message msg, int recu) {
 
-        String sql = "INSERT INTO discussion VALUES(?,?,?)";
+        String sql = "INSERT INTO discussion VALUES(?,?,?,?)";
 
         try (PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setInt(1, msg.getSender().getId());
             pstmt.setString(2, msg.getDate());
             pstmt.setString(3, msg.getContenu());
+            pstmt.setInt(4,recu);
             pstmt.executeUpdate();
             System.out.println("[DB_Manager] Ajout message dans table ok");
         } catch (SQLException e) {
@@ -354,6 +356,13 @@ public class DB_locale_manager {
         PreparedStatement pstmt = con.prepareStatement(sql);
         pstmt.executeUpdate();
         System.out.println("[DB_Manager] Table utilisateur correctement supprimee");
+    }
+
+    private static void delete_table_discussion() throws SQLException {
+        String sql = "DROP TABLE discussion";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.executeUpdate();
+        System.out.println("[DB_Manager] Table discussion correctement supprimee");
     }
 
     /**
