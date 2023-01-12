@@ -34,7 +34,7 @@ public class UDP extends Thread{
 	 * @param msg
 	 * @throws IOException
 	 */
-	public static void broadcast(String msg) throws IOException {
+	public void broadcast(String msg) throws IOException {
 		
 		byte[] addressforbid = new byte[]{(byte)0,(byte)0,(byte)0,(byte)0};
 				

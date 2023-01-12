@@ -38,7 +38,7 @@ public class TCP extends Thread{
 	
 	public void run () {
 		
-		int port = 1024;
+		int port = 6000;
 		ServerSocket serveur;
 		Socket link2 ;
 		

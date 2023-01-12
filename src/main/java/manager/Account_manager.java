@@ -3,13 +3,13 @@ package manager;
 import java.io.IOException;
 import java.util.regex.*;
 import model.*;
-import transport.*;
 
 public class Account_manager {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 	}
+	
 	
 	static int maxLength = 30;
 	//verifie si pseudo pas trop long ou pas caracteres speciaux
@@ -25,20 +25,20 @@ public class Account_manager {
 	
 	
 	public static void connecte(User sender) throws IOException {
-		String msg = Message.construire_message("",sender,Message.TypeMessage.CONNECTE);
-		UDP.broadcast(msg);
+		String msg = Message.construire_message("nul",sender,Message.TypeMessage.CONNECTE);
+		Network_manager.Udp.broadcast(msg);
 	}
 	
 	
 	public static void deconnecte(User sender) throws IOException {
 		String msg = Message.construire_message("",sender,Message.TypeMessage.DECONNECTE);
-		UDP.broadcast(msg);
+		Network_manager.Udp.broadcast(msg);
 		Network_manager.deconnection();
 		}
 	
 	public static void changer_pseudo(User sender) throws IOException {
 		String msg = Message.construire_message("",sender,Message.TypeMessage.CHANGE_PSEUDO);
-		UDP.broadcast(msg);
+		Network_manager.Udp.broadcast(msg);
 	}
 	
 	}

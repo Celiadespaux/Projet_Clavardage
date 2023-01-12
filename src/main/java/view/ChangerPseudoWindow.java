@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import manager.*;
@@ -16,9 +17,10 @@ import java.sql.SQLException;
 
 public class ChangerPseudoWindow {
 
-    String pseudo;
-    @FXML
-    private TextField tf_pseudo;
+    static String pseudo;
+    @FXML TextField tf_pseudo2;
+    
+    @FXML Label l_mess_pseudo2 ;
 
     @FXML
     public void changeScene_ChatWindow(ActionEvent event) throws IOException {
@@ -31,20 +33,24 @@ public class ChangerPseudoWindow {
     }
 
     public void valider_choix_pseudo(ActionEvent event) throws SQLException, IOException {
-
-        pseudo = tf_pseudo.getText();
+        pseudo = tf_pseudo2.getText();
         if (Account_manager.verifier_pseudo_valide(pseudo)) {
             if (DB_locale_manager.verifier_pseudo_libre(pseudo)) {
-            	Account_manager.changer_pseudo(Traitement_Messages.getMoi());
+            	try {
+					Account_manager.changer_pseudo(Traitement_Messages.getMoi());
+					//ChatWindow.changer_nom();
+				    changeScene_ChatWindow(event);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
             else {
-            	//TODO afficher "pseudo non libre"
+            	l_mess_pseudo2.setText("Pseudo non libre, choisir un autre pseudo :");
             }
         }
         else {
-        	//TODO afficher "pseudo non valide"
+        	l_mess_pseudo2.setText("Pseudo non valide, choisir un autre pseudo :");
         }
-        changeScene_ChatWindow(event);
     }
-
 }

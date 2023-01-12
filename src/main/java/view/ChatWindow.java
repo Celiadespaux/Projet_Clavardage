@@ -4,9 +4,11 @@ package view;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -16,16 +18,20 @@ import transport.TCP;
 import transport.Traitement_Messages;
 
 import java.io.IOException;
+import java.net.URL;
 import java.net.UnknownHostException;
+import java.util.ResourceBundle;
 
-//public class ChatWindow implements Initializable {
-public class ChatWindow {
+public class ChatWindow implements Initializable {
+//public class ChatWindow {
 
 	@FXML
     private TextField tf_mess_a_envoyer;
 	
     @FXML
     private VBox vbox_chat_messages;
+    
+    @FXML Label l_mon_nom ;
 
 /*
     @Override
@@ -55,6 +61,11 @@ public class ChatWindow {
 
     }*/
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+    	l_mon_nom.setText(ChoixPseudoWindow.pseudo);
+    }
+
     // Affichage page de deconnexion qd on clique sur le bouton deconnexion
     @FXML
     public void changeScene_DeconnexionWindow(ActionEvent event) throws IOException {
@@ -70,6 +81,10 @@ public class ChatWindow {
         Account_manager.deconnecte(Traitement_Messages.getMoi());
         changeScene_DeconnexionWindow(event);
     }
+    
+    /*public static void changer_nom() {
+        l_mon_nom.setText(ChangerPseudoWindow.pseudo);
+    }*/
     
     public void changer_pseudo(ActionEvent event) throws IOException { //TODO lier cette fonction au bouton changer pseudo 
     	Parent root;
