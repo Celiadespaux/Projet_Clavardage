@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import manager.Account_manager;
@@ -37,6 +38,9 @@ public class ChatWindow implements Initializable {
     private VBox vbox_chat_messages;
     
     @FXML Label l_mon_nom ;
+
+    @FXML
+    private HBox hbox_utilisateurs_actifs;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
