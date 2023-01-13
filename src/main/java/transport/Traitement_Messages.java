@@ -60,7 +60,12 @@ public class Traitement_Messages implements Runnable {
 			break;
 			
 		case PSEUDO_DISPO:
-			Account_manager.pseudoPasDispo();
+			String pseudo = msg.getContenu();
+			String Monpseudo = moi.getPseudo();
+			if (pseudo.equals(Monpseudo)) {
+				Account_manager.pseudoPasDispo();
+			}
+			else { }
 			break;
 	
 		}
