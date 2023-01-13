@@ -36,7 +36,7 @@ public class ChoixPseudoWindow {
         	pseudo = tf_pseudo.getText();
 	        if (Account_manager.verifier_pseudo_valide(pseudo)) {
 	            //if (DB_locale_manager.verifier_pseudo_libre(pseudo)) {
-	            if (Account_manager.verifier_pseudo_libre(pseudo)) {
+	            if (true) {
 	            	try {
 						Account_manager.connecte(Traitement_Messages.getMoi());
 					    changeScene_ChatWindow(event);
