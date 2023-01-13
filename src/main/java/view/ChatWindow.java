@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import manager.Account_manager;
@@ -39,9 +40,13 @@ public class ChatWindow implements Initializable {
     
     @FXML Label l_mon_nom ;
 
+    @FXML
+    private HBox hbox_utilisateurs_actifs;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        //Affichage de tous les messages
         ArrayList<Message> messages_list;
         try {
             messages_list = DB_locale_manager.getHistory_mess();
@@ -62,7 +67,29 @@ public class ChatWindow implements Initializable {
                 throw new RuntimeException(e);
             }
         }
-        
+
+        //Affichage de tous les contacts
+        ArrayList<User> contacts_list;
+        try {
+            contacts_list = DB_locale_manager.getContacts();
+        } catch (SQLException e) {
+            System.out.println("[ChatWindow.java] Pb creation liste contacts");
+            throw new RuntimeException(e);
+        }
+        for (User user : contacts_list) {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/Contact_item.fxml"));
+            try {
+                VBox c_item_fxml = fxmlLoader.load();
+                Contact_item c_item_ctrl = fxmlLoader.getController();
+                c_item_ctrl.setData(user);
+                hbox_utilisateurs_actifs.getChildren().add(c_item_fxml);
+            } catch (IOException e) {
+                System.out.println("[ChatWindow.java] Pb load contact_item");
+                throw new RuntimeException(e);
+            }
+        }
+
         l_mon_nom.setText(ChoixPseudoWindow.pseudo);
     }
 

@@ -22,6 +22,8 @@ public class DB_locale_manager {
         //CONNEXION
         try {
             Class.forName("org.sqlite.JDBC");
+            // TODO recuperer le path des utilisateurs qd ils se connectent a l'application pour le mettre a la place de testDB
+            //TODO prends en arg l'url du path du fichier a creer localement
             con = DriverManager.getConnection("jdbc:sqlite:testDB"); // //localhost/test"
             System.out.println("[DB_Manager] Connection a la bdd ok");
 
@@ -35,9 +37,10 @@ public class DB_locale_manager {
         }
 
         //INITIALISATION
+        drop_table("annuaire");
         creer_tables_DB();
 
-        deleteUsers();
+        delete_entire_content("utilisateur");
         User user1 = new User(111, "toto", "motdepasse", "143.112.212.233", 3348);
         User user2 = new User(222, "pierre", "motdepass24e", "143.112.212.233", 3358);
         User user3 = new User(333, "jack", "motdepass24e", "143.112.212.233", 3379);
@@ -45,50 +48,25 @@ public class DB_locale_manager {
         add_utlisateur_db(user2);
         add_utlisateur_db(user3);
 
-        deleteDiscussion();
+        delete_entire_content("discussion");
         Message msg = new Message(moi, "hey ca va ?", Message.TypeMessage.MESSAGE_CONV);
         insert_message_db(msg,0);
         Message msg2 = new Message(user2, "ca va trql", Message.TypeMessage.MESSAGE_CONV);
         insert_message_db(msg2,1);
-
         getHistory_mess();
+
+        delete_entire_content("annuaire");
+        add_user_annuaire(111);
+        add_user_annuaire(222);
+        add_user_annuaire(333);
+        getContacts();
+
 
     }
 
-/*
-    // TODO prends en arg l'url du path du fichier a creer localement
-    *//**
-     * Charge le pilote et se connecte a la bdd
-     *//*
-    public static Connection connectionDB() {
-
-        //Chargement pilote
-        try {
-            Class.forName("org.sqlite.JDBC");
-        } catch (ClassNotFoundException e) {
-            System.out.println("[DB_Manager] Problème chargement pilote");
-            e.printStackTrace();
-        }
-
-
-        //Connexion à la BDD
-
-        //String url = "jdbc:sqlite:" + Path+ BdName;
-
-        try {
-            // TODO recuperer le path des utilisateurs qd ils se connectent a l'application pour le mettre a la place de testDB
-            con = DriverManager.getConnection("jdbc:sqlite:testDB"); // //localhost/test"
-            System.out.println("[DB_Manager] Connection a la bdd ok");
-
-        } catch (Exception e) {
-            System.out.println("[DB_Manager] Problème connexion à la BDD");
-            e.printStackTrace();
-        }
-
-        return con;
-
-    }*/
-
+    //
+    // CREATION DES TABLES
+    //
 
     /**
      * Creation des tables utilsateur, discussion et annuaire
@@ -117,18 +95,8 @@ public class DB_locale_manager {
                 + ");";
 
         String sql_annuaire = "CREATE TABLE IF NOT EXISTS annuaire (\n"
-                + "	id_user integer PRIMARY KEY,\n"
-                + "	id_ami1 integer,\n"
-                + "	id_ami2 integer,\n"
-                + "	id_ami3 integer,\n"
-                + "	id_ami4 integer,\n"
-                + "	id_ami5 integer,\n"
-                + "	id_ami6 integer,\n"
-                + "	id_ami7 integer,\n"
-                + "	id_ami8 integer,\n"
-                + "	id_ami9 integer,\n"
-                + "	id_ami10 integer,\n"
-                + "   FOREIGN KEY (id_user) REFERENCES utilisateur(id)"
+                + "	id_ami integer PRIMARY KEY,\n"
+                + "   FOREIGN KEY (id_ami) REFERENCES utilisateur(id)"
                 + ");";
 
 
@@ -145,9 +113,12 @@ public class DB_locale_manager {
 
     }
 
+    //
+    // TABLE discussion
+    //
+
     /**
      * Enregistre un message dans le tableau discussion
-     *
      * @param msg le message à enregistrer
      */
     public static void insert_message_db(Message msg, int recu) {
@@ -165,11 +136,8 @@ public class DB_locale_manager {
             System.out.println(e.getMessage());
         }
     }
-    //
-    // TABLE MESSAGES
-    //
 
-    /**
+    /** Cree un table de Messages de tous les messages dans le l'utilisateur (envoyes et recu)
      * @return un tabeau de tous les messages de l'utlisateur
      * @throws SQLException
      */
@@ -182,16 +150,17 @@ public class DB_locale_manager {
         ResultSet result = statement.executeQuery(query);
         ArrayList<Message> list = new ArrayList<>();
 
-        // loop through the result set
         while (result.next()) {
 
             User sender;
 
+            // si je suis le destinataire
             if (result.getInt("recu")==1){
                 sender = DB_locale_manager.getUserfromId(result.getInt("id_dest"));
-            } else {
+            }
+            //si je suis l'expediteur
+            else {
                 sender = moi;
-
             }
             Message m = new Message(
                     sender,
@@ -200,80 +169,15 @@ public class DB_locale_manager {
                     Message.TypeMessage.MESSAGE_CONV
             );
             list.add(m);
-            System.out.println(list);
-
         }
-        System.out.println("[DB_Manager]Liste finale:");
+        System.out.println("[DB_Manager] Liste messages finale:");
         System.out.println(list);
         return list;
     }
 
-    /**
-     * Effacer l'historique
-     *
-     * @throws SQLException
-     */
-    private static void deleteDiscussion() throws SQLException {
-        String query = "DELETE FROM discussion";
-        Statement statement = con.createStatement();
-        statement.execute(query);
-        System.out.println("[DB_Manager] Le contenu de la table discussion est supprimé");
-
-    }
-
-    /**
-     *
-     * @param id
-     * @return l'User si trouvé ou null
-     */
-    public static User getUserfromId (Integer id){
-
-        try {
-            String query = "SELECT * FROM utilisateur WHERE id = ?";
-            PreparedStatement statement = con.prepareStatement(query);
-            statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                int userId = resultSet.getInt("id");
-                String pseudo = resultSet.getString("pseudo");
-                String mdp = resultSet.getString("mdp");
-                String ip = resultSet.getString("ip_adr");
-                int port = resultSet.getInt("port_nb");
-                User user = new User(userId, pseudo, mdp, ip, port);
-                System.out.println("[DB_locale_manager -> getUserfromId] user trouve :"+user);
-                return user;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-
-        /* String id_string = id.toString();
-        String sql = "SELECT * FROM utilisateur where id='"+id_string+"'";
-
-        Statement stmt = null;
-        try {
-            stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            while(rs.next()){
-                return new User(
-                        id,
-                        rs.getString("pseudo"),
-                        rs.getString("mdp"),
-                        rs.getString("ip_adr"),
-                        rs.getInt("port_nb")
-                );
-            }
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
-        }*/
-
-    }
-
-
-
-
-
+    //
+    // TABLE utilisateur
+    //
 
     /**
      * Ajout d'un utilisateur dans le tableau utilisateur
@@ -300,37 +204,21 @@ public class DB_locale_manager {
 
     }
 
-    //
-    // TABLE UTILISATEURS
-    //
-
     /**
      * Checks if a user with the login is already created or not
-     *
      * @param
      * @return true if already exists, else false
      * @throws SQLException
      */
     public static boolean verifier_pseudo_libre(String pseudo) throws SQLException {
-
-
         String sql = "SELECT * FROM utilisateur where pseudo='" + pseudo + "'";
-
-
         Statement stmt = con.createStatement();
-
-
         ResultSet rs = stmt.executeQuery(sql);
-
-
-        //System.out.println("login Aux = " + loginAux);
-
         return (!rs.next());
     }
 
     /**
      * Changer le pseudo de l'utilisateur
-     *
      * @param pseudo
      * @param id
      */
@@ -353,6 +241,8 @@ public class DB_locale_manager {
 
     }
 
+
+    //TODO supprimer showusers
     /**
      * @return un tabeau de tous les messages de l'utlisateur
      * @throws SQLException
@@ -382,63 +272,114 @@ public class DB_locale_manager {
         return list;
     }
 
-    private static void delete_table_utilisateur() throws SQLException {
-        String sql = "DROP TABLE utilisateur";
-        PreparedStatement pstmt = con.prepareStatement(sql);
-        pstmt.executeUpdate();
-        System.out.println("[DB_Manager] Table utilisateur correctement supprimee");
+    //
+    // TABLE ANNUAIRE
+    //
+
+    /**
+     * Ajoute un utilisateur à partir de son id à l'annuaire
+     * @param id de l'utilisateur
+     */
+    public static void add_user_annuaire(int id) {
+        String sql = "INSERT INTO annuaire (id_ami) VALUES (?)";
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+            System.out.println("[DB_Manager] Utilisateur "+ id +" bien ajouté dans l'annuaire");
+        } catch (SQLException e) {
+            System.out.println("[DB_Manager] Probleme lors de l'ajout de l'user dans l'annuaire");
+            e.printStackTrace();
+        }
     }
 
-    private static void delete_table_discussion() throws SQLException {
-        String sql = "DROP TABLE discussion";
-        PreparedStatement pstmt = con.prepareStatement(sql);
-        pstmt.executeUpdate();
-        System.out.println("[DB_Manager] Table discussion correctement supprimee");
+    public static ArrayList<User> getContacts() throws SQLException {
+         String query = "SELECT * FROM annuaire ";
+            Statement statement = con.createStatement();
+            ResultSet result = statement.executeQuery(query);
+            ArrayList<User> list = new ArrayList<>();
+
+            while (result.next()) {
+                list.add(getUserfromId(result.getInt("id_ami")));
+            }
+            System.out.println("[DB_Manager] Liste contacts finale:");
+            System.out.println(list);
+            return list;
+    }
+
+    //
+    // AUTRES
+    //
+
+    /**
+     * Renvoie un User construit à partir de son id
+     * @param id
+     * @return l'User si trouvé ou null
+     */
+    public static User getUserfromId (Integer id){
+
+        try {
+            String query = "SELECT * FROM utilisateur WHERE id = ?";
+            PreparedStatement statement = con.prepareStatement(query);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                int userId = resultSet.getInt("id");
+                String pseudo = resultSet.getString("pseudo");
+                String mdp = resultSet.getString("mdp");
+                String ip = resultSet.getString("ip_adr");
+                int port = resultSet.getInt("port_nb");
+                return new User(userId, pseudo, mdp, ip, port);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+
+        /* String id_string = id.toString();
+        String sql = "SELECT * FROM utilisateur where id='"+id_string+"'";
+
+        Statement stmt = null;
+        try {
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                return new User(
+                        id,
+                        rs.getString("pseudo"),
+                        rs.getString("mdp"),
+                        rs.getString("ip_adr"),
+                        rs.getInt("port_nb")
+                );
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }*/
+
     }
 
     /**
-     * Effacer tous les utilisateurs
-     *
+     * Supprime la table passée en arg
+     * @param table le nom de la table à supprimer
      * @throws SQLException
      */
-    private static void deleteUsers() throws SQLException {
-        String query = "DELETE FROM utilisateur";
+    private static void drop_table(String table) throws SQLException {
+        String sql = "DROP TABLE "+table;
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.executeUpdate();
+        System.out.println("[DB_Manager] Table"+table+" correctement supprimee");
+    }
+
+    private static void delete_entire_content(String table) throws SQLException {
+        String query = "DELETE FROM " + table;
         Statement statement = con.createStatement();
         statement.execute(query);
-        System.out.println("[DB_Manager] Le contenu de la table utilisateur est supprimé");
-
+        System.out.println("[DB_Manager] Le contenu de la table " + table + " est supprimé");
     }
 
-    public static void main(String[] args) throws SQLException {
-
-        //delete_table_utilisateur();
-
-
-        /*
-
-        deleteHistory();
-        showHistory();
-        showUsers();
-        if (verifier_pseudo_libre("paul")) {
-            System.out.println("[DB_Manager] Pseudo paul libre");
-        } else {
-            System.out.println("[DB_Manager] Pseudo paul occupe");
-        }
-        if (verifier_pseudo_libre("toto")) {
-            System.out.println("[DB_Manager] Pseudo toto libre");
-        } else {
-            System.out.println("[DB_Manager] Pseudo toto occupe");
-        }*/
-
-        // maj_pseudo("jackie", 333);
-
-
-    }
-
-
-    //
+        //
     // MAIN
     //
 
-
+    public static void main(String[] args) throws SQLException {
+    }
 }
