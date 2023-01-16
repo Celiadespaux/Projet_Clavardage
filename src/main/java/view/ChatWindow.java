@@ -43,6 +43,7 @@ public class ChatWindow implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         //Affichage de tous les messages
+
        /* ArrayList<Message> messages_list;
         try {
             messages_list = DB_locale_manager.getHistory_mess();
