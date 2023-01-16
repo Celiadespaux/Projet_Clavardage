@@ -215,6 +215,8 @@ public class DB_locale_manager {
 
             User sender;
 
+            System.out.println("[DB_Manager-getHistory_mess] Valeur recu : "+resultSet.getInt("recu"));
+
             // si je suis le destinataire
             if (resultSet.getInt("recu")==1){
                 sender = DB_locale_manager.getUserfromId(resultSet.getInt("id_user"));
@@ -222,7 +224,10 @@ public class DB_locale_manager {
             //si je suis l'expediteur
             else {
                 sender = moi;
+                System.out.println("[DB_Manager-getHistory_mess] Je suis le sender dans gethistory mess");
+
             }
+            System.out.println("[DB_Manager-getHistory_mess] Le sender avant ajout du messages dans la table est :"+ sender);
             Message m = new Message(
                     sender,
                     resultSet.getString("date"),

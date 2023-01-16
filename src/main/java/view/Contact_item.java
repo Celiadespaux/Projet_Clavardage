@@ -1,5 +1,6 @@
 package view;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -22,6 +23,18 @@ public class Contact_item {
     private Button b_contact;
 
     public User contact;
+
+    private ChatWindow controller_chat_window;;
+
+    public void setController_chat_windowController(ChatWindow controller) {
+        this.controller_chat_window = controller ;
+    }
+
+    @FXML
+    private void handleButtonClick(ActionEvent event) {
+        controller_chat_window.afficher_messages(this.contact.getId());
+
+    }
 
     public void setContact(User contact) {
         this.contact = contact;
