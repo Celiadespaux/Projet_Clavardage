@@ -17,14 +17,18 @@ public class DB_locale_manager {
 
     public static Connection con;
     //TODO modifier moi par getmoi de connexion window
+
     static User moi = new User(777,"bidon_moi","mdp","127.0.0.1",6000);
+
     
     //static User moi;
     
     public static User creer_moi() throws UnknownHostException {
-    	InetAddress myip = InetAddress.getLocalHost();
-    	String myips = myip.toString();
-    	return moi = new User(ConnexionWindow.getId(),"","",myips,6000 );
+
+    	//InetAddress myip = InetAddress.getLocalHost();
+    	//String myips = myip.toString();
+    	return moi = new User(ConnexionWindow.getId(),"Moi","","192.168.56.1",6000 );
+
     }
     
     public static User getMoi() {
@@ -66,7 +70,8 @@ public class DB_locale_manager {
         add_utlisateur_db(user1);
         add_utlisateur_db(user2);
         add_utlisateur_db(user3);
-        add_utlisateur_db(user4);
+       add_utlisateur_db(moi);
+
 
         delete_entire_content("discussion");
         Message msg = new Message(moi, "hey ca va ?", Message.TypeMessage.MESSAGE_CONV);
@@ -201,9 +206,14 @@ public class DB_locale_manager {
 
     public static ArrayList<Message> getHistory_mess(int id_contact) throws SQLException {
 
-        String query = "SELECT * FROM discussion WHERE id_user = ?";
+        String query = "SELECT * FROM discussion WHERE id_user = ? or id_user = ?";
         PreparedStatement statement = con.prepareStatement(query);
         statement.setInt(1, id_contact);
+        statement.setInt(2, getMoi().getId());
+
+        System.out.println("[DB_Manager-getHistory_mess] Valeur pseudo moi : "+getMoi().getPseudo());
+
+
         ResultSet resultSet = statement.executeQuery();
 
         ArrayList<Message> list = new ArrayList<>();
