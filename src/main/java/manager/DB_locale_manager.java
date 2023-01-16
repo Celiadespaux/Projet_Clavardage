@@ -57,13 +57,13 @@ public class DB_locale_manager {
 
         delete_entire_content("discussion");
 		Message msg = new Message(User.getMoi(), "hey ca va user2 ?", Message.TypeMessage.MESSAGE_CONV);
-        insert_message_db(msg,0, User.getMoi().getId());
+        insert_message_db(msg,0, user2.getId());
         Message msg2 = new Message(user2, "ca va trql", Message.TypeMessage.MESSAGE_CONV);
         insert_message_db(msg2,1,msg2.getSender().getId());
         Message msg3 = new Message(user3, "je suis user3", Message.TypeMessage.MESSAGE_CONV);
         insert_message_db(msg3,1,msg3.getSender().getId());
         Message msg4 = new Message(User.getMoi(), "hey u3 !", Message.TypeMessage.MESSAGE_CONV);
-        insert_message_db(msg4,0, User.getMoi().getId());
+        insert_message_db(msg4,0, user3.getId());
 
 
         getHistory_mess();
@@ -199,8 +199,7 @@ public class DB_locale_manager {
         String query = "SELECT * FROM discussion WHERE id_user = ?";
         PreparedStatement statement = con.prepareStatement(query);
         statement.setInt(1, id_contact);
-        statement.setInt(2, User.getMoi().getId());
-        System.out.println("[DB_Manager-getHistory_mess] Valeur pseudo moi : "+User.getMoi().getPseudo());
+       // System.out.println("[DB_Manager-getHistory_mess] Valeur pseudo moi : "+User.getMoi().getPseudo());
 
 
         ResultSet resultSet = statement.executeQuery();

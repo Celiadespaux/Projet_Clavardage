@@ -19,8 +19,8 @@ public class Network_manager {
 
 	}
 
-	public void setController_chat_windowController(ChatWindow controller) {
-		this.controller_chat_window = controller ;
+	public static void setController_chat_windowController(ChatWindow controller) {
+		controller_chat_window = controller ;
 	}
 
 
