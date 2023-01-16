@@ -45,9 +45,9 @@ public class ConnexionWindow {
     	user = DB_locale_manager.getUserfromId(Integer.valueOf(id));
     	mdpbon = user.getMdp();
     	if (mdp.equals(mdpbon)) {
-    		DB_locale_manager.creer_moi();
+    		User.creer_moi();
     		changeScene_ChoixPseudo(event);
-    		System.out.println(DB_locale_manager.getMoi());
+    		System.out.println(User.getMoi());
     	}
     	else {
     		l_mess_connexion.setText("Mot de passe erroné, veuillez réessayer");

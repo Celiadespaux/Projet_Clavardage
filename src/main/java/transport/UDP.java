@@ -8,6 +8,8 @@ import java.util.*;
 
 import manager.DB_locale_manager;
 import model.Message;
+import model.User;
+
 import java.net.InterfaceAddress ; 
 import java.net.NetworkInterface ;
 import java.net.SocketException;
@@ -102,7 +104,7 @@ public class UDP extends Thread{
 				socket.receive(dp);
 				String recu = new String(dp.getData(), 0, dp.getLength());
 				
-				Message msg = Message.deconstruire_message(recu, DB_locale_manager.getMoi());
+				Message msg = Message.deconstruire_message(recu, User.getMoi());
 				Traitement_Messages.differencier_msg(msg);
 			}
 				

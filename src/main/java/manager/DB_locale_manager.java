@@ -16,25 +16,7 @@ public class DB_locale_manager {
     //
 
     public static Connection con;
-    //TODO modifier moi par getmoi de connexion window
-
-    static User moi = new User(777,"bidon_moi","mdp","127.0.0.1",6000);
-
     
-    //static User moi;
-    
-    public static User creer_moi() throws UnknownHostException {
-
-    	//InetAddress myip = InetAddress.getLocalHost();
-    	//String myips = myip.toString();
-    	return moi = new User(ConnexionWindow.getId(),"Moi","","192.168.56.1",6000 );
-
-    }
-    
-    public static User getMoi() {
-		return moi;
-	}
-
 	public DB_locale_manager() throws SQLException {
 
         //CONNEXION
@@ -63,25 +45,26 @@ public class DB_locale_manager {
         creer_tables_DB();
 
         delete_entire_content("utilisateur");
-        User user1 = new User(111, "toto", "motdepasse", "143.112.212.233", 3348);
-        User user2 = new User(222, "pierre", "motdepass24e", "143.112.212.233", 3358);
-        User user3 = new User(333, "jack", "motdepass24e", "143.112.212.233", 3379);
-        User user4 = new User(777,"bidon_moi","mdp","127.0.0.1",6000);
+        User user1 = new User(111, "toto", "motdepasse", "localhost", 6000);
+        User user2 = new User(222, "pierre", "motdepass24e", "localhost", 6000);
+        User user3 = new User(333, "jack", "motdepass24e", "localhost", 6000);
+        User user4 = new User(777,"bidon_moi","mdp","localhost",6000);
         add_utlisateur_db(user1);
         add_utlisateur_db(user2);
         add_utlisateur_db(user3);
-       add_utlisateur_db(moi);
+        add_utlisateur_db(user4);
 
 
         delete_entire_content("discussion");
-        Message msg = new Message(moi, "hey ca va user2 ?", Message.TypeMessage.MESSAGE_CONV);
-        insert_message_db(msg,0, getMoi().getId());
+		Message msg = new Message(User.getMoi(), "hey ca va user2 ?", Message.TypeMessage.MESSAGE_CONV);
+        insert_message_db(msg,0, User.getMoi().getId());
         Message msg2 = new Message(user2, "ca va trql", Message.TypeMessage.MESSAGE_CONV);
         insert_message_db(msg2,1,msg2.getSender().getId());
         Message msg3 = new Message(user3, "je suis user3", Message.TypeMessage.MESSAGE_CONV);
         insert_message_db(msg3,1,msg3.getSender().getId());
-        Message msg4 = new Message(moi, "hey u3 !", Message.TypeMessage.MESSAGE_CONV);
-        insert_message_db(msg4,0,getMoi().getId());
+        Message msg4 = new Message(User.getMoi(), "hey u3 !", Message.TypeMessage.MESSAGE_CONV);
+        insert_message_db(msg4,0, User.getMoi().getId());
+
 
         getHistory_mess();
 
@@ -196,7 +179,7 @@ public class DB_locale_manager {
             }
             //si je suis l'expediteur
             else {
-                sender = moi;
+                sender = User.getMoi();
             }
             Message m = new Message(
                     sender,
@@ -216,7 +199,8 @@ public class DB_locale_manager {
         String query = "SELECT * FROM discussion WHERE id_user = ?";
         PreparedStatement statement = con.prepareStatement(query);
         statement.setInt(1, id_contact);
-        System.out.println("[DB_Manager-getHistory_mess] Valeur pseudo moi : "+getMoi().getPseudo());
+        statement.setInt(2, User.getMoi().getId());
+        System.out.println("[DB_Manager-getHistory_mess] Valeur pseudo moi : "+User.getMoi().getPseudo());
 
 
         ResultSet resultSet = statement.executeQuery();
@@ -235,7 +219,7 @@ public class DB_locale_manager {
             }
             //si je suis l'expediteur
             else {
-                sender = moi;
+                sender = User.getMoi();
                 System.out.println("[DB_Manager-getHistory_mess] Je suis le sender dans gethistory mess");
 
             }
