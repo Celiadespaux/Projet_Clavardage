@@ -56,6 +56,10 @@ public class DB_locale_manager {
 
         //INITIALISATION
         drop_table("annuaire");
+        drop_table("utilisateur");
+        drop_table("discussion");
+
+
         creer_tables_DB();
 
         delete_entire_content("utilisateur");
@@ -71,6 +75,12 @@ public class DB_locale_manager {
         insert_message_db(msg,0);
         Message msg2 = new Message(user2, "ca va trql", Message.TypeMessage.MESSAGE_CONV);
         insert_message_db(msg2,1);*/
+
+        Message msg3 = new Message(user3, "je suis user3", Message.TypeMessage.MESSAGE_CONV);
+        insert_message_db(msg3,1);
+        Message msg4 = new Message(moi, "hey u3 !", Message.TypeMessage.MESSAGE_CONV);
+        insert_message_db(msg4,0);
+
         getHistory_mess();
 
         delete_entire_content("annuaire");
@@ -104,12 +114,12 @@ public class DB_locale_manager {
 
         //1 table par utilisateur
         String sql_discussion = "CREATE TABLE IF NOT EXISTS discussion (\n"
-                + "	id_dest integer,\n"
+                + "	id_user integer,\n"
                 + "	date text,\n"
                 + "	message text,\n"
                 + " recu text ,\n" //1 si recu 0 si envoye
-                + "   FOREIGN KEY (id_dest) REFERENCES utilisateur(id),"
-                + "	PRIMARY KEY (id_dest,date)\n"
+                + "   FOREIGN KEY (id_user) REFERENCES utilisateur(id),"
+                + "	PRIMARY KEY (id_user,date)\n"
                 + ");";
 
         String sql_annuaire = "CREATE TABLE IF NOT EXISTS annuaire (\n"
@@ -162,7 +172,6 @@ public class DB_locale_manager {
     //TODO trier en fct de expe / dest
     public static ArrayList<Message> getHistory_mess() throws SQLException {
 
-        //TODO poffiner en fct de la convo
         String query = "SELECT * FROM discussion ";
         Statement statement = con.createStatement();
         ResultSet result = statement.executeQuery(query);
@@ -174,7 +183,7 @@ public class DB_locale_manager {
 
             // si je suis le destinataire
             if (result.getInt("recu")==1){
-                sender = DB_locale_manager.getUserfromId(result.getInt("id_dest"));
+                sender = DB_locale_manager.getUserfromId(result.getInt("id_user"));
             }
             //si je suis l'expediteur
             else {
@@ -189,6 +198,40 @@ public class DB_locale_manager {
             list.add(m);
         }
         System.out.println("[DB_Manager] Liste messages finale:");
+        System.out.println(list);
+        return list;
+    }
+
+    public static ArrayList<Message> getHistory_mess(int id_contact) throws SQLException {
+
+        String query = "SELECT * FROM discussion WHERE id_user = ?";
+        PreparedStatement statement = con.prepareStatement(query);
+        statement.setInt(1, id_contact);
+        ResultSet resultSet = statement.executeQuery();
+
+        ArrayList<Message> list = new ArrayList<>();
+
+        while (resultSet.next()) {
+
+            User sender;
+
+            // si je suis le destinataire
+            if (resultSet.getInt("recu")==1){
+                sender = DB_locale_manager.getUserfromId(resultSet.getInt("id_user"));
+            }
+            //si je suis l'expediteur
+            else {
+                sender = moi;
+            }
+            Message m = new Message(
+                    sender,
+                    resultSet.getString("date"),
+                    resultSet.getString("message"),
+                    Message.TypeMessage.MESSAGE_CONV
+            );
+            list.add(m);
+        }
+        System.out.println("[DB_Manager] Liste messages finale avec "+id_contact+": ");
         System.out.println(list);
         return list;
     }
