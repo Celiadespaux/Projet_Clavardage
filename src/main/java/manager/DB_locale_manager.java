@@ -17,14 +17,14 @@ public class DB_locale_manager {
 
     public static Connection con;
     //TODO modifier moi par getmoi de connexion window
-    //static User moi = new User(777,"bidon_moi","mdp","test",123);
+    static User moi = new User(777,"bidon_moi","mdp","127.0.0.1",6000);
     
-    static User moi;
+    //static User moi;
     
     public static User creer_moi() throws UnknownHostException {
-    	//InetAddress myip = InetAddress.getLocalHost();
-    	//String myips = myip.toString();
-    	return moi = new User(ConnexionWindow.getId(),"","","192.168.56.1",6000 );
+    	InetAddress myip = InetAddress.getLocalHost();
+    	String myips = myip.toString();
+    	return moi = new User(ConnexionWindow.getId(),"","",myips,6000 );
     }
     
     public static User getMoi() {
@@ -66,16 +66,17 @@ public class DB_locale_manager {
         User user1 = new User(111, "toto", "motdepasse", "143.112.212.233", 3348);
         User user2 = new User(222, "pierre", "motdepass24e", "143.112.212.233", 3358);
         User user3 = new User(333, "jack", "motdepass24e", "143.112.212.233", 3379);
+        User user4 = new User(777,"bidon_moi","mdp","127.0.0.1",6000);
         add_utlisateur_db(user1);
         add_utlisateur_db(user2);
         add_utlisateur_db(user3);
+        add_utlisateur_db(user4);
 
         delete_entire_content("discussion");
-        /*Message msg = new Message(moi, "hey ca va ?", Message.TypeMessage.MESSAGE_CONV);
+        Message msg = new Message(moi, "hey ca va ?", Message.TypeMessage.MESSAGE_CONV);
         insert_message_db(msg,0);
         Message msg2 = new Message(user2, "ca va trql", Message.TypeMessage.MESSAGE_CONV);
-        insert_message_db(msg2,1);*/
-
+        insert_message_db(msg2,1);
         Message msg3 = new Message(user3, "je suis user3", Message.TypeMessage.MESSAGE_CONV);
         insert_message_db(msg3,1);
         Message msg4 = new Message(moi, "hey u3 !", Message.TypeMessage.MESSAGE_CONV);
@@ -84,10 +85,10 @@ public class DB_locale_manager {
         getHistory_mess();
 
         delete_entire_content("annuaire");
-        //add_user_annuaire(111);
+        add_user_annuaire(111);
         add_user_annuaire(222);
         add_user_annuaire(333);
-        //getContacts();
+        getContacts();
 
 
     }
