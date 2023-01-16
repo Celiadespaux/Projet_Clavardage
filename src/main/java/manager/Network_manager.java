@@ -3,19 +3,26 @@ package manager;
 import java.io.IOException;
 import model.*;
 import transport.*;
+import view.ChatWindow;
 
 public class Network_manager {
 
 	static TCP Tcp;
 	static UDP Udp;
-	
+
+	private static ChatWindow controller_chat_window;;
+
 	public Network_manager() {
 		// TODO Auto-generated constructor stub
 		Tcp = new TCP();
 		Udp = new UDP(5001, 10000) ;
 
 	}
-	
+
+	public void setController_chat_windowController(ChatWindow controller) {
+		this.controller_chat_window = controller ;
+	}
+
 
 	//run servers 
 	public void runservers() throws IOException {
@@ -26,7 +33,8 @@ public class Network_manager {
 	
 	//recevoir un message (tcp) et ajouter a la db
 	public static void message_recu(Message msg) {
-		DB_locale_manager.insert_message_db(msg,1);
+		DB_locale_manager.insert_message_db(msg,1,msg.getSender().getId());
+		controller_chat_window.afficher_new_mess(msg);
 	} 
 	
 	public static void deconnection() {

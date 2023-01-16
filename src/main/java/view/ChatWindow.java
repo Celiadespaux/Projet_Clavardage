@@ -158,9 +158,25 @@ public class ChatWindow implements Initializable {
     public void envoyer_message(ActionEvent event) throws UnknownHostException, IOException {
     	String msg = tf_mess_a_envoyer.getText();
     	Message message = new Message(DB_locale_manager.getMoi(), msg, Message.TypeMessage.MESSAGE_CONV);
-    	DB_locale_manager.insert_message_db(message,0);
+    	DB_locale_manager.insert_message_db(message,0,last_contact_cliked.getId());
     	//User user = new User(2,"User2","MDP2","127.0.0.1",6000); //TODO recup user depuis la window
     	TCP.envoyer_msg_tcp(last_contact_cliked, message);
+
+    }
+
+    public void afficher_new_mess (Message mess){
+
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(ChatWindow.class.getResource("/Message_item.fxml"));
+        try {
+            VBox m_item_fxml = fxmlLoader.load();
+            Message_item m_item_ctrl = fxmlLoader.getController();
+            m_item_ctrl.setData(mess);
+            vbox_chat_messages.getChildren().add(m_item_fxml);
+        } catch (IOException e) {
+            System.out.println("[Contact_item.java] Pb load message_item");
+            throw new RuntimeException(e);
+        }
 
     }
 

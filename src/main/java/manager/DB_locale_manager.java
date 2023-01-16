@@ -74,14 +74,14 @@ public class DB_locale_manager {
 
 
         delete_entire_content("discussion");
-        Message msg = new Message(moi, "hey ca va ?", Message.TypeMessage.MESSAGE_CONV);
-        insert_message_db(msg,0);
+        Message msg = new Message(moi, "hey ca va user2 ?", Message.TypeMessage.MESSAGE_CONV);
+        insert_message_db(msg,0, getMoi().getId());
         Message msg2 = new Message(user2, "ca va trql", Message.TypeMessage.MESSAGE_CONV);
-        insert_message_db(msg2,1);
+        insert_message_db(msg2,1,msg2.getSender().getId());
         Message msg3 = new Message(user3, "je suis user3", Message.TypeMessage.MESSAGE_CONV);
-        insert_message_db(msg3,1);
+        insert_message_db(msg3,1,msg3.getSender().getId());
         Message msg4 = new Message(moi, "hey u3 !", Message.TypeMessage.MESSAGE_CONV);
-        insert_message_db(msg4,0);
+        insert_message_db(msg4,0,getMoi().getId());
 
         getHistory_mess();
 
@@ -151,12 +151,19 @@ public class DB_locale_manager {
      * Enregistre un message dans le tableau discussion
      * @param msg le message à enregistrer
      */
-    public static void insert_message_db(Message msg, int recu) {
+    public static void insert_message_db(Message msg, int recu, int id_user_discussion) {
 
         String sql = "INSERT INTO discussion VALUES(?,?,?,?)";
 
         try (PreparedStatement pstmt = con.prepareStatement(sql)) {
-            pstmt.setInt(1, msg.getSender().getId());
+
+
+            if (recu == 0) { //si j'envoie le message
+                pstmt.setInt(1, id_user_discussion);
+            } else if (recu == 1) { //si je recois le message
+                pstmt.setInt(1,  msg.getSender().getId());
+            }
+
             pstmt.setString(2, msg.getDate());
             pstmt.setString(3, msg.getContenu());
             pstmt.setInt(4,recu);
@@ -206,11 +213,9 @@ public class DB_locale_manager {
 
     public static ArrayList<Message> getHistory_mess(int id_contact) throws SQLException {
 
-        String query = "SELECT * FROM discussion WHERE id_user = ? or id_user = ?";
+        String query = "SELECT * FROM discussion WHERE id_user = ?";
         PreparedStatement statement = con.prepareStatement(query);
         statement.setInt(1, id_contact);
-        statement.setInt(2, getMoi().getId());
-
         System.out.println("[DB_Manager-getHistory_mess] Valeur pseudo moi : "+getMoi().getPseudo());
 
 
