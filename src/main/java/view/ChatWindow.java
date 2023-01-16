@@ -27,7 +27,6 @@ import manager.*;
 
 public class ChatWindow implements Initializable {
 //public class ChatWindow {
-
 	
 	@FXML
     private TextField tf_mess_a_envoyer;
@@ -47,9 +46,9 @@ public class ChatWindow implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
        // contact_item_controller.setController_chat_windowController(this);
+        //Affichage de tous les messages
 
-     /*   //Affichage de tous les messages
-        ArrayList<Message> messages_list;
+       /* ArrayList<Message> messages_list;
         try {
             messages_list = DB_locale_manager.getHistory_mess();
         } catch (SQLException e) {
@@ -154,6 +153,7 @@ public class ChatWindow implements Initializable {
     	String msg = tf_mess_a_envoyer.getText();
     	Message message = new Message(DB_locale_manager.getMoi(), msg, Message.TypeMessage.MESSAGE_CONV);
     	User user = new User(2,"User2","MDP2","127.0.0.1",6000); //TODO recup user depuis la window 
+    	DB_locale_manager.insert_message_db(message,0);
     	TCP.envoyer_msg_tcp(user, message);
     }
 

@@ -18,11 +18,6 @@ public class Traitement_Messages implements Runnable {
 	ServerSocket serverSocket ;
 	TCP serverTCP ; 
 	
-	//static User moi = new User(1,"User1","MDP1","127.0.0.1",6000);
-	
-	/*public static User getMoi() {
-		return moi;
-	}*/
 	
 	public Traitement_Messages(Socket client, ServerSocket serverSocket, TCP serverTCP) {
 		this.clientSocket = client ;
