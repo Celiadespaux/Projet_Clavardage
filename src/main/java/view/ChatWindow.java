@@ -82,7 +82,8 @@ public class ChatWindow implements Initializable {
             try {
                 VBox c_item_fxml = fxmlLoader.load();
                 Contact_item c_item_ctrl = fxmlLoader.getController();
-                c_item_ctrl.setData(user);
+                c_item_ctrl.setContact(user);
+                c_item_ctrl.setData();
                 hbox_utilisateurs_actifs.getChildren().add(c_item_fxml);
             } catch (IOException e) {
                 System.out.println("[ChatWindow.java] Pb load contact_item");
@@ -91,6 +92,29 @@ public class ChatWindow implements Initializable {
         }
 
         l_mon_nom.setText(ChoixPseudoWindow.pseudo);
+    }
+
+    public void afficher_messages(int id_contact){
+        ArrayList<Message> messages_list;
+        try {
+            messages_list = DB_locale_manager.getHistory_mess(id_contact);
+        } catch (SQLException e) {
+            System.out.println("[Contact_item.java] Pb creation liste messages");
+            throw new RuntimeException(e);
+        }
+        for (Message message : messages_list) {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(ChatWindow.class.getResource("/Message_item.fxml"));
+            try {
+                VBox m_item_fxml = fxmlLoader.load();
+                Message_item m_item_ctrl = fxmlLoader.getController();
+                m_item_ctrl.setData(message);
+                vbox_chat_messages.getChildren().add(m_item_fxml);
+            } catch (IOException e) {
+                System.out.println("[Contact_item.java] Pb load message_item");
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     // Affichage page de deconnexion qd on clique sur le bouton deconnexion
