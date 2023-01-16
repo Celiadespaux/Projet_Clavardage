@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -14,15 +15,20 @@
                 <Image url="@logo_clavardage_grand.png" />
             </image>
         </ImageView>
-        <TextField id="tf_id" layoutX="425.0" layoutY="326.0" prefHeight="45.0" prefWidth="250.0" promptText="Id :" style="-fx-background-color: #4e2e2f; -fx-text-fill: #ffffff;">
+        <Label fx:id="l_mess_connexion" alignment="CENTER" contentDisplay="CENTER" layoutX="290.0" layoutY="430.0" prefHeight="112.0" prefWidth="520.0" text=" " textFill="WHITE">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+        <TextField fx:id="tf_id" layoutX="425.0" layoutY="326.0" prefHeight="45.0" prefWidth="250.0" promptText="Id :" style="-fx-background-color: #4e2e2f; -fx-text-fill: #ffffff;">
          <font>
             <Font size="20.0" />
          </font></TextField>
-        <TextField id="tf_mdp" layoutX="425.0" layoutY="408.0" prefHeight="45.0" prefWidth="250.0" promptText="Mot de passe :" style="-fx-background-color: #4e2e2f; -fx-text-fill: #ffffff;">
+        <TextField fx:id="tf_mdp" layoutX="425.0" layoutY="408.0" prefHeight="45.0" prefWidth="250.0" promptText="Mot de passe :" style="-fx-background-color: #4e2e2f; -fx-text-fill: #ffffff;">
          <font>
             <Font size="20.0" />
          </font></TextField>
-        <Button id="button_connexion" layoutX="470.0" layoutY="524.0" mnemonicParsing="false" onAction="#changeScene_ChoixPseudo" prefHeight="47.0" prefWidth="160.0" style="-fx-background-radius: 30;" text="Connexion">
+        <Button id="button_connexion" layoutX="470.0" layoutY="524.0" mnemonicParsing="false" onAction="#verifier_mdp" prefHeight="47.0" prefWidth="160.0" style="-fx-background-radius: 30;" text="Connexion">
             <font>
                 <Font name="Arial Bold" size="20.0" />
             </font>

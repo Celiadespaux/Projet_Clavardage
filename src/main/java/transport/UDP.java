@@ -6,6 +6,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.*;
 
+import manager.DB_locale_manager;
 import model.Message;
 import java.net.InterfaceAddress ; 
 import java.net.NetworkInterface ;
@@ -101,7 +102,7 @@ public class UDP extends Thread{
 				socket.receive(dp);
 				String recu = new String(dp.getData(), 0, dp.getLength());
 				
-				Message msg = Message.deconstruire_message(recu, Traitement_Messages.getMoi());
+				Message msg = Message.deconstruire_message(recu, DB_locale_manager.getMoi());
 				Traitement_Messages.differencier_msg(msg);
 			}
 				

@@ -13,11 +13,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import manager.Account_manager;
 import model.*;
 import transport.TCP;
-import transport.Traitement_Messages;
-
 import java.io.IOException;
 import java.net.URL;
 import java.net.UnknownHostException;
@@ -105,7 +102,7 @@ public class ChatWindow implements Initializable {
     }
 
     public void bouton_deconnection(ActionEvent event) throws IOException {
-        Account_manager.deconnecte(Traitement_Messages.getMoi());
+        Account_manager.deconnecte(DB_locale_manager.getMoi());
         changeScene_DeconnexionWindow(event);
     }
     
@@ -124,7 +121,7 @@ public class ChatWindow implements Initializable {
     
     public void envoyer_message(ActionEvent event) throws UnknownHostException, IOException {
     	String msg = tf_mess_a_envoyer.getText();
-    	Message message = new Message(Traitement_Messages.getMoi(), msg, Message.TypeMessage.MESSAGE_CONV);
+    	Message message = new Message(DB_locale_manager.getMoi(), msg, Message.TypeMessage.MESSAGE_CONV);
     	User user = new User(2,"User2","MDP2","127.0.0.1",6000); //TODO recup user depuis la window 
     	TCP.envoyer_msg_tcp(user, message);
     }

@@ -10,7 +10,6 @@ import manager.Account_manager;
 import manager.DB_locale_manager;
 import manager.Network_manager;
 import model.Message;
-import model.User;
 
 
 public class Traitement_Messages implements Runnable {
@@ -19,11 +18,11 @@ public class Traitement_Messages implements Runnable {
 	ServerSocket serverSocket ;
 	TCP serverTCP ; 
 	
-	static User moi = new User(1,"User1","MDP1","127.0.0.1",6000);
+	//static User moi = new User(1,"User1","MDP1","127.0.0.1",6000);
 	
-	public static User getMoi() {
+	/*public static User getMoi() {
 		return moi;
-	}
+	}*/
 	
 	public Traitement_Messages(Socket client, ServerSocket serverSocket, TCP serverTCP) {
 		this.clientSocket = client ;
@@ -41,9 +40,12 @@ public class Traitement_Messages implements Runnable {
 			break;
 		
 		case CONNECTE :
-			DB_locale_manager.add_utlisateur_db(msg.getSender());
-			Message nmsg = new Message(getMoi(),"", Message.TypeMessage.RENVOIE_PSEUDO);
-			TCP.envoyer_msg_tcp(msg.getSender(), nmsg);
+			if (msg.getSender().getId() == (DB_locale_manager.getMoi().getId())) {  }
+			else {
+				DB_locale_manager.add_user_annuaire(msg.getSender().getId());
+				Message nmsg = new Message(DB_locale_manager.getMoi(),"", Message.TypeMessage.RENVOIE_PSEUDO);
+				TCP.envoyer_msg_tcp(msg.getSender(), nmsg);
+			}
 			break;
 		
 		case DECONNECTE :
@@ -52,7 +54,10 @@ public class Traitement_Messages implements Runnable {
 			break;
 			
 		case RENVOIE_PSEUDO :
-			DB_locale_manager.add_utlisateur_db(msg.getSender());
+			if (msg.getSender().getId() == (DB_locale_manager.getMoi().getId())) {  }
+			else {
+				DB_locale_manager.add_user_annuaire(msg.getSender().getId());
+			}
 			break;
 			
 		case CHANGE_PSEUDO : 
@@ -61,7 +66,7 @@ public class Traitement_Messages implements Runnable {
 			
 		case PSEUDO_DISPO:
 			String pseudo = msg.getContenu();
-			String Monpseudo = moi.getPseudo();
+			String Monpseudo = DB_locale_manager.getMoi().getPseudo();
 			if (pseudo.equals(Monpseudo)) {
 				Account_manager.pseudoPasDispo();
 			}
@@ -78,7 +83,7 @@ public class Traitement_Messages implements Runnable {
 			input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			String recu = input.readLine();
 			
-			Message msg = Message.deconstruire_message(recu, getMoi());
+			Message msg = Message.deconstruire_message(recu, DB_locale_manager.getMoi());
 			differencier_msg(msg);
 			
 			input.close();

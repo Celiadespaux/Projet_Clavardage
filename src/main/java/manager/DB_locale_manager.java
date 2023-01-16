@@ -2,10 +2,12 @@ package manager;
 
 import model.Message;
 import model.User;
+import view.ConnexionWindow;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.*;
 
 public class DB_locale_manager {
 
@@ -15,9 +17,25 @@ public class DB_locale_manager {
 
     public static Connection con;
     //TODO modifier moi par getmoi de connexion window
-    static User moi = new User(777,"bidon_moi","mdp","test",123);
+    //static User moi = new User(777,"bidon_moi","mdp","test",123);
+    
+    static User moi;
+    
+    public static User creer_moi() throws UnknownHostException {
+    	//InetAddress myip = InetAddress.getLocalHost();
+    	//String myips = myip.toString();
+    	return moi = new User(ConnexionWindow.getId(),"","","192.168.56.1",6000 );
+    }
+    
+    public static User getMoi() {
+		return moi;
+	}
 
-    public DB_locale_manager() throws SQLException {
+    public static void setMoi(User moi) {
+		DB_locale_manager.moi = moi;
+	}
+
+	public DB_locale_manager() throws SQLException {
 
         //CONNEXION
         try {
@@ -49,17 +67,17 @@ public class DB_locale_manager {
         add_utlisateur_db(user3);
 
         delete_entire_content("discussion");
-        Message msg = new Message(moi, "hey ca va ?", Message.TypeMessage.MESSAGE_CONV);
+        /*Message msg = new Message(moi, "hey ca va ?", Message.TypeMessage.MESSAGE_CONV);
         insert_message_db(msg,0);
         Message msg2 = new Message(user2, "ca va trql", Message.TypeMessage.MESSAGE_CONV);
-        insert_message_db(msg2,1);
+        insert_message_db(msg2,1);*/
         getHistory_mess();
 
         delete_entire_content("annuaire");
-        add_user_annuaire(111);
+        //add_user_annuaire(111);
         add_user_annuaire(222);
         add_user_annuaire(333);
-        getContacts();
+        //getContacts();
 
 
     }

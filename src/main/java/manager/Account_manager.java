@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.regex.*;
 import model.*;
 import model.Message.TypeMessage;
-import transport.Traitement_Messages;
 
 public class Account_manager {
 
@@ -31,7 +30,7 @@ public class Account_manager {
 		long timeElapsed = 0;
 		long start = System.currentTimeMillis();
 		long finish = 0;
-		String msg = Message.construire_message(pseudo,  Traitement_Messages.getMoi(), TypeMessage.PSEUDO_DISPO);
+		String msg = Message.construire_message(pseudo,  DB_locale_manager.getMoi(), TypeMessage.PSEUDO_DISPO);
 		
 		Network_manager.Udp.broadcast(msg);
 
