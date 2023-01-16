@@ -31,10 +31,6 @@ public class DB_locale_manager {
 		return moi;
 	}
 
-    public static void setMoi(User moi) {
-		DB_locale_manager.moi = moi;
-	}
-
 	public DB_locale_manager() throws SQLException {
 
         //CONNEXION

@@ -37,6 +37,7 @@ public class ChoixPseudoWindow {
 	            	try {
 						Account_manager.connecte(DB_locale_manager.getMoi());
 						DB_locale_manager.getContacts();
+						DB_locale_manager.getMoi().setPseudo(pseudo);
 					    changeScene_ChatWindow(event);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block

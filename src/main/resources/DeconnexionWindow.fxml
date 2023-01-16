@@ -9,7 +9,7 @@
 
 <AnchorPane prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: #B68F8F;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.DeconnexionWindow">
    <children>
-      <Label layoutX="416.0" layoutY="350.0" text="A bientot !" textFill="WHITE">
+      <Label layoutX="416.0" layoutY="350.0" text="À bientôt !" textFill="WHITE">
          <font>
             <Font size="63.0" />
          </font>
