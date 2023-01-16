@@ -10,6 +10,7 @@ import manager.Account_manager;
 import manager.DB_locale_manager;
 import manager.Network_manager;
 import model.Message;
+import model.User;
 
 
 public class Traitement_Messages implements Runnable {
@@ -35,10 +36,10 @@ public class Traitement_Messages implements Runnable {
 			break;
 		
 		case CONNECTE :
-			if (msg.getSender().getId() == (DB_locale_manager.getMoi().getId())) {  }
+			if (msg.getSender().getId() == (User.getMoi().getId())) {  }
 			else {
 				DB_locale_manager.add_user_annuaire(msg.getSender().getId());
-				Message nmsg = new Message(DB_locale_manager.getMoi(),"", Message.TypeMessage.RENVOIE_PSEUDO);
+				Message nmsg = new Message(User.getMoi(),"", Message.TypeMessage.RENVOIE_PSEUDO);
 				TCP.envoyer_msg_tcp(msg.getSender(), nmsg);
 			}
 			break;
@@ -49,7 +50,7 @@ public class Traitement_Messages implements Runnable {
 			break;
 			
 		case RENVOIE_PSEUDO :
-			if (msg.getSender().getId() == (DB_locale_manager.getMoi().getId())) {  }
+			if (msg.getSender().getId() == (User.getMoi().getId())) {  }
 			else {
 				DB_locale_manager.add_user_annuaire(msg.getSender().getId());
 			}
@@ -61,7 +62,7 @@ public class Traitement_Messages implements Runnable {
 			
 		case PSEUDO_DISPO:
 			String pseudo = msg.getContenu();
-			String Monpseudo = DB_locale_manager.getMoi().getPseudo();
+			String Monpseudo = User.getMoi().getPseudo();
 			if (pseudo.equals(Monpseudo)) {
 				Account_manager.pseudoPasDispo();
 			}
@@ -78,7 +79,7 @@ public class Traitement_Messages implements Runnable {
 			input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			String recu = input.readLine();
 			
-			Message msg = Message.deconstruire_message(recu, DB_locale_manager.getMoi());
+			Message msg = Message.deconstruire_message(recu, User.getMoi());
 			differencier_msg(msg);
 			
 			input.close();

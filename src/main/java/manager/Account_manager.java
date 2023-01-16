@@ -30,7 +30,7 @@ public class Account_manager {
 		long timeElapsed = 0;
 		long start = System.currentTimeMillis();
 		long finish = 0;
-		String msg = Message.construire_message(pseudo,  DB_locale_manager.getMoi(), TypeMessage.PSEUDO_DISPO);
+		String msg = Message.construire_message(pseudo,  User.getMoi(), TypeMessage.PSEUDO_DISPO);
 		
 		Network_manager.Udp.broadcast(msg);
 

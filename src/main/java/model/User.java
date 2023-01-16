@@ -1,5 +1,9 @@
 package model;
 
+import java.net.UnknownHostException;
+
+import view.ConnexionWindow;
+
 public class User {
 	
 	
@@ -16,6 +20,21 @@ public class User {
 		this.ip = ip;
 		this.port = port;
 		
+	}
+	
+	static User moi = new User(1,"","","",1);
+	    
+	public static User creer_moi() throws UnknownHostException {
+		moi.setId(ConnexionWindow.getId());
+		moi.setPseudo("Moi");
+		moi.setIp("localhost");
+		moi.setPort(6000);
+		return moi;
+
+	}
+	    
+	public static User getMoi() {
+		return moi;
 	}
 
 	public int getId() {

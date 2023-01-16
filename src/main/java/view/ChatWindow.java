@@ -8,7 +8,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -138,7 +137,7 @@ public class ChatWindow implements Initializable {
     }
 
     public void bouton_deconnection(ActionEvent event) throws IOException {
-        Account_manager.deconnecte(DB_locale_manager.getMoi());
+        Account_manager.deconnecte(User.getMoi());
         changeScene_DeconnexionWindow(event);
     }
     
@@ -157,11 +156,10 @@ public class ChatWindow implements Initializable {
     
     public void envoyer_message(ActionEvent event) throws UnknownHostException, IOException {
     	String msg = tf_mess_a_envoyer.getText();
-    	Message message = new Message(DB_locale_manager.getMoi(), msg, Message.TypeMessage.MESSAGE_CONV);
+    	Message message = new Message(User.getMoi(), msg, Message.TypeMessage.MESSAGE_CONV);
     	DB_locale_manager.insert_message_db(message,0);
-    	//User user = new User(2,"User2","MDP2","127.0.0.1",6000); //TODO recup user depuis la window
     	TCP.envoyer_msg_tcp(last_contact_cliked, message);
-
+    	tf_mess_a_envoyer.setText("");
     }
 
 }

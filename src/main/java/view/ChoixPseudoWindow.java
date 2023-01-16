@@ -10,6 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import manager.*;
+import model.User;
+
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -35,9 +37,9 @@ public class ChoixPseudoWindow {
 	        if (Account_manager.verifier_pseudo_valide(pseudo)) {
 	            if (Account_manager.verifier_pseudo_libre(pseudo)) {
 	            	try {
-						Account_manager.connecte(DB_locale_manager.getMoi());
+						Account_manager.connecte(User.getMoi());
 						DB_locale_manager.getContacts();
-						DB_locale_manager.getMoi().setPseudo(pseudo);
+						User.getMoi().setPseudo(pseudo);
 					    changeScene_ChatWindow(event);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
