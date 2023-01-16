@@ -43,10 +43,15 @@ public class ChatWindow implements Initializable {
     @FXML
     private HBox hbox_utilisateurs_actifs;
 
+    /*@FXML
+    private Contact_item contact_item_controller;
+*/
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        //Affichage de tous les messages
+       // contact_item_controller.setController_chat_windowController(this);
+
+     /*   //Affichage de tous les messages
         ArrayList<Message> messages_list;
         try {
             messages_list = DB_locale_manager.getHistory_mess();
@@ -66,7 +71,7 @@ public class ChatWindow implements Initializable {
                 System.out.println("[ChatWindow.java] Pb load message_item");
                 throw new RuntimeException(e);
             }
-        }
+        }*/
 
         //Affichage de tous les contacts
         ArrayList<User> contacts_list;
@@ -84,6 +89,7 @@ public class ChatWindow implements Initializable {
                 Contact_item c_item_ctrl = fxmlLoader.getController();
                 c_item_ctrl.setContact(user);
                 c_item_ctrl.setData();
+                c_item_ctrl.setController_chat_windowController(this);
                 hbox_utilisateurs_actifs.getChildren().add(c_item_fxml);
             } catch (IOException e) {
                 System.out.println("[ChatWindow.java] Pb load contact_item");
@@ -95,6 +101,7 @@ public class ChatWindow implements Initializable {
     }
 
     public void afficher_messages(int id_contact){
+        vbox_chat_messages.getChildren().clear();
         ArrayList<Message> messages_list;
         try {
             messages_list = DB_locale_manager.getHistory_mess(id_contact);

@@ -23,6 +23,7 @@ public class Message_item {
     @FXML
     private Label l_mess;
 
+
     public static String formatDate(String input) {
         try {
             SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");

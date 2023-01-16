@@ -8,7 +8,7 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="100.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Contact_item">
    <children>
-      <Button fx:id="b_contact" minHeight="100.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-color: #4e2e2f;" text="X" textFill="WHITE">
+      <Button fx:id="b_contact" minHeight="100.0" minWidth="100.0" mnemonicParsing="false" onAction="#handleButtonClick" style="-fx-background-radius: 50; -fx-background-color: #4e2e2f;" text="X" textFill="WHITE">
          <font>
             <Font size="44.0" />
          </font>
