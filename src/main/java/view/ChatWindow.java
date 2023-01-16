@@ -40,6 +40,8 @@ public class ChatWindow implements Initializable {
     @FXML
     private HBox hbox_utilisateurs_actifs;
 
+    public static User last_contact_cliked;
+
     /*@FXML
     private Contact_item contact_item_controller;
 */
@@ -97,7 +99,10 @@ public class ChatWindow implements Initializable {
         l_mon_nom.setText(ChoixPseudoWindow.pseudo);
     }
 
-    public void afficher_messages(int id_contact){
+    public void setLast_contact_cliked(User contact){
+        last_contact_cliked = contact;
+    }
+    public void charger_historique(int id_contact){
         vbox_chat_messages.getChildren().clear();
         ArrayList<Message> messages_list;
         try {
@@ -153,8 +158,8 @@ public class ChatWindow implements Initializable {
     public void envoyer_message(ActionEvent event) throws UnknownHostException, IOException {
     	String msg = tf_mess_a_envoyer.getText();
     	Message message = new Message(DB_locale_manager.getMoi(), msg, Message.TypeMessage.MESSAGE_CONV);
-    	User user = new User(2,"User2","MDP2","127.0.0.1",6000); //TODO recup user depuis la window 
-    	TCP.envoyer_msg_tcp(user, message);
+    	//User user = new User(2,"User2","MDP2","127.0.0.1",6000); //TODO recup user depuis la window
+    	TCP.envoyer_msg_tcp(last_contact_cliked, message);
     }
 
 }

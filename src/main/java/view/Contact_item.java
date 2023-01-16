@@ -32,7 +32,8 @@ public class Contact_item {
 
     @FXML
     private void handleButtonClick(ActionEvent event) {
-        controller_chat_window.afficher_messages(this.contact.getId());
+        controller_chat_window.setLast_contact_cliked(this.contact);
+        controller_chat_window.charger_historique(this.contact.getId());
 
     }
 
@@ -52,7 +53,7 @@ public class Contact_item {
         b_contact.setText(capitalizeFirstLetter(this.contact.getPseudo()));
     }
 
-   /* public void afficher_convo_contact(){
+    /* public void afficher_convo_contact(){
         int id_contact = this.contact.getId();
         FXMLLoader fxmlLoader = new FXMLLoader(ConnexionWindow.class.getResource("/ChatWindow.fxml"));
         try {
