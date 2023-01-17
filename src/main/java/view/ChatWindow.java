@@ -14,6 +14,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.*;
+import javafx.application.Platform;
 import transport.TCP;
 import java.io.IOException;
 import java.net.URL;
@@ -129,17 +130,25 @@ public class ChatWindow implements Initializable {
 
     public void afficher_new_mess (Message mess){
 
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(ChatWindow.class.getResource("/Message_item.fxml"));
-        try {
-            VBox m_item_fxml = fxmlLoader.load();
-            Message_item m_item_ctrl = fxmlLoader.getController();
-            m_item_ctrl.setData(mess);
-            vbox_chat_messages.getChildren().add(m_item_fxml);
-        } catch (IOException e) {
-            System.out.println("[Contact_item.java] Pb load message_item");
-            throw new RuntimeException(e);
-        }
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(ChatWindow.class.getResource("/Message_item.fxml"));
+
+                try {
+                    VBox m_item_fxml = fxmlLoader.load();
+                    Message_item m_item_ctrl = fxmlLoader.getController();
+                    m_item_ctrl.setData(mess);
+                    vbox_chat_messages.getChildren().add(m_item_fxml);
+                } catch (IOException e) {
+                    System.out.println("[Contact_item.java] Pb load message_item");
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
 
     }
 
