@@ -95,6 +95,8 @@ public class ChatWindow implements Initializable {
             }
         }
 
+        Network_manager.setController_chat_windowController(this);
+
         l_mon_nom.setText(ChoixPseudoWindow.pseudo);
     }
 
@@ -123,6 +125,22 @@ public class ChatWindow implements Initializable {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public void afficher_new_mess (Message mess){
+
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(ChatWindow.class.getResource("/Message_item.fxml"));
+        try {
+            VBox m_item_fxml = fxmlLoader.load();
+            Message_item m_item_ctrl = fxmlLoader.getController();
+            m_item_ctrl.setData(mess);
+            vbox_chat_messages.getChildren().add(m_item_fxml);
+        } catch (IOException e) {
+            System.out.println("[Contact_item.java] Pb load message_item");
+            throw new RuntimeException(e);
+        }
+
     }
 
     // Affichage page de deconnexion qd on clique sur le bouton deconnexion
@@ -158,24 +176,11 @@ public class ChatWindow implements Initializable {
     	String msg = tf_mess_a_envoyer.getText();
     	Message message = new Message(User.getMoi(), msg, Message.TypeMessage.MESSAGE_CONV);
     	DB_locale_manager.insert_message_db(message,0,last_contact_cliked.getId());
+        afficher_new_mess(message);
     	TCP.envoyer_msg_tcp(last_contact_cliked, message);
     	tf_mess_a_envoyer.setText("");
     }
 
-    public void afficher_new_mess (Message mess){
 
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(ChatWindow.class.getResource("/Message_item.fxml"));
-        try {
-            VBox m_item_fxml = fxmlLoader.load();
-            Message_item m_item_ctrl = fxmlLoader.getController();
-            m_item_ctrl.setData(mess);
-            vbox_chat_messages.getChildren().add(m_item_fxml);
-        } catch (IOException e) {
-            System.out.println("[Contact_item.java] Pb load message_item");
-            throw new RuntimeException(e);
-        }
-
-    }
 
 }
