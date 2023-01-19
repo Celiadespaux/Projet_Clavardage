@@ -37,8 +37,8 @@ public class ChangerPseudoWindow {
         if (Account_manager.verifier_pseudo_valide(pseudo)) {
             if (DB_locale_manager.verifier_pseudo_libre(pseudo)) {
             	try {
+            		User.getMoi().setPseudo(pseudo);
 					Account_manager.changer_pseudo(User.getMoi());
-					User.getMoi().setPseudo(pseudo);
 				    changeScene_ChatWindow(event);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
