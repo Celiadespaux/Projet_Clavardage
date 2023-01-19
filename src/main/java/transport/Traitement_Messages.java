@@ -57,6 +57,7 @@ public class Traitement_Messages implements Runnable {
 			break;
 			
 		case CHANGE_PSEUDO : 
+			//TODO ajouter affichage fenetre qui previent l'utilisateur du changement 
 			DB_locale_manager.maj_pseudo(msg.getSender().getPseudo(), msg.getSender().getId());
 			break;
 			

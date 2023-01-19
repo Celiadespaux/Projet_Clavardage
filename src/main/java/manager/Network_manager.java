@@ -1,6 +1,11 @@
 package manager;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.InterfaceAddress;
+import java.net.NetworkInterface;
+import java.util.*;
+
 import model.*;
 import transport.*;
 import view.ChatWindow;
@@ -9,15 +14,42 @@ public class Network_manager {
 
 	static TCP Tcp;
 	static UDP Udp;
+	static InetAddress myIP ;
+	static String myIPString ;
 
 	private static ChatWindow controller_chat_window;;
 
 	public Network_manager() {
-		// TODO Auto-generated constructor stub
 		Tcp = new TCP();
 		Udp = new UDP(5001, 10000) ;
-
+		
+		try { //recup adresse ip 
+			Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces();
+			while (en.hasMoreElements()) {
+				NetworkInterface ni = en.nextElement();
+				List<InterfaceAddress> list = ni.getInterfaceAddresses();
+				Iterator<InterfaceAddress> it = list.iterator();
+				while (it.hasNext()) {
+					InterfaceAddress ia = it.next();
+					if (ia.getBroadcast()!=null && myIP == null) {
+						myIP = ia.getAddress() ;
+					}
+				}		
+			}
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		myIPString = myIP.toString();
+		if (myIPString.charAt(0) == ('/')) {
+			myIPString = myIPString.substring(1);
+		}
 	}
+	
+	public String getMyIPString() {
+		return myIPString ;
+	}
+
 
 	public static void setController_chat_windowController(ChatWindow controller) {
 		controller_chat_window = controller ;
