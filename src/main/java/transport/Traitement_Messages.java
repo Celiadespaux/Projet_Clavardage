@@ -11,6 +11,7 @@ import manager.DB_locale_manager;
 import manager.Network_manager;
 import model.Message;
 import model.User;
+import view.ChatWindow;
 
 
 public class Traitement_Messages implements Runnable {
@@ -58,6 +59,7 @@ public class Traitement_Messages implements Runnable {
 			
 		case CHANGE_PSEUDO : 
 			DB_locale_manager.maj_pseudo(msg.getSender().getPseudo(), msg.getSender().getId());
+			ChatWindow.handle_notification_pseudo_change(msg.getContenu());
 			break;
 			
 		case PSEUDO_DISPO:
