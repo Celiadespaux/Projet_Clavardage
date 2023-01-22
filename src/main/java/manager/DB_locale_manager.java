@@ -56,7 +56,8 @@ public class DB_locale_manager {
 
 
         delete_entire_content("discussion");
-		/*Message msg = new Message(User.getMoi(), "hey ca va user2 ?", Message.TypeMessage.MESSAGE_CONV);
+/*
+		Message msg = new Message(User.getMoi(), "hey ca va user2 ?", Message.TypeMessage.MESSAGE_CONV);
         insert_message_db(msg,0, user2.getId());
         Message msg2 = new Message(user2, "ca va trql", Message.TypeMessage.MESSAGE_CONV);
         insert_message_db(msg2,1,msg2.getSender().getId());
@@ -64,15 +65,17 @@ public class DB_locale_manager {
         insert_message_db(msg3,1,msg3.getSender().getId());
         Message msg4 = new Message(User.getMoi(), "hey u3 !", Message.TypeMessage.MESSAGE_CONV);
         insert_message_db(msg4,0, user3.getId());*/
-
-
         getHistory_mess();
 
+        
         delete_entire_content("annuaire");
-        /*add_user_annuaire(111);
+/*
+        add_user_annuaire(111);
         add_user_annuaire(222);
         add_user_annuaire(333);
-        getContacts();*/
+*/
+        getContacts();
+
 
 
     }
