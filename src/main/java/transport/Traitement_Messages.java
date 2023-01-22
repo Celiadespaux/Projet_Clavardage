@@ -42,6 +42,7 @@ public class Traitement_Messages implements Runnable {
 				DB_locale_manager.add_user_annuaire(msg.getSender().getId());
 				Message nmsg = new Message(User.getMoi(),"", Message.TypeMessage.RENVOIE_PSEUDO);
 				TCP.envoyer_msg_tcp(msg.getSender(), nmsg);
+				System.out.println("[MESSAGE] envoie du message -> ok bienvenue, voici mon pseudo, tu peux m'ajouter");
 			}
 			break;
 		
@@ -58,8 +59,9 @@ public class Traitement_Messages implements Runnable {
 			break;
 			
 		case CHANGE_PSEUDO : 
+			//TODO ajouter affichage fenetre qui previent l'utilisateur du changement 
 			DB_locale_manager.maj_pseudo(msg.getSender().getPseudo(), msg.getSender().getId());
-			ChatWindow.handle_notification_pseudo_change(msg.getContenu());
+			ChatWindow.handle_notification_pseudo_change(msg.getContenu(),msg.getSender());
 			break;
 			
 		case PSEUDO_DISPO:

@@ -50,6 +50,7 @@ public class Account_manager {
 	public static void connecte(User sender) throws IOException {
 		String msg = Message.construire_message("nul",sender,Message.TypeMessage.CONNECTE);
 		Network_manager.Udp.broadcast(msg);
+		System.out.println("[MESSAGE] envoie du message -> je viens de me connecter");
 	}
 	
 	
@@ -57,12 +58,14 @@ public class Account_manager {
 		String msg = Message.construire_message("",sender,Message.TypeMessage.DECONNECTE);
 		Network_manager.Udp.broadcast(msg);
 		Network_manager.deconnection();
+		System.out.println("[MESSAGE] envoie du message -> je viens de me deconnecter");
 		}
 	
 	public static void changer_pseudo(User sender, String newPseudo ) throws IOException {
 		String message = "L'utilisateur " + User.getMoi().getPseudo() + " a changé de pseudo en " + newPseudo;
 		String msg = Message.construire_message(message,sender,Message.TypeMessage.CHANGE_PSEUDO);
 		Network_manager.Udp.broadcast(msg);
+		System.out.println("[MESSAGE] envoie du message -> je viens de changer mon pseudo");
 	}
 	
 	}
