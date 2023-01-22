@@ -181,20 +181,22 @@ public class ChatWindow implements Initializable {
         stage.show();
     }
 
-    public static void handle_notification_pseudo_change(String new_pseudo) {
-        Platform.runLater(() -> {
-            try {
-                FXMLLoader loader = new FXMLLoader(ChatWindow.class.getResource("/NotificationPseudo.fxml"));
-                Parent root = loader.load();
-                NotificationPseudo controller = loader.getController();
-                controller.setNewPseudo(new_pseudo);
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root, 450, 170));
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+    public static void handle_notification_pseudo_change(String new_pseudo, User new_contact) {
+        if (new_contact.getId()!=User.getMoi().getId()) {
+            Platform.runLater(() -> {
+                try {
+                    FXMLLoader loader = new FXMLLoader(ChatWindow.class.getResource("/NotificationPseudo.fxml"));
+                    Parent root = loader.load();
+                    NotificationPseudo controller = loader.getController();
+                    controller.setNewPseudo(new_pseudo);
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(root, 450, 170));
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
     }
     
     public void envoyer_message(ActionEvent event) throws UnknownHostException, IOException {
