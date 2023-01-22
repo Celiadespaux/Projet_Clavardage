@@ -46,7 +46,7 @@ public class Network_manager {
 		}
 	}
 	
-	public String getMyIPString() {
+	public static String getMyIPString() {
 		return myIPString ;
 	}
 

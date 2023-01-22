@@ -41,6 +41,7 @@ public class Traitement_Messages implements Runnable {
 				DB_locale_manager.add_user_annuaire(msg.getSender().getId());
 				Message nmsg = new Message(User.getMoi(),"", Message.TypeMessage.RENVOIE_PSEUDO);
 				TCP.envoyer_msg_tcp(msg.getSender(), nmsg);
+				System.out.println("[MESSAGE] envoie du message -> ok bienvenue, voici mon pseudo, tu peux m'ajouter");
 			}
 			break;
 		
