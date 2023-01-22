@@ -6,7 +6,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.*;
 
-import manager.DB_locale_manager;
+import manager.Network_manager;
 import model.Message;
 import model.User;
 
@@ -44,6 +44,7 @@ public class UDP extends Thread{
 		try {
 			
 			InetAddress addressf = InetAddress.getByAddress(addressforbid);
+			InetAddress addressf2 = InetAddress.getByName(Network_manager.getMyIPString());
 			
 			List<InetAddress> broadcast = new ArrayList<InetAddress>() ;
 			
@@ -59,7 +60,7 @@ public class UDP extends Thread{
 				while(ite.hasNext()) {
 					InterfaceAddress interaddress = ite.next();
 					
-					if (interaddress.getBroadcast()!= null && !interaddress.getBroadcast().equals(addressf)) {
+					if (interaddress.getBroadcast()!= null && !interaddress.getBroadcast().equals(addressf) && !interaddress.getBroadcast().equals(addressf2)) {
 						broadcast.add(interaddress.getBroadcast());
 					}
 				}
@@ -88,7 +89,7 @@ public class UDP extends Thread{
 	
 	
 	/**
-	 * recoit un broadcast (et va le donner a network manager)
+	 * recoit un broadcast (et va le donner a traitement messages)
 	 * @throws IOException
 	 */
 	public void run() {

@@ -52,7 +52,9 @@ public class Traitement_Messages implements Runnable {
 			break;
 			
 		case RENVOIE_PSEUDO :
-			if (msg.getSender().getId() == (User.getMoi().getId())) {  }
+			if (msg.getSender().getId() == (User.getMoi().getId())) { 
+				System.out.println("je renvoie pas le pseudo a cause du if");
+			}
 			else {
 				DB_locale_manager.add_user_annuaire(msg.getSender().getId());
 			}

@@ -2,10 +2,6 @@ package manager;
 
 import model.Message;
 import model.User;
-import view.ConnexionWindow;
-
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.sql.*;
 import java.util.ArrayList;
 
