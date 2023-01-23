@@ -24,20 +24,21 @@ public class User {
 		
 	}
 	
-	static User moi = new User(1,"","","",1);
-	    
-	public static User creer_moi() throws UnknownHostException {
-		User moi = DB_locale_manager.getUserfromId(111);
-		moi.setId(ConnexionWindow.getId());
-		moi.setPseudo("Moi");
+	//static int myid = ConnexionWindow.getId();
+	static int myid = 111;
+	public static int getMyId() {
+		return myid;
+	}
+	
+	public static void creer_moi() throws UnknownHostException {
+		//moi.setId(ConnexionWindow.getId());
+		DB_locale_manager.maj_pseudo("moi",ConnexionWindow.getId());
 		//moi.setIp(Network_manager.getMyIPString());
-		moi.setPort(6000);
-		return moi;
-
+		//moi.setPort(6000);
 	}
 	    
 	public static User getMoi() {
-		return moi;
+		return DB_locale_manager.getUserfromId(myid);
 	}
 
 	public int getId() {
