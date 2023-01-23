@@ -38,9 +38,15 @@ public class ChatWindow implements Initializable {
     @FXML Label l_mon_nom ;
 
     @FXML
-    private HBox hbox_utilisateurs_actifs;
+    private static HBox hbox_utilisateurs_actifs;
 
     public static User last_contact_cliked;
+
+    private static ChatWindow instance;
+
+    public ChatWindow() {
+        instance = this;
+    }
 
     /*@FXML
     private Contact_item contact_item_controller;
@@ -73,7 +79,7 @@ public class ChatWindow implements Initializable {
         }*/
 
         //Affichage de tous les contacts
-        ArrayList<User> contacts_list;
+        /*ArrayList<User> contacts_list;
         try {
             contacts_list = DB_locale_manager.getContacts();
         } catch (SQLException e) {
@@ -94,7 +100,7 @@ public class ChatWindow implements Initializable {
                 System.out.println("[ChatWindow.java] Pb load contact_item");
                 throw new RuntimeException(e);
             }
-        }
+        }*/
 
         Network_manager.setController_chat_windowController(this);
 
@@ -150,6 +156,25 @@ public class ChatWindow implements Initializable {
         });
 
 
+    }
+
+    public static void afficher_new_contact (User contact){
+
+        Platform.runLater(() -> {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(ChatWindow.class.getResource("/Contact_item.fxml"));
+            try {
+                VBox c_item_fxml = fxmlLoader.load();
+                Contact_item c_item_ctrl = fxmlLoader.getController();
+                c_item_ctrl.setContact(contact);
+                c_item_ctrl.setData();
+                c_item_ctrl.setController_chat_windowController(instance);
+                hbox_utilisateurs_actifs.getChildren().add(c_item_fxml);
+            } catch (IOException e) {
+                System.out.println("[ChatWindow.java] Pb load contact_item");
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     // Affichage page de deconnexion qd on clique sur le bouton deconnexion
