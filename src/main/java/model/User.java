@@ -2,6 +2,8 @@ package model;
 
 import java.net.UnknownHostException;
 
+import manager.DB_locale_manager;
+import manager.Network_manager;
 import view.ConnexionWindow;
 
 public class User {
@@ -25,9 +27,10 @@ public class User {
 	static User moi = new User(1,"","","",1);
 	    
 	public static User creer_moi() throws UnknownHostException {
+		User moi = DB_locale_manager.getUserfromId(111);
 		moi.setId(ConnexionWindow.getId());
 		moi.setPseudo("Moi");
-		moi.setIp("localhost");
+		//moi.setIp(Network_manager.getMyIPString());
 		moi.setPort(6000);
 		return moi;
 

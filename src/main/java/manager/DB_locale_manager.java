@@ -7,11 +7,7 @@ import java.util.ArrayList;
 
 public class DB_locale_manager {
 
-    //
-    // CONFIGURATION
-    //
-
-    public static Connection con;
+	public static Connection con;
     
 	public DB_locale_manager() throws SQLException {
 
