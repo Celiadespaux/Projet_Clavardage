@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import model.User;
 
 public class NotificationPseudo {
 
@@ -16,6 +17,8 @@ public class NotificationPseudo {
 
     private Stage stage;
 
+    private static User new_contact;
+
     public void setStage(Stage stage) {
         this.stage = stage;
     }
@@ -25,8 +28,13 @@ public class NotificationPseudo {
         label_new_pseudo.setText(new_pseudo);
     }
 
+    public static void setNew_contact(User contact) {
+        new_contact = contact;
+    }
+
     @FXML
     void handleButtonOK(ActionEvent event) {
         stage.close();
+        ChatWindow.afficher_new_contact(new_contact);
     }
 }
