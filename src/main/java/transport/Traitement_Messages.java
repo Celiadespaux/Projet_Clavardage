@@ -37,13 +37,10 @@ public class Traitement_Messages implements Runnable {
 			break;
 		
 		case CONNECTE :
-			if (msg.getSender().getId() == (User.getMoi().getId())) {  }
-			else {
-				DB_locale_manager.add_user_annuaire(msg.getSender().getId());
-				Message nmsg = new Message(User.getMoi(),"", Message.TypeMessage.RENVOIE_PSEUDO);
-				TCP.envoyer_msg_tcp(msg.getSender(), nmsg);
-				System.out.println("[MESSAGE] envoie du message -> ok bienvenue, voici mon pseudo, tu peux m'ajouter");
-			}
+			DB_locale_manager.add_user_annuaire(msg.getSender().getId());
+			Message nmsg = new Message(User.getMoi(),"", Message.TypeMessage.RENVOIE_PSEUDO);
+			TCP.envoyer_msg_tcp(msg.getSender(), nmsg);
+			System.out.println("[MESSAGE] envoie du message -> ok bienvenue, voici mon pseudo, tu peux m'ajouter");
 			break;
 		
 		case DECONNECTE :
@@ -52,16 +49,10 @@ public class Traitement_Messages implements Runnable {
 			break;
 			
 		case RENVOIE_PSEUDO :
-			if (msg.getSender().getId() == (User.getMoi().getId())) { 
-				System.out.println("je renvoie pas le pseudo a cause du if");
-			}
-			else {
-				DB_locale_manager.add_user_annuaire(msg.getSender().getId());
-			}
+			DB_locale_manager.add_user_annuaire(msg.getSender().getId());
 			break;
 			
 		case CHANGE_PSEUDO : 
-			//TODO ajouter affichage fenetre qui previent l'utilisateur du changement 
 			DB_locale_manager.maj_pseudo(msg.getSender().getPseudo(), msg.getSender().getId());
 			ChatWindow.handle_notification_pseudo_change(msg.getContenu(),msg.getSender());
 			break;
