@@ -62,7 +62,7 @@ public class Account_manager {
 		}
 	
 	public static void changer_pseudo(User sender, String newPseudo ) throws IOException {
-		String message = "L'utilisateur " + User.getMoi().getPseudo() + " a changé de pseudo en " + newPseudo;
+		String message = "Le nouveau pseudo de l'utilisateur " + User.getMoi().getPseudo() + " est " + newPseudo;
 		String msg = Message.construire_message(message,sender,Message.TypeMessage.CHANGE_PSEUDO);
 		Network_manager.Udp.broadcast(msg);
 		System.out.println("[MESSAGE] envoie du message -> je viens de changer mon pseudo");
