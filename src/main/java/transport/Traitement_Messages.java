@@ -45,7 +45,7 @@ public class Traitement_Messages implements Runnable {
 				System.out.println("[MESSAGE] je ne renvoie pas le pseudo car c'est moi "+User.getMyId());
 			} 
 			else {
-				DB_locale_manager.add_user_annuaire(msg.getSender().getId(),msg.getSender().getPseudo(),1);
+				DB_locale_manager.add_user_annuaire(msg.getSender().getId(),msg.getSender().getPseudo(),1,msg.getSender().getIp());
 				Message nmsg = new Message(User.getMoi(),"", Message.TypeMessage.RENVOIE_PSEUDO);
 				TCP.envoyer_msg_tcp(msg.getSender(), nmsg);
 				System.out.println("[MESSAGE] envoie du message -> ok bienvenue, voici mon pseudo, tu peux m'ajouter"+User.getMyId());
@@ -62,7 +62,7 @@ public class Traitement_Messages implements Runnable {
 			
 		case RENVOIE_PSEUDO :
 			System.out.println("[Traitement_mess] dans RENVOIE_PSEUDO");
-			DB_locale_manager.add_user_annuaire(msg.getSender().getId(),msg.getSender().getPseudo(),1);
+			DB_locale_manager.add_user_annuaire(msg.getSender().getId(),msg.getSender().getPseudo(),1,msg.getSender().getIp());
 			System.out.println("[Traitement_mess] fin RENVOIE_PSEUDO");
 			break;
 			
