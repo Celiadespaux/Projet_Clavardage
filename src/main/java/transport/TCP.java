@@ -22,7 +22,7 @@ public class TCP extends Thread{
 	public static void envoyer_msg_tcp (User Destinataire, Message msg) throws UnknownHostException, IOException {	 
 		
 		
-		Socket link = new Socket(Destinataire.getIp(),Destinataire.getPort());
+		Socket link = new Socket(Destinataire.getIp(),6000);
 		
 		BufferedWriter out = new BufferedWriter(new OutputStreamWriter(link.getOutputStream()));
 		

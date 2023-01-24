@@ -19,6 +19,12 @@ public class NotificationPseudo {
 
     private static User new_contact;
 
+    private ChatWindow controller_chat_window;;
+
+    public void setController_chat_windowController(ChatWindow controller) {
+        this.controller_chat_window = controller ;
+    }
+
     public void setStage(Stage stage) {
         this.stage = stage;
     }
@@ -35,6 +41,6 @@ public class NotificationPseudo {
     @FXML
     void handleButtonOK(ActionEvent event) {
         stage.close();
-        ChatWindow.afficher_new_contact(new_contact);
+        controller_chat_window.afficher_new_contact(new_contact);
     }
 }

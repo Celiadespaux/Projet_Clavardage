@@ -25,7 +25,7 @@ public class User {
 	}
 	
 	//static int myid = ConnexionWindow.getId();
-	static int myid = 111;
+	static int myid = 777;
 	public static int getMyId() {
 		return myid;
 	}
