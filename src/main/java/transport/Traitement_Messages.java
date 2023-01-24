@@ -55,9 +55,8 @@ public class Traitement_Messages implements Runnable {
 			break;
 		
 		case DECONNECTE :
-			//TODO supprimer utilisateur de l'annuaire
-			DB_locale_manager.deconnecter_user(User.getMyId());
 			Network_manager.deconnection();
+			DB_locale_manager.deconnecter_user(msg.getSender().getId());
 			break;
 			
 		case RENVOIE_PSEUDO :
