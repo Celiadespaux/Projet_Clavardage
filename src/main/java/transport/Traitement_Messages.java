@@ -38,10 +38,15 @@ public class Traitement_Messages implements Runnable {
 			break;
 		
 		case CONNECTE :
-			DB_locale_manager.add_user_annuaire(msg.getSender().getId(),msg.getSender().getPseudo());
-			Message nmsg = new Message(User.getMoi(),"", Message.TypeMessage.RENVOIE_PSEUDO);
-			TCP.envoyer_msg_tcp(msg.getSender(), nmsg);
-			System.out.println("[MESSAGE] envoie du message -> ok bienvenue, voici mon pseudo, tu peux m'ajouter");
+			if (msg.getSender().getId() == User.getMyId()) {
+				System.out.println("[MESSAGE] je ne renvoie pas le pseudo car c'est moi "+User.getMyId());
+			} 
+			else {
+				DB_locale_manager.add_user_annuaire(msg.getSender().getId(),msg.getSender().getPseudo());
+				Message nmsg = new Message(User.getMoi(),"", Message.TypeMessage.RENVOIE_PSEUDO);
+				TCP.envoyer_msg_tcp(msg.getSender(), nmsg);
+				System.out.println("[MESSAGE] envoie du message -> ok bienvenue, voici mon pseudo, tu peux m'ajouter"+User.getMyId());
+			}
 			break;
 		
 		case DECONNECTE :
