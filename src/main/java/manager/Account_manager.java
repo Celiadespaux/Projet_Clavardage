@@ -61,8 +61,8 @@ public class Account_manager {
 		System.out.println("[MESSAGE] envoie du message -> je viens de me deconnecter");
 		}
 	
-	public static void changer_pseudo(User sender, String newPseudo ) throws IOException {
-		String message = "Le nouveau pseudo de l'utilisateur " + User.getMoi().getPseudo() + " est " + newPseudo;
+	public static void changer_pseudo(User sender, String oldPseudo ) throws IOException {
+		String message = "Le nouveau pseudo de l'utilisateur " + oldPseudo + " est " + User.getMoi().getPseudo();
 		String msg = Message.construire_message(message,sender,Message.TypeMessage.CHANGE_PSEUDO);
 		Network_manager.Udp.broadcast(msg);
 		System.out.println("[MESSAGE] envoie du message -> je viens de changer mon pseudo");
