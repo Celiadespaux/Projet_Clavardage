@@ -107,6 +107,7 @@ public class DB_locale_manager {
         String sql_annuaire = "CREATE TABLE IF NOT EXISTS annuaire (\n"
                 + "	id_ami integer PRIMARY KEY,\n"
                 + "	pseudo_ami text,\n"
+                + "	ip_ami text,\n"
                 + "	connecte integer,\n" //1 il est connecte 0 non
                 + "   FOREIGN KEY (id_ami) REFERENCES utilisateur(id)"
                 + ");";
@@ -353,12 +354,13 @@ public class DB_locale_manager {
      * Ajoute un utilisateur à partir de son id à l'annuaire
      * @param id de l'utilisateur
      */
-    public static void add_user_annuaire(int id, String pseudo, int connecte) {
-        String sql = "INSERT INTO annuaire (id_ami,pseudo_ami,connecte) VALUES (?,?,?)";
+    public static void add_user_annuaire(int id, String pseudo, int connecte, String ip) {
+        String sql = "INSERT INTO annuaire (id_ami,pseudo_ami,connecte,ip_ami) VALUES (?,?,?,?)";
         try (PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setInt(1, id);
             pstmt.setString(2, pseudo);
             pstmt.setInt(3, connecte);
+            pstmt.setString(4, ip);
             pstmt.executeUpdate();
             System.out.println("[DB_Manager] Utilisateur "+ id +" avec le pseudo " + pseudo +" bien ajouté dans l'annuaire");
         } catch (SQLException e) {
@@ -374,7 +376,7 @@ public class DB_locale_manager {
             ArrayList<User> list = new ArrayList<>();
 
             while (result.next()) {
-                User temp = new User(result.getInt("id_ami"),result.getString("pseudo_ami"),"","",0);
+                User temp = new User(result.getInt("id_ami"),result.getString("pseudo_ami"),"",result.getString("ip_ami"),0);
                 list.add(temp);
             }
             System.out.println("[DB_Manager] Liste contacts finale:");

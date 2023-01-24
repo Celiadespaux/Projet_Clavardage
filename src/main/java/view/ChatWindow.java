@@ -38,7 +38,7 @@ public class ChatWindow implements Initializable {
     @FXML Label l_mon_nom ;
 
     @FXML
-    private static HBox hbox_utilisateurs_actifs;
+    private HBox hbox_utilisateurs_actifs;
 
     public static User last_contact_cliked;
 
@@ -79,7 +79,7 @@ public class ChatWindow implements Initializable {
         }*/
 
         //Affichage de tous les contacts
-        /*ArrayList<User> contacts_list;
+        ArrayList<User> contacts_list;
         try {
             contacts_list = DB_locale_manager.getContacts();
         } catch (SQLException e) {
@@ -100,7 +100,7 @@ public class ChatWindow implements Initializable {
                 System.out.println("[ChatWindow.java] Pb load contact_item");
                 throw new RuntimeException(e);
             }
-        }*/
+        }
 
         Network_manager.setController_chat_windowController(this);
 
@@ -169,7 +169,7 @@ public class ChatWindow implements Initializable {
                 c_item_ctrl.setContact(contact);
                 c_item_ctrl.setData();
                 c_item_ctrl.setController_chat_windowController(instance);
-                hbox_utilisateurs_actifs.getChildren().add(c_item_fxml);
+                instance.hbox_utilisateurs_actifs.getChildren().add(c_item_fxml);
             } catch (IOException e) {
                 System.out.println("[ChatWindow.java] Pb load contact_item");
                 throw new RuntimeException(e);
