@@ -158,7 +158,7 @@ public class ChatWindow implements Initializable {
 
     }
 
-    public static void afficher_new_contact (User contact){
+    public void afficher_new_contact(User contact){
 
         Platform.runLater(() -> {
             FXMLLoader fxmlLoader = new FXMLLoader();
@@ -168,8 +168,8 @@ public class ChatWindow implements Initializable {
                 Contact_item c_item_ctrl = fxmlLoader.getController();
                 c_item_ctrl.setContact(contact);
                 c_item_ctrl.setData();
-                c_item_ctrl.setController_chat_windowController(instance);
-                instance.hbox_utilisateurs_actifs.getChildren().add(c_item_fxml);
+                c_item_ctrl.setController_chat_windowController(this);
+                hbox_utilisateurs_actifs.getChildren().add(c_item_fxml);
             } catch (IOException e) {
                 System.out.println("[ChatWindow.java] Pb load contact_item");
                 throw new RuntimeException(e);
@@ -210,6 +210,7 @@ public class ChatWindow implements Initializable {
         if (new_contact.getId()!=User.getMoi().getId()) {
             Platform.runLater(() -> {
                 try {
+                   // NotificationPseudo.setController_chat_windowController(this);
                     FXMLLoader loader = new FXMLLoader(ChatWindow.class.getResource("/NotificationPseudo.fxml"));
                     Parent root = loader.load();
                     NotificationPseudo controller = loader.getController();
