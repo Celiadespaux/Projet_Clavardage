@@ -39,14 +39,14 @@ public class DB_locale_manager {
         delete_entire_content("utilisateur");
 
         User user1 = new User(111, "toto", "motdepasse", "172.29.71.138", 6000); // ip estelle : 172.29.177.126, ip celia : 172.29.71.138
-        /*User user2 = new User(222, "pierre", "motdepass24e", Network_manager.getMyIPString(), 6000);
+        User user2 = new User(222, "pierre", "motdepass24e", Network_manager.getMyIPString(), 6000);
         User user3 = new User(333, "jack", "motdepass24e", Network_manager.getMyIPString(), 6000);
 
-        User user4 = new User(777,"bidon_moi","mdp",Network_manager.getMyIPString(),6000);*/
-        add_utlisateur_db(user1);
-        /*add_utlisateur_db(user2);
-        add_utlisateur_db(user3);
-        add_utlisateur_db(user4);*/
+        User user4 = new User(777,"bidon_moi","mdp",Network_manager.getMyIPString(),6000);
+        /*add_utlisateur_db(user1);
+        add_utlisateur_db(user2);
+        add_utlisateur_db(user3);*/
+        add_utlisateur_db(user4);
 
 
         delete_entire_content("discussion");
@@ -63,12 +63,14 @@ public class DB_locale_manager {
 
         
         delete_entire_content("annuaire");
-/*
-        add_user_annuaire(111);
-        add_user_annuaire(222);
-        add_user_annuaire(333);
-*/
-        getContacts();
+
+        add_user_annuaire(666,"paul",1);
+        add_user_annuaire(222,"pierre",1);
+        add_user_annuaire(999,"pasla",0);
+        add_user_annuaire(783,"dodo",0);
+
+
+        getContacts(1);
 
 
 
@@ -107,6 +109,7 @@ public class DB_locale_manager {
         String sql_annuaire = "CREATE TABLE IF NOT EXISTS annuaire (\n"
                 + "	id_ami integer PRIMARY KEY,\n"
                 + "	pseudo_ami text,\n"
+                + "	connecte integer,\n" //1 si connecte 0 si deconnecte
                 + "   FOREIGN KEY (id_ami) REFERENCES utilisateur(id)"
                 + ");";
 
@@ -339,11 +342,12 @@ public class DB_locale_manager {
      * Ajoute un utilisateur à partir de son id à l'annuaire
      * @param id de l'utilisateur
      */
-    public static void add_user_annuaire(int id, String pseudo) {
-        String sql = "INSERT INTO annuaire (id_ami,pseudo_ami) VALUES (?,?)";
+    public static void add_user_annuaire(int id, String pseudo, int connecte) {
+        String sql = "INSERT INTO annuaire (id_ami,pseudo_ami,connecte) VALUES (?,?,?)";
         try (PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setInt(1, id);
             pstmt.setString(2, pseudo);
+            pstmt.setInt(3, connecte);
             pstmt.executeUpdate();
             System.out.println("[DB_Manager] Utilisateur "+ id +" avec le pseudo " + pseudo +" bien ajouté dans l'annuaire");
         } catch (SQLException e) {
@@ -352,17 +356,17 @@ public class DB_locale_manager {
         }
     }
 
-    public static ArrayList<User> getContacts() throws SQLException {
-         String query = "SELECT * FROM annuaire ";
-            Statement statement = con.createStatement();
-            ResultSet result = statement.executeQuery(query);
+    public static ArrayList<User> getContacts(int connecte) throws SQLException {
+         String query = "SELECT * FROM annuaire WHERE connecte = ?";
+         PreparedStatement statement = con.prepareStatement(query);
+         statement.setInt(1, connecte);
+         ResultSet result = statement.executeQuery();
             ArrayList<User> list = new ArrayList<>();
-
             while (result.next()) {
                 User temp = new User(result.getInt("id_ami"),result.getString("pseudo_ami"),"","",0);
                 list.add(temp);
             }
-            System.out.println("[DB_Manager] Liste contacts finale:");
+            System.out.println("[DB_Manager] Liste contacts finale avec connecte ="+connecte+" :");
             System.out.println(list);
             return list;
     }

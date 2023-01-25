@@ -38,19 +38,21 @@ public class Traitement_Messages implements Runnable {
 			break;
 		
 		case CONNECTE :
-			DB_locale_manager.add_user_annuaire(msg.getSender().getId(),msg.getSender().getPseudo());
+			DB_locale_manager.add_user_annuaire(msg.getSender().getId(),msg.getSender().getPseudo(),1);
 			Message nmsg = new Message(User.getMoi(),"", Message.TypeMessage.RENVOIE_PSEUDO);
 			TCP.envoyer_msg_tcp(msg.getSender(), nmsg);
 			System.out.println("[MESSAGE] envoie du message -> ok bienvenue, voici mon pseudo, tu peux m'ajouter");
+			ChatWindow.get_contact_item_by_user(msg.getSender().getId()).setBStyle(1);
 			break;
 		
 		case DECONNECTE :
 			//TODO supprimer utilisateur de l'annuaire
+			ChatWindow.get_contact_item_by_user(msg.getSender().getId()).setBStyle(0);
 			Network_manager.deconnection();
 			break;
 			
 		case RENVOIE_PSEUDO :
-			DB_locale_manager.add_user_annuaire(msg.getSender().getId(),msg.getSender().getPseudo());
+			DB_locale_manager.add_user_annuaire(msg.getSender().getId(),msg.getSender().getPseudo(),1);
 			break;
 			
 		case CHANGE_PSEUDO : 

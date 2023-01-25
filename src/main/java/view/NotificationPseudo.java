@@ -35,6 +35,6 @@ public class NotificationPseudo {
     @FXML
     void handleButtonOK(ActionEvent event) {
         stage.close();
-        ChatWindow.afficher_new_contact(new_contact);
+        //ChatWindow.afficher_new_contact(new_contact);
     }
 }

@@ -38,19 +38,25 @@ public class ChatWindow implements Initializable {
     @FXML Label l_mon_nom ;
 
     @FXML
-    private static HBox hbox_utilisateurs_actifs;
+    private HBox hbox_utilisateurs_actifs;
 
     public static User last_contact_cliked;
 
-    private static ChatWindow instance;
+    private static ArrayList<Contact_item> contact_items_list = new ArrayList<Contact_item>();
 
-    public ChatWindow() {
-        instance = this;
+    public void add_contact_item_to_list(Contact_item item) {
+        contact_items_list.add(item);
     }
 
-    /*@FXML
-    private Contact_item contact_item_controller;
-*/
+    public static Contact_item get_contact_item_by_user(int id_contact) {
+        for (Contact_item item : contact_items_list) {
+            if (item.contact.getId() == id_contact) {
+                return item;
+            }
+        }
+        return null;
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -78,29 +84,36 @@ public class ChatWindow implements Initializable {
             }
         }*/
 
-        //Affichage de tous les contacts
-        /*ArrayList<User> contacts_list;
-        try {
-            contacts_list = DB_locale_manager.getContacts();
-        } catch (SQLException e) {
-            System.out.println("[ChatWindow.java] Pb creation liste contacts");
-            throw new RuntimeException(e);
-        }
-        for (User user : contacts_list) {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("/Contact_item.fxml"));
+        //Affichage de tous les contacts connectes d'abbord puis les deconnecte
+        ArrayList<User> contacts_list;
+        int connecte = 1;
+        for (int u=0; u<2; u++){
             try {
-                VBox c_item_fxml = fxmlLoader.load();
-                Contact_item c_item_ctrl = fxmlLoader.getController();
-                c_item_ctrl.setContact(user);
-                c_item_ctrl.setData();
-                c_item_ctrl.setController_chat_windowController(this);
-                hbox_utilisateurs_actifs.getChildren().add(c_item_fxml);
-            } catch (IOException e) {
-                System.out.println("[ChatWindow.java] Pb load contact_item");
+                contacts_list = DB_locale_manager.getContacts(connecte);
+            } catch (SQLException e) {
+                System.out.println("[ChatWindow.java] Pb creation liste contacts");
                 throw new RuntimeException(e);
             }
-        }*/
+            for (User user : contacts_list) {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("/Contact_item.fxml"));
+                try {
+                    VBox c_item_fxml = fxmlLoader.load();
+                    Contact_item c_item_ctrl = fxmlLoader.getController();
+                    c_item_ctrl.setContact(user);
+                    c_item_ctrl.setData();
+                    c_item_ctrl.setBStyle(connecte);
+                    c_item_ctrl.setController_chat_windowController(this);
+                    hbox_utilisateurs_actifs.getChildren().add(c_item_fxml);
+                    this.add_contact_item_to_list(c_item_ctrl);
+                } catch (IOException e) {
+                    System.out.println("[ChatWindow.java] Pb load contact_item");
+                    throw new RuntimeException(e);
+                }
+            }
+            connecte=0;
+        }
+
 
         Network_manager.setController_chat_windowController(this);
 
@@ -156,25 +169,6 @@ public class ChatWindow implements Initializable {
         });
 
 
-    }
-
-    public static void afficher_new_contact (User contact){
-
-        Platform.runLater(() -> {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(ChatWindow.class.getResource("/Contact_item.fxml"));
-            try {
-                VBox c_item_fxml = fxmlLoader.load();
-                Contact_item c_item_ctrl = fxmlLoader.getController();
-                c_item_ctrl.setContact(contact);
-                c_item_ctrl.setData();
-                c_item_ctrl.setController_chat_windowController(instance);
-                hbox_utilisateurs_actifs.getChildren().add(c_item_fxml);
-            } catch (IOException e) {
-                System.out.println("[ChatWindow.java] Pb load contact_item");
-                throw new RuntimeException(e);
-            }
-        });
     }
 
     // Affichage page de deconnexion qd on clique sur le bouton deconnexion
