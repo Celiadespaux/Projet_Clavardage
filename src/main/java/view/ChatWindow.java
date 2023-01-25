@@ -84,16 +84,19 @@ public class ChatWindow implements Initializable {
             }
         }*/
 
+
         //Affichage de tous les contacts connectes d'abbord puis les deconnecte
         ArrayList<User> contacts_list;
         int connecte = 1;
         for (int u=0; u<2; u++){
+
             try {
                 contacts_list = DB_locale_manager.getContacts(connecte);
             } catch (SQLException e) {
                 System.out.println("[ChatWindow.java] Pb creation liste contacts");
                 throw new RuntimeException(e);
             }
+
             for (User user : contacts_list) {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("/Contact_item.fxml"));
@@ -113,7 +116,6 @@ public class ChatWindow implements Initializable {
             }
             connecte=0;
         }
-
 
         Network_manager.setController_chat_windowController(this);
 
@@ -171,6 +173,25 @@ public class ChatWindow implements Initializable {
 
     }
 
+    public void afficher_new_contact(User contact){
+
+        Platform.runLater(() -> {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(ChatWindow.class.getResource("/Contact_item.fxml"));
+            try {
+                VBox c_item_fxml = fxmlLoader.load();
+                Contact_item c_item_ctrl = fxmlLoader.getController();
+                c_item_ctrl.setContact(contact);
+                c_item_ctrl.setData();
+                c_item_ctrl.setController_chat_windowController(this);
+                hbox_utilisateurs_actifs.getChildren().add(c_item_fxml);
+            } catch (IOException e) {
+                System.out.println("[ChatWindow.java] Pb load contact_item");
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
     // Affichage page de deconnexion qd on clique sur le bouton deconnexion
     @FXML
     public void changeScene_DeconnexionWindow(ActionEvent event) throws IOException {
@@ -204,6 +225,7 @@ public class ChatWindow implements Initializable {
         if (new_contact.getId()!=User.getMoi().getId()) {
             Platform.runLater(() -> {
                 try {
+                   // NotificationPseudo.setController_chat_windowController(this);
                     FXMLLoader loader = new FXMLLoader(ChatWindow.class.getResource("/NotificationPseudo.fxml"));
                     Parent root = loader.load();
                     NotificationPseudo controller = loader.getController();

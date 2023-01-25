@@ -38,25 +38,37 @@ public class Traitement_Messages implements Runnable {
 			break;
 		
 		case CONNECTE :
-			DB_locale_manager.add_user_annuaire(msg.getSender().getId(),msg.getSender().getPseudo(),1);
-			Message nmsg = new Message(User.getMoi(),"", Message.TypeMessage.RENVOIE_PSEUDO);
-			TCP.envoyer_msg_tcp(msg.getSender(), nmsg);
-			System.out.println("[MESSAGE] envoie du message -> ok bienvenue, voici mon pseudo, tu peux m'ajouter");
+			System.out.println("[Traitement_mess] dans CONNECTE");
+
+			if (msg.getSender().getId() == User.getMyId()) {
+				System.out.println("[MESSAGE] je ne renvoie pas le pseudo car c'est moi "+User.getMyId());
+			} 
+			else {
+				DB_locale_manager.add_user_annuaire(msg.getSender().getId(),msg.getSender().getPseudo(),1,msg.getSender().getIp());
+				Message nmsg = new Message(User.getMoi(),"", Message.TypeMessage.RENVOIE_PSEUDO);
+				TCP.envoyer_msg_tcp(msg.getSender(), nmsg);
+				System.out.println("[MESSAGE] envoie du message -> ok bienvenue, voici mon pseudo, tu peux m'ajouter"+User.getMyId());
+			}
+			System.out.println("[Traitement_mess] fin CONNECTE");
 			ChatWindow.get_contact_item_by_user(msg.getSender().getId()).setBStyle(1);
 			break;
-		
+
 		case DECONNECTE :
-			//TODO supprimer utilisateur de l'annuaire
 			ChatWindow.get_contact_item_by_user(msg.getSender().getId()).setBStyle(0);
 			Network_manager.deconnection();
+			DB_locale_manager.deconnecter_user(msg.getSender().getId());
 			break;
 			
 		case RENVOIE_PSEUDO :
-			DB_locale_manager.add_user_annuaire(msg.getSender().getId(),msg.getSender().getPseudo(),1);
+			System.out.println("[Traitement_mess] dans RENVOIE_PSEUDO");
+			DB_locale_manager.add_user_annuaire(msg.getSender().getId(),msg.getSender().getPseudo(),1,msg.getSender().getIp());
+			System.out.println("[Traitement_mess] fin RENVOIE_PSEUDO");
+
 			break;
 			
 		case CHANGE_PSEUDO : 
-			DB_locale_manager.maj_pseudo(msg.getSender().getPseudo(), msg.getSender().getId());
+			//DB_locale_manager.maj_pseudo(msg.getSender().getPseudo(), msg.getSender().getId());
+			DB_locale_manager.update_pseudo_annuaire(msg.getSender().getPseudo(),msg.getSender().getId());
 			ChatWindow.handle_notification_pseudo_change(msg.getContenu(),msg.getSender());
 			NotificationPseudo.setNew_contact(msg.getSender());
 			break;

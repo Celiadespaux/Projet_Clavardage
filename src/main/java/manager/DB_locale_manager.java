@@ -29,23 +29,24 @@ public class DB_locale_manager {
         }
 
         //INITIALISATION
-        drop_table("annuaire");
-        drop_table("utilisateur");
-        drop_table("discussion");
+        //drop_table("annuaire");
+        //drop_table("utilisateur");
+        //drop_table("discussion");
 
 
         creer_tables_DB();
 
         delete_entire_content("utilisateur");
 
-        User user1 = new User(111, "toto", "motdepasse", "172.29.71.138", 6000); // ip estelle : 172.29.177.126, ip celia : 172.29.71.138
-        User user2 = new User(222, "pierre", "motdepass24e", Network_manager.getMyIPString(), 6000);
-        User user3 = new User(333, "jack", "motdepass24e", Network_manager.getMyIPString(), 6000);
 
+        //User user1 = new User(111, "toto", "motdepasse", Network_manager.getMyIPString(), 6000); // ip estelle : 172.29.177.126, ip celia : 172.29.71.138
+        //User user2 = new User(222, "pierre", "motdepass24e", Network_manager.getMyIPString(), 6000);
+        //User user3 = new User(333, "jack", "motdepass24e", Network_manager.getMyIPString(), 6000);
         User user4 = new User(777,"bidon_moi","mdp",Network_manager.getMyIPString(),6000);
-        /*add_utlisateur_db(user1);
-        add_utlisateur_db(user2);
-        add_utlisateur_db(user3);*/
+        //add_utlisateur_db(user1);
+        //add_utlisateur_db(user2);
+        //add_utlisateur_db(user3);
+
         add_utlisateur_db(user4);
 
 
@@ -64,10 +65,10 @@ public class DB_locale_manager {
         
         delete_entire_content("annuaire");
 
-        add_user_annuaire(666,"paul",1);
-        add_user_annuaire(222,"pierre",1);
-        add_user_annuaire(999,"pasla",0);
-        add_user_annuaire(783,"dodo",0);
+        add_user_annuaire(666,"paul",1,"");
+        add_user_annuaire(222,"pierre",1,"");
+        add_user_annuaire(999,"pasla",0,"");
+        add_user_annuaire(783,"dodo",0,"");
 
 
         getContacts(1);
@@ -110,6 +111,7 @@ public class DB_locale_manager {
                 + "	id_ami integer PRIMARY KEY,\n"
                 + "	pseudo_ami text,\n"
                 + "	connecte integer,\n" //1 si connecte 0 si deconnecte
+                + "	ip_ami text,\n"
                 + "   FOREIGN KEY (id_ami) REFERENCES utilisateur(id)"
                 + ");";
 
@@ -266,6 +268,19 @@ public class DB_locale_manager {
 
     }
 
+    public static void deconnecter_user(int id) {
+        String sql = "UPDATE utilisateur SET connecte = 0 WHERE id = ?";
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+            System.out.println("[DB_Manager] Utilisateur "+ id +" déconnecté");
+        } catch (SQLException e) {
+            System.out.println("[DB_Manager] Problème lors de la déconnexion de l'utilisateur");
+            e.printStackTrace();
+        }
+    }
+
+
     /**
      * Checks if a user with the login is already created or not
      * @param
@@ -342,12 +357,13 @@ public class DB_locale_manager {
      * Ajoute un utilisateur à partir de son id à l'annuaire
      * @param id de l'utilisateur
      */
-    public static void add_user_annuaire(int id, String pseudo, int connecte) {
-        String sql = "INSERT INTO annuaire (id_ami,pseudo_ami,connecte) VALUES (?,?,?)";
+    public static void add_user_annuaire(int id, String pseudo, int connecte, String ip) {
+        String sql = "INSERT INTO annuaire (id_ami,pseudo_ami,connecte,ip_ami) VALUES (?,?,?,?)";
         try (PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setInt(1, id);
             pstmt.setString(2, pseudo);
             pstmt.setInt(3, connecte);
+            pstmt.setString(4, ip);
             pstmt.executeUpdate();
             System.out.println("[DB_Manager] Utilisateur "+ id +" avec le pseudo " + pseudo +" bien ajouté dans l'annuaire");
         } catch (SQLException e) {
@@ -363,13 +379,28 @@ public class DB_locale_manager {
          ResultSet result = statement.executeQuery();
             ArrayList<User> list = new ArrayList<>();
             while (result.next()) {
-                User temp = new User(result.getInt("id_ami"),result.getString("pseudo_ami"),"","",0);
+                User temp = new User(result.getInt("id_ami"),result.getString("pseudo_ami"),"",result.getString("ip_ami"),0);
                 list.add(temp);
             }
             System.out.println("[DB_Manager] Liste contacts finale avec connecte ="+connecte+" :");
             System.out.println(list);
             return list;
     }
+
+    public static void update_pseudo_annuaire(String newPseudo, int id) {
+        String sql = "UPDATE annuaire SET pseudo_ami = ? WHERE id_ami = ?";
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, newPseudo);
+            pstmt.setInt(2, id);
+            pstmt.executeUpdate();
+            System.out.println("[DB_Manager] Pseudo de l'ami " + id + " mis à jour en " + newPseudo);
+        } catch (SQLException e) {
+            System.out.println("[DB_Manager] Problème lors de la mise à jour du pseudo de l'ami " + id);
+            e.printStackTrace();
+        }
+    }
+
+
 
     //
     // AUTRES

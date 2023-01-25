@@ -19,6 +19,12 @@ public class NotificationPseudo {
 
     private static User new_contact;
 
+    private ChatWindow controller_chat_window;;
+
+    public void setController_chat_windowController(ChatWindow controller) {
+        this.controller_chat_window = controller ;
+    }
+
     public void setStage(Stage stage) {
         this.stage = stage;
     }
