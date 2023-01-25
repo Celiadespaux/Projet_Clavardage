@@ -53,6 +53,14 @@ public class Contact_item {
         b_contact.setText(capitalizeFirstLetter(this.contact.getPseudo()));
     }
 
+    public void setBStyle(int connecte){
+        if (connecte == 1){
+            b_contact.setStyle("-fx-background-color: #94585A;");
+        } else if (connecte==0) {
+            b_contact.setStyle("-fx-background-color: #4E2E2F;");
+        }
+    }
+
     /* public void afficher_convo_contact(){
         int id_contact = this.contact.getId();
         FXMLLoader fxmlLoader = new FXMLLoader(ConnexionWindow.class.getResource("/ChatWindow.fxml"));

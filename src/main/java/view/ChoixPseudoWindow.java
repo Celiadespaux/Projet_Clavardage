@@ -38,7 +38,7 @@ public class ChoixPseudoWindow {
 	            if (Account_manager.verifier_pseudo_libre(pseudo)) {
 	            	try {
 						Account_manager.connecte(User.getMoi());
-						DB_locale_manager.getContacts();
+						DB_locale_manager.getContacts(1);
 						//User.getMoi().setPseudo(pseudo);
 						DB_locale_manager.maj_pseudo(pseudo,User.getMyId());
 					    changeScene_ChatWindow(event);
