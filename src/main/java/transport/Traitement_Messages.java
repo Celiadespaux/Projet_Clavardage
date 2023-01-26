@@ -5,6 +5,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Objects;
 
 import manager.Account_manager;
 import manager.DB_locale_manager;
@@ -50,11 +51,13 @@ public class Traitement_Messages implements Runnable {
 				System.out.println("[MESSAGE] envoie du message -> ok bienvenue, voici mon pseudo, tu peux m'ajouter"+User.getMyId());
 			}
 			System.out.println("[Traitement_mess] fin CONNECTE");
-			ChatWindow.get_contact_item_by_user(msg.getSender().getId()).setBStyle(1);
+			//Objects.requireNonNull(ChatWindow.get_contact_item_by_user(msg.getSender().getId())).setBStyle(1);
+			ChatWindow.afficher_tous_les_contacts(ChatWindow.getInstance());
 			break;
 
 		case DECONNECTE :
-			ChatWindow.get_contact_item_by_user(msg.getSender().getId()).setBStyle(0);
+			//Objects.requireNonNull(ChatWindow.get_contact_item_by_user(msg.getSender().getId())).setBStyle(0);
+			ChatWindow.afficher_tous_les_contacts(ChatWindow.getInstance());
 			Network_manager.deconnection();
 			DB_locale_manager.deconnecter_user(msg.getSender().getId());
 			break;
