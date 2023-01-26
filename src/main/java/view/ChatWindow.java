@@ -42,7 +42,13 @@ public class ChatWindow implements Initializable {
 
     public static User last_contact_cliked;
 
-    private static ArrayList<Contact_item> contact_items_list = new ArrayList<Contact_item>();
+    private static ChatWindow instance;
+
+    public static ChatWindow getInstance() {
+        return instance;
+    }
+
+    private static ArrayList<Contact_item> contact_items_list = new ArrayList<>();
 
     public void add_contact_item_to_list(Contact_item item) {
         contact_items_list.add(item);
@@ -84,8 +90,22 @@ public class ChatWindow implements Initializable {
             }
         }*/
 
+        afficher_tous_les_contacts(this);
 
-        //Affichage de tous les contacts connectes d'abbord puis les deconnecte
+        Network_manager.setController_chat_windowController(this);
+
+        l_mon_nom.setText(ChoixPseudoWindow.pseudo);
+
+        instance = this;
+    }
+
+    public void setLast_contact_cliked(User contact){
+        last_contact_cliked = contact;
+    }
+
+    //Affichage de tous les contacts connectes d'abbord puis les deconnecte
+    public static void afficher_tous_les_contacts(ChatWindow chatwindow){
+        chatwindow.hbox_utilisateurs_actifs.getChildren().clear();
         ArrayList<User> contacts_list;
         int connecte = 1;
         for (int u=0; u<2; u++){
@@ -99,16 +119,16 @@ public class ChatWindow implements Initializable {
 
             for (User user : contacts_list) {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(getClass().getResource("/Contact_item.fxml"));
+                fxmlLoader.setLocation(ChatWindow.class.getResource("/Contact_item.fxml"));
                 try {
                     VBox c_item_fxml = fxmlLoader.load();
                     Contact_item c_item_ctrl = fxmlLoader.getController();
                     c_item_ctrl.setContact(user);
                     c_item_ctrl.setData();
                     c_item_ctrl.setBStyle(connecte);
-                    c_item_ctrl.setController_chat_windowController(this);
-                    hbox_utilisateurs_actifs.getChildren().add(c_item_fxml);
-                    this.add_contact_item_to_list(c_item_ctrl);
+                    c_item_ctrl.setController_chat_windowController(chatwindow);
+                    chatwindow.hbox_utilisateurs_actifs.getChildren().add(c_item_fxml);
+                    chatwindow.add_contact_item_to_list(c_item_ctrl);
                 } catch (IOException e) {
                     System.out.println("[ChatWindow.java] Pb load contact_item");
                     throw new RuntimeException(e);
@@ -116,15 +136,8 @@ public class ChatWindow implements Initializable {
             }
             connecte=0;
         }
-
-        Network_manager.setController_chat_windowController(this);
-
-        l_mon_nom.setText(ChoixPseudoWindow.pseudo);
     }
 
-    public void setLast_contact_cliked(User contact){
-        last_contact_cliked = contact;
-    }
     public void charger_historique(int id_contact){
         vbox_chat_messages.getChildren().clear();
         ArrayList<Message> messages_list;
