@@ -358,19 +358,19 @@ public class DB_locale_manager {
      * @param id de l'utilisateur
      */
     public static void add_user_annuaire(int id, String pseudo, int connecte, String ip) {
-        if (id != User.getMyId()) {
-    	String sql = "INSERT INTO annuaire (id_ami,pseudo_ami,connecte,ip_ami) VALUES (?,?,?,?)";
-        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
-            pstmt.setInt(1, id);
-            pstmt.setString(2, pseudo);
-            pstmt.setInt(3, connecte);
-            pstmt.setString(4, ip);
-            pstmt.executeUpdate();
-            System.out.println("[DB_Manager] Utilisateur "+ id +" avec le pseudo " + pseudo +" bien ajouté dans l'annuaire");
-        } catch (SQLException e) {
-            System.out.println("[DB_Manager] Probleme lors de l'ajout de l'user dans l'annuaire");
-            e.printStackTrace();
-        }
+        if (id != User.getMyId()){
+            String sql = "INSERT INTO annuaire (id_ami,pseudo_ami,connecte,ip_ami) VALUES (?,?,?,?)";
+            try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+                pstmt.setInt(1, id);
+                pstmt.setString(2, pseudo);
+                pstmt.setInt(3, connecte);
+                pstmt.setString(4, ip);
+                pstmt.executeUpdate();
+                System.out.println("[DB_Manager] Utilisateur "+ id +" avec le pseudo " + pseudo +" bien ajouté dans l'annuaire");
+            } catch (SQLException e) {
+                System.out.println("[DB_Manager] Probleme lors de l'ajout de l'user dans l'annuaire");
+                e.printStackTrace();
+            }
         }
     }
 
