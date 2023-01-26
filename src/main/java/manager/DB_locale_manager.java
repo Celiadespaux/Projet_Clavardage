@@ -42,7 +42,7 @@ public class DB_locale_manager {
         //User user1 = new User(111, "toto", "motdepasse", Network_manager.getMyIPString(), 6000); // ip estelle : 172.29.177.126, ip celia : 172.29.71.138
         //User user2 = new User(222, "pierre", "motdepass24e", Network_manager.getMyIPString(), 6000);
         //User user3 = new User(333, "jack", "motdepass24e", Network_manager.getMyIPString(), 6000);
-        User user4 = new User(777,"bidon_moi","mdp","172.29.177.126,6000",6000);
+        User user4 = new User(777,"bidon_moi","mdp","172.29.177.126",6000);
         //add_utlisateur_db(user1);
         //add_utlisateur_db(user2);
         //add_utlisateur_db(user3);

@@ -49,15 +49,29 @@ public class Traitement_Messages implements Runnable {
 				Message nmsg = new Message(User.getMoi(),"", Message.TypeMessage.RENVOIE_PSEUDO);
 				TCP.envoyer_msg_tcp(msg.getSender(), nmsg);
 				System.out.println("[MESSAGE] envoie du message -> ok bienvenue, voici mon pseudo, tu peux m'ajouter"+User.getMyId());
+				if (ChatWindow.getInstance()==null){
+					System.out.println("[Traitement_mes] getinstance null");
+				} else {
+					System.out.println("[Traitement_mes] getinstance : "+ChatWindow.getInstance());
+					ChatWindow.afficher_tous_les_contacts(ChatWindow.getInstance());
+
+				}
+
 			}
 			System.out.println("[Traitement_mess] fin CONNECTE");
 			//Objects.requireNonNull(ChatWindow.get_contact_item_by_user(msg.getSender().getId())).setBStyle(1);
-			ChatWindow.afficher_tous_les_contacts(ChatWindow.getInstance());
 			break;
 
 		case DECONNECTE :
 			//Objects.requireNonNull(ChatWindow.get_contact_item_by_user(msg.getSender().getId())).setBStyle(0);
-			ChatWindow.afficher_tous_les_contacts(ChatWindow.getInstance());
+			//ChatWindow.afficher_tous_les_contacts(ChatWindow.getInstance());
+			if (ChatWindow.getInstance()==null){
+				System.out.println("[Traitement_mes] getinstance null");
+			} else {
+				System.out.println("[Traitement_mes] getinstance : "+ChatWindow.getInstance());
+				ChatWindow.afficher_tous_les_contacts(ChatWindow.getInstance());
+
+			}
 			Network_manager.deconnection();
 			DB_locale_manager.deconnecter_user(msg.getSender().getId());
 			break;
