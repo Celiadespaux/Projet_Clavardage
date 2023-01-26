@@ -39,15 +39,15 @@ public class DB_locale_manager {
         delete_entire_content("utilisateur");
 
 
-        //User user1 = new User(111, "toto", "motdepasse", Network_manager.getMyIPString(), 6000); // ip estelle : 172.29.177.126, ip celia : 172.29.71.138
+        User user1 = new User(111, "toto", "motdepasse", "172.29.71.138", 6000); // ip estelle : 172.29.177.126, ip celia : 172.29.71.138
         //User user2 = new User(222, "pierre", "motdepass24e", Network_manager.getMyIPString(), 6000);
         //User user3 = new User(333, "jack", "motdepass24e", Network_manager.getMyIPString(), 6000);
-        User user4 = new User(777,"bidon_moi","mdp","172.29.177.126",6000);
+        //User user4 = new User(777,"bidon_moi","mdp","172.29.177.126",6000);
         //add_utlisateur_db(user1);
         //add_utlisateur_db(user2);
         //add_utlisateur_db(user3);
 
-        add_utlisateur_db(user4);
+        add_utlisateur_db(user1);
 
 
         delete_entire_content("discussion");
@@ -358,7 +358,8 @@ public class DB_locale_manager {
      * @param id de l'utilisateur
      */
     public static void add_user_annuaire(int id, String pseudo, int connecte, String ip) {
-        String sql = "INSERT INTO annuaire (id_ami,pseudo_ami,connecte,ip_ami) VALUES (?,?,?,?)";
+        if (id != User.getMyId()) {
+    	String sql = "INSERT INTO annuaire (id_ami,pseudo_ami,connecte,ip_ami) VALUES (?,?,?,?)";
         try (PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setInt(1, id);
             pstmt.setString(2, pseudo);
@@ -369,6 +370,7 @@ public class DB_locale_manager {
         } catch (SQLException e) {
             System.out.println("[DB_Manager] Probleme lors de l'ajout de l'user dans l'annuaire");
             e.printStackTrace();
+        }
         }
     }
 

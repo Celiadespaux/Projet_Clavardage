@@ -119,7 +119,9 @@ public class ChatWindow implements Initializable {
 
     //Affichage de tous les contacts connectes d'abbord puis les deconnecte
     public static void afficher_tous_les_contacts(ChatWindow chatwindow){
+    	Platform.runLater(() -> {
         chatwindow.hbox_utilisateurs_actifs.getChildren().clear();
+    	});
         ArrayList<User> contacts_list;
         int connecte = 1;
         for (int u=0; u<2; u++){
@@ -141,7 +143,9 @@ public class ChatWindow implements Initializable {
                     c_item_ctrl.setData();
                     c_item_ctrl.setBStyle(connecte);
                     c_item_ctrl.setController_chat_windowController(chatwindow);
+                    Platform.runLater(() -> {
                     chatwindow.hbox_utilisateurs_actifs.getChildren().add(c_item_fxml);
+                    });
                     chatwindow.add_contact_item_to_list(c_item_ctrl);
                 } catch (IOException e) {
                     System.out.println("[ChatWindow.java] Pb load contact_item");
