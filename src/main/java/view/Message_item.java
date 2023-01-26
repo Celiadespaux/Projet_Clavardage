@@ -34,7 +34,9 @@ public class Message_item {
         l_mess.setText(mess.getContenu());
         String sender = mess.getSender().getPseudo();
         l_expediteur.setText(sender);
-    }
+    } 
+    
+    
 
 
 

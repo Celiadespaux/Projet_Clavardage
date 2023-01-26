@@ -54,7 +54,7 @@ public class TCP extends Thread{
 			serveur.close();
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			System.out.println("[TCP] pb de connexion");
 			e.printStackTrace();
 		} 
 		

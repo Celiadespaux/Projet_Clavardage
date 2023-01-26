@@ -43,7 +43,7 @@ public class ChangerPseudoWindow {
             		//User.getMoi().setPseudo(pseudo);
 				    changeScene_ChatWindow(event);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+					System.out.println("[ChangerPseudo] pb dans valider choix pseudo");
 					e.printStackTrace();
 				}
             }

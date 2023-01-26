@@ -23,16 +23,13 @@ public class User {
 		
 	}
 	
-	static int myid = 777;
+	static int myid = 111;
 	public static int getMyId() {
 		return myid;
 	}
 	
 	public static void creer_moi() throws UnknownHostException {
-		//moi.setId(ConnexionWindow.getId());
 		DB_locale_manager.maj_pseudo("moi",ConnexionWindow.getId());
-		//moi.setIp(Network_manager.getMyIPString());
-		//moi.setPort(6000);
 	}
 	    
 	public static User getMoi() {
