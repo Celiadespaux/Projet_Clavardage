@@ -12,9 +12,6 @@ public class NotificationPseudo {
     @FXML
     private Label label_new_pseudo;
 
-    @FXML
-    private Button b_ok;
-
     private Stage stage;
 
     private static User new_contact;
@@ -38,9 +35,4 @@ public class NotificationPseudo {
         new_contact = contact;
     }
 
-    @FXML
-    void handleButtonOK(ActionEvent event) {
-        stage.close();
-        //ChatWindow.afficher_new_contact(new_contact);
-    }
 }

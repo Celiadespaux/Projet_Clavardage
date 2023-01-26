@@ -48,9 +48,9 @@ public class Traitement_Messages implements Runnable {
 				TCP.envoyer_msg_tcp(msg.getSender(), nmsg);
 				System.out.println("[MESSAGE] envoie du message -> ok bienvenue, voici mon pseudo, tu peux m'ajouter"+User.getMyId());
 				if (ChatWindow.getInstance()==null){
-					System.out.println("[Traitement_mes] getinstance null");
+					System.out.println("[Traitement_mes CONNECTE] getinstance null");
 				} else {
-					System.out.println("[Traitement_mes] getinstance : "+ChatWindow.getInstance());
+					System.out.println("[Traitement_mes CONNECTE] getinstance : "+ChatWindow.getInstance());
 					ChatWindow.afficher_tous_les_contacts(ChatWindow.getInstance());
 
 				}
@@ -64,9 +64,9 @@ public class Traitement_Messages implements Runnable {
 			//Objects.requireNonNull(ChatWindow.get_contact_item_by_user(msg.getSender().getId())).setBStyle(0);
 			//ChatWindow.afficher_tous_les_contacts(ChatWindow.getInstance());
 			if (ChatWindow.getInstance()==null){
-				System.out.println("[Traitement_mes] getinstance null");
+				System.out.println("[Traitement_mes DECONNECTE] getinstance null");
 			} else {
-				System.out.println("[Traitement_mes] getinstance : "+ChatWindow.getInstance());
+				System.out.println("[Traitement_mes DECONNECTE] getinstance : "+ChatWindow.getInstance());
 				ChatWindow.afficher_tous_les_contacts(ChatWindow.getInstance());
 
 			}
@@ -77,15 +77,29 @@ public class Traitement_Messages implements Runnable {
 		case RENVOIE_PSEUDO :
 			System.out.println("[Traitement_mess] dans RENVOIE_PSEUDO");
 			DB_locale_manager.add_user_annuaire(msg.getSender().getId(),msg.getSender().getPseudo(),1,msg.getSender().getIp());
+			if (ChatWindow.getInstance()==null){
+				System.out.println("[Traitement_mes RENVOIE_PSEUDO] getinstance null");
+			} else {
+				System.out.println("[Traitement_mes RENVOIE_PSEUDO] getinstance : "+ChatWindow.getInstance());
+				ChatWindow.afficher_tous_les_contacts(ChatWindow.getInstance());
+
+			}
 			System.out.println("[Traitement_mess] fin RENVOIE_PSEUDO");
 
 			break;
 			
-		case CHANGE_PSEUDO : 
+		case CHANGE_PSEUDO :
 			//DB_locale_manager.maj_pseudo(msg.getSender().getPseudo(), msg.getSender().getId());
 			DB_locale_manager.update_pseudo_annuaire(msg.getSender().getPseudo(),msg.getSender().getId());
 			ChatWindow.handle_notification_pseudo_change(msg.getContenu(),msg.getSender());
 			NotificationPseudo.setNew_contact(msg.getSender());
+			if (ChatWindow.getInstance()==null){
+				System.out.println("[Traitement_mes CHANGE_PSEUDO] getinstance null");
+			} else {
+				System.out.println("[Traitement_mes CHANGE_PSEUDO] getinstance : "+ChatWindow.getInstance());
+				ChatWindow.afficher_tous_les_contacts(ChatWindow.getInstance());
+
+			}
 			break;
 			
 		case PSEUDO_DISPO:
