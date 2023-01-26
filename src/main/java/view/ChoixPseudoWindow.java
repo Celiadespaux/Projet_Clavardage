@@ -43,7 +43,7 @@ public class ChoixPseudoWindow {
 						DB_locale_manager.maj_pseudo(pseudo,User.getMyId());
 					    changeScene_ChatWindow(event);
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
+						System.out.println("[ChoixPseudo] pb dans valider choix pseudo");
 						e.printStackTrace();
 					}
 	            }

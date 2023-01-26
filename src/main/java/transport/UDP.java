@@ -116,10 +116,10 @@ public class UDP extends Thread{
 			
 			
 		} catch (SocketException e) {
-			// TODO Auto-generated catch block
+			System.out.println("[UDP] pb de connexion1");
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			System.out.println("[UDP] pb de connexion2");
 			e.printStackTrace();
 		}
 		

@@ -34,15 +34,17 @@ public class Message {
 	        this.type = type ;
 	}
 	
-	/*public static String construire_message(String contenu, int id_dest, TypeMessage type) {
-		return (contenu + "&&" + id_dest + "&&"+ type);
-	}*/
+	/**
+	 * créer message en String
+	 */
 	public static String construire_message(String contenu, User sender, TypeMessage type) {
 		String util = User.construire_user(sender);
 		return (contenu + "&&" + util + "&&"+ type);
 	}
 	
-
+	/**
+	 * créer un message de type Message à partir d'un String 
+	 */
 	public static Message deconstruire_message(String msg, User moi) {
 		String[] m = msg.split("&&");
 		

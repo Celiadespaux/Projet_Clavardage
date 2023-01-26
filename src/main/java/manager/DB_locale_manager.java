@@ -36,44 +36,23 @@ public class DB_locale_manager {
 
         creer_tables_DB();
 
-        delete_entire_content("utilisateur");
-
-
-        //User user1 = new User(111, "toto", "motdepasse", "172.29.71.138", 6000); // ip estelle : 172.29.177.126, ip celia : 172.29.71.138
-        //User user2 = new User(222, "pierre", "motdepass24e", Network_manager.getMyIPString(), 6000);
-        //User user3 = new User(333, "jack", "motdepass24e", Network_manager.getMyIPString(), 6000);
-        User user4 = new User(777,"bidon_moi","mdp","172.29.177.126",6000);
-        //add_utlisateur_db(user1);
-        //add_utlisateur_db(user2);
-        //add_utlisateur_db(user3);
-
-        add_utlisateur_db(user4);
-
-
-        delete_entire_content("discussion");
-/*
-		Message msg = new Message(User.getMoi(), "hey ca va user2 ?", Message.TypeMessage.MESSAGE_CONV);
-        insert_message_db(msg,0, user2.getId());
-        Message msg2 = new Message(user2, "ca va trql", Message.TypeMessage.MESSAGE_CONV);
-        insert_message_db(msg2,1,msg2.getSender().getId());
-        Message msg3 = new Message(user3, "je suis user3", Message.TypeMessage.MESSAGE_CONV);
-        insert_message_db(msg3,1,msg3.getSender().getId());
-        Message msg4 = new Message(User.getMoi(), "hey u3 !", Message.TypeMessage.MESSAGE_CONV);
-        insert_message_db(msg4,0, user3.getId());*/
-        getHistory_mess();
-
+        //**************************************************************************************************
+        //
+        // MODIFIER ICI : choisir un user (le décommenter) et l'ajouter dans la database ligne 50
+        //
+        //**************************************************************************************************
         
-        delete_entire_content("annuaire");
+        User user1 = new User(1,"", "motdepasse", "172.29.71.138", 6000); // ip estelle : 172.29.177.126, ip celia : 172.29.71.138
+        //User user2 = new User(2,"", "motdepasse", Network_manager.getMyIPString(), 6000);
+        //User user3 = new User(3,"", "motdepasse", Network_manager.getMyIPString(), 6000);
+        //User user4 = new User(4,"","motdepasse","172.29.177.126",6000);
 
-        add_user_annuaire(666,"paul",1,"");
-        add_user_annuaire(222,"pierre",1,"");
-        add_user_annuaire(999,"pasla",0,"");
-        add_user_annuaire(783,"dodo",0,"");
+        add_utlisateur_db(user1);
+
+        getHistory_mess();
 
 
         getContacts(1);
-
-
 
     }
 
@@ -164,7 +143,6 @@ public class DB_locale_manager {
      * @return un tabeau de tous les messages de l'utlisateur
      * @throws SQLException
      */
-    //TODO trier en fct de expe / dest
     public static ArrayList<Message> getHistory_mess() throws SQLException {
 
         String query = "SELECT * FROM discussion ";
@@ -217,7 +195,7 @@ public class DB_locale_manager {
 
             // si je suis le destinataire
             if (resultSet.getInt("recu")==1){
-                sender = DB_locale_manager.getUserfromId(resultSet.getInt("id_user"));
+            	sender = new User(resultSet.getInt("id_user"),"","","",6000);
             }
             //si je suis l'expediteur
             else {
@@ -235,7 +213,7 @@ public class DB_locale_manager {
             list.add(m);
         }
         System.out.println("[DB_Manager] Liste messages finale avec "+id_contact+": ");
-        System.out.println(list);
+        //System.out.println(list);
         return list;
     }
 
@@ -402,6 +380,9 @@ public class DB_locale_manager {
         }
     }
 
+    public static String getPseudofromId(Integer id) {
+    	return "";
+    }
 
 
     //
