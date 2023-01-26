@@ -97,6 +97,20 @@ public class ChatWindow implements Initializable {
         l_mon_nom.setText(ChoixPseudoWindow.pseudo);
 
         instance = this;
+        if (instance==null){
+            System.out.println("[ChatWindow.java] instance null");
+        } else {
+            System.out.println("[ChatWindow.java] instance : "+instance);
+        }
+
+        if (ChatWindow.getInstance()==null){
+            System.out.println("[ChatWindow.java] getinstance null");
+        } else {
+            System.out.println("[ChatWindow.java] getinstance : "+instance);
+        }
+
+
+
     }
 
     public void setLast_contact_cliked(User contact){
@@ -256,10 +270,12 @@ public class ChatWindow implements Initializable {
     public void envoyer_message(ActionEvent event) throws UnknownHostException, IOException {
     	String msg = tf_mess_a_envoyer.getText();
     	Message message = new Message(User.getMoi(), msg, Message.TypeMessage.MESSAGE_CONV);
-    	DB_locale_manager.insert_message_db(message,0,last_contact_cliked.getId());
-        afficher_new_mess(message);
-    	TCP.envoyer_msg_tcp(last_contact_cliked, message);
-    	tf_mess_a_envoyer.setText("");
+        if (last_contact_cliked!=null){
+            DB_locale_manager.insert_message_db(message,0,last_contact_cliked.getId());
+            afficher_new_mess(message);
+            TCP.envoyer_msg_tcp(last_contact_cliked, message);
+            tf_mess_a_envoyer.setText("");
+        }
     }
 
 
