@@ -3,7 +3,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import manager.*;
-import model.*;
 
 public class mainApp extends Application {
 
@@ -24,7 +23,8 @@ public class mainApp extends Application {
 
         Network_manager networkManager = new Network_manager();
 		networkManager.runservers();
-        DB_locale_manager DB = new DB_locale_manager();
+        @SuppressWarnings("unused")
+		DB_locale_manager DB = new DB_locale_manager();
 
 
         // LANCEMENT APP

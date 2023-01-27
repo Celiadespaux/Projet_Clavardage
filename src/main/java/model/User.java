@@ -29,7 +29,7 @@ public class User {
     //
     //**************************************************************************************************
     
-	static int myid = 111; //changer id selon user 
+	static int myid = 11; //changer id selon user 
 	public static int getMyId() {
 		return myid;
 	}

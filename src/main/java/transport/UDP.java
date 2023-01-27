@@ -45,7 +45,6 @@ public class UDP extends Thread{
 			
 			InetAddress addressf = InetAddress.getByAddress(addressforbid);
 			InetAddress addressf2 = InetAddress.getByName(Network_manager.getMyIPString());
-			//InetAddress addressf2 = InetAddress.getByName("172.29.71.138");
 			
 			List<InetAddress> broadcast = new ArrayList<InetAddress>() ;
 			
