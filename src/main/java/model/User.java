@@ -23,7 +23,13 @@ public class User {
 		
 	}
 	
-	static int myid = 111;
+	//**************************************************************************************************
+    //
+    // MODIFIER ICI : écrire dans la ligne 32 l'id de User choisi dans DB_locale_manager
+    //
+    //**************************************************************************************************
+    
+	static int myid = 111; //changer id selon user 
 	public static int getMyId() {
 		return myid;
 	}

@@ -1,6 +1,7 @@
 package model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 public class Message {
@@ -22,7 +23,10 @@ public class Message {
 	
     public Message(User sender, String contenu, TypeMessage type) {
 		this.sender = sender;
-		this.date = LocalDateTime.now().toString();
+		LocalDateTime date = LocalDateTime.now();
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+		String formattedDate = date.format(format);
+		this.date = formattedDate;
 		this.contenu = contenu;
 		this.type = type ;
 	}

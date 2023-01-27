@@ -64,7 +64,7 @@
             </VBox>
             <VBox prefHeight="204.0" prefWidth="890.0">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="891.0" text="Utilisateurs actifs" textFill="WHITE">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="891.0" text="Utilisateurs" textFill="WHITE">
                      <font>
                         <Font size="23.0" />
                      </font>

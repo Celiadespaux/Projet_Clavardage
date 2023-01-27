@@ -90,7 +90,7 @@ public class UDP extends Thread{
 	
 	
 	/**
-	 * recoit un broadcast (et va le donner a traitement messages)
+	 * recoit un broadcast (et va le donner à traitement messages)
 	 * @throws IOException
 	 */
 	public void run() {

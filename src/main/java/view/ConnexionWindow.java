@@ -28,7 +28,6 @@ public class ConnexionWindow {
 		return Integer.valueOf(id);
 	}
 	
-    //FCT Get_moi pour savoir qui s'est connecte
     @FXML
     public void changeScene_ChoixPseudo(ActionEvent event) throws IOException {
         Parent root = null;

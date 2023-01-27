@@ -47,7 +47,7 @@ public class DB_locale_manager {
         //User user3 = new User(3,"", "motdepasse", Network_manager.getMyIPString(), 6000);
         //User user4 = new User(4,"","motdepasse","172.29.177.126",6000);
 
-        add_utlisateur_db(user1);
+        add_utlisateur_db(user1); //mettre ici le nom de user choisi 
 
         getHistory_mess();
 
@@ -195,7 +195,7 @@ public class DB_locale_manager {
 
             // si je suis le destinataire
             if (resultSet.getInt("recu")==1){
-            	sender = new User(resultSet.getInt("id_user"),"","","",6000);
+            	sender = new User(resultSet.getInt("id_user"),getPseudofromId(resultSet.getInt("id_user")),"","",6000);
             }
             //si je suis l'expediteur
             else {
@@ -297,36 +297,8 @@ public class DB_locale_manager {
     }
 
 
-    //TODO supprimer showusers
-    /**
-     * @return un tabeau de tous les messages de l'utlisateur
-     * @throws SQLException
-     */
-    public static ArrayList<User> showUsers() throws SQLException {
-        //TODO poffiner en fct de la convo
-        String query = "SELECT * FROM utilisateur ";
-
-        Statement statement = con.createStatement();
-
-        ResultSet result = statement.executeQuery(query);
-        ArrayList<User> list = new ArrayList<>();
-
-        // loop through the result set
-        while (result.next()) {
-
-            //TODO changer id expe
-            User u = new User(
-                    result.getInt("id"),
-                    result.getString("Pseudo"),
-                    result.getString("mdp"),
-                    result.getString("ip_adr"),
-                    result.getInt("port_nb"));
-            list.add(u);
-        }
-        System.out.println(list);
-        return list;
-    }
-
+   
+    
     //
     // TABLE ANNUAIRE
     //
@@ -380,8 +352,21 @@ public class DB_locale_manager {
         }
     }
 
+    
     public static String getPseudofromId(Integer id) {
-    	return "";
+    	try {
+            String query = "SELECT * FROM annuaire WHERE id = ?";
+            PreparedStatement statement = con.prepareStatement(query);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                String pseudo = resultSet.getString("pseudo");
+                return pseudo;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 
@@ -413,28 +398,9 @@ public class DB_locale_manager {
             e.printStackTrace();
         }
         return null;
-
-        /* String id_string = id.toString();
-        String sql = "SELECT * FROM utilisateur where id='"+id_string+"'";
-
-        Statement stmt = null;
-        try {
-            stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            while(rs.next()){
-                return new User(
-                        id,
-                        rs.getString("pseudo"),
-                        rs.getString("mdp"),
-                        rs.getString("ip_adr"),
-                        rs.getInt("port_nb")
-                );
-            }
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
-        }*/
-
     }
+    
+    
 
     /**
      * Supprime la table passée en arg
@@ -455,7 +421,7 @@ public class DB_locale_manager {
         System.out.println("[DB_Manager] Le contenu de la table " + table + " est supprimé");
     }
 
-        //
+    //
     // MAIN
     //
 
