@@ -42,10 +42,10 @@ public class DB_locale_manager {
         //
         //**************************************************************************************************
         
-        User user1 = new User(1,"", "motdepasse", "172.29.71.138", 6000); // ip estelle : 172.29.177.126, ip celia : 172.29.71.138
-        //User user2 = new User(2,"", "motdepasse", Network_manager.getMyIPString(), 6000);
-        //User user3 = new User(3,"", "motdepasse", Network_manager.getMyIPString(), 6000);
-        //User user4 = new User(4,"","motdepasse","172.29.177.126",6000);
+        User user1 = new User(11,"", "motdepasse", Network_manager.getMyIPString(), 6000); 
+        //User user2 = new User(22,"", "motdepasse", Network_manager.getMyIPString(), 6000);
+        //User user3 = new User(33,"", "motdepasse", Network_manager.getMyIPString(), 6000);
+        //User user4 = new User(44,"","motdepasse",Network_manager.getMyIPString(),6000);
 
         add_utlisateur_db(user1); //mettre ici le nom de user choisi 
 
@@ -407,14 +407,16 @@ public class DB_locale_manager {
      * @param table le nom de la table à supprimer
      * @throws SQLException
      */
-    private static void drop_table(String table) throws SQLException {
+    @SuppressWarnings("unused")
+	private static void drop_table(String table) throws SQLException {
         String sql = "DROP TABLE "+table;
         PreparedStatement pstmt = con.prepareStatement(sql);
         pstmt.executeUpdate();
         System.out.println("[DB_Manager] Table"+table+" correctement supprimee");
     }
 
-    private static void delete_entire_content(String table) throws SQLException {
+    @SuppressWarnings("unused")
+	private static void delete_entire_content(String table) throws SQLException {
         String query = "DELETE FROM " + table;
         Statement statement = con.createStatement();
         statement.execute(query);
