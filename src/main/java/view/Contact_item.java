@@ -53,16 +53,4 @@ public class Contact_item {
         }
     }
 
-    /* public void afficher_convo_contact(){
-        int id_contact = this.contact.getId();
-        FXMLLoader fxmlLoader = new FXMLLoader(ConnexionWindow.class.getResource("/ChatWindow.fxml"));
-        try {
-            fxmlLoader.load();
-        } catch (IOException e) {
-            System.out.println("[Contact_item.java] Pb load ChatWindow.fxml");
-            throw new RuntimeException(e);
-        }
-        ChatWindow cw = fxmlLoader.getController();
-        cw.afficher_messages(id_contact);
-    }*/
 }

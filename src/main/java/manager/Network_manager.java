@@ -23,7 +23,7 @@ public class Network_manager {
 		Tcp = new TCP();
 		Udp = new UDP(5001, 10000) ;
 		
-		try { //recup adresse ip 
+		try { //recupère notre adresse ip 
 			Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces();
 			while (en.hasMoreElements()) {
 				NetworkInterface ni = en.nextElement();

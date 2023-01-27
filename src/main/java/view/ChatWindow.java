@@ -66,30 +66,6 @@ public class ChatWindow implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-       // contact_item_controller.setController_chat_windowController(this);
-        //Affichage de tous les messages
-
-        /*ArrayList<Message> messages_list;
-        try {
-            messages_list = DB_locale_manager.getHistory_mess();
-        } catch (SQLException e) {
-            System.out.println("[ChatWindow.java] Pb creation liste messages");
-            throw new RuntimeException(e);
-        }
-        for (Message message : messages_list) {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("/Message_item.fxml"));
-            try {
-                VBox m_item_fxml = fxmlLoader.load();
-                Message_item m_item_ctrl = fxmlLoader.getController();
-                m_item_ctrl.setData(message);
-                vbox_chat_messages.getChildren().add(m_item_fxml);
-            } catch (IOException e) {
-                System.out.println("[ChatWindow.java] Pb load message_item");
-                throw new RuntimeException(e);
-            }
-        }*/
-
         afficher_tous_les_contacts(this);
 
         Network_manager.setController_chat_windowController(this);
